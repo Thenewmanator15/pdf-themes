@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pdf-themes"
+version = "0.3.0"
+description = "Colour themes in PDF: one file, its content stored once, with checked light, dark, high-contrast and tinted themes."
+readme = "README.md"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Mathew Newman" }]
+requires-python = ">=3.10"
+dependencies = ["pikepdf>=9", "numpy>=1.24", "pillow>=10", "pypdfium2>=4"]
+
+[project.optional-dependencies]
+typst = ["typst>=0.13"]
+dev = ["pytest>=8", "pymupdf>=1.24", "typst>=0.13", "pyflakes>=3"]
+
+[project.scripts]
+pdf-themes = "pdfthemes.cli:main"
+
+[tool.setuptools]
+packages = ["pdfthemes"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

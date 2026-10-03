@@ -1,0 +1,414 @@
+{
+  "date": "2026-10-03",
+  "engines": {
+    "Poppler": "24.02.0",
+    "MuPDF": "1.28.2",
+    "PDFium": "153.0.7999.0"
+  },
+  "sample": {
+    "themes": [
+      {
+        "name": "Light",
+        "kind": "default",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 11,
+        "unmeasured": 0,
+        "lowest": 5.07,
+        "lowest_text": "Channel A",
+        "failures": []
+      },
+      {
+        "name": "Dark",
+        "kind": "author",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 11,
+        "unmeasured": 0,
+        "lowest": 6.63,
+        "lowest_text": "Channel A",
+        "failures": []
+      },
+      {
+        "name": "Light, more contrast",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 11,
+        "unmeasured": 0,
+        "lowest": 7.18,
+        "lowest_text": "Channel A",
+        "failures": []
+      },
+      {
+        "name": "Dark, more contrast",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 11,
+        "unmeasured": 0,
+        "lowest": 8.18,
+        "lowest_text": "Channel A",
+        "failures": []
+      },
+      {
+        "name": "Cream",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 11,
+        "unmeasured": 0,
+        "lowest": 4.58,
+        "lowest_text": "Channel A",
+        "failures": []
+      },
+      {
+        "name": "Peach",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 11,
+        "unmeasured": 0,
+        "lowest": 4.69,
+        "lowest_text": "Channel A",
+        "failures": []
+      },
+      {
+        "name": "Yellow",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 11,
+        "unmeasured": 0,
+        "lowest": 4.61,
+        "lowest_text": "Channel A",
+        "failures": []
+      },
+      {
+        "name": "Turquoise",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 11,
+        "unmeasured": 0,
+        "lowest": 4.66,
+        "lowest_text": "Channel A",
+        "failures": []
+      }
+    ],
+    "merge": {
+      "palettes": 2,
+      "colours": 25,
+      "replaced by Dark": 2,
+      "images stored as palette indices": 1
+    },
+    "sizes": {
+      "light_as_typst_writes_it": 190813,
+      "dark_as_typst_writes_it": 192000,
+      "light": 187564,
+      "dark": 188752,
+      "themed_light_and_dark": 185965,
+      "themed": 186382,
+      "two_layers": 192715
+    },
+    "pixels": {
+      "Poppler": {
+        "default theme vs light build": [
+          {
+            "same_size": true,
+            "pixels": 1000440,
+            "identical": 1000440,
+            "differ_gt_2": 0,
+            "max_diff": 0
+          }
+        ],
+        "dark theme vs dark build": [
+          {
+            "same_size": true,
+            "pixels": 1000440,
+            "identical": 1000440,
+            "differ_gt_2": 0,
+            "max_diff": 0
+          }
+        ]
+      },
+      "MuPDF": {
+        "default theme vs light build": [
+          {
+            "same_size": true,
+            "pixels": 1000440,
+            "identical": 1000440,
+            "differ_gt_2": 0,
+            "max_diff": 0
+          }
+        ],
+        "dark theme vs dark build": [
+          {
+            "same_size": true,
+            "pixels": 1000440,
+            "identical": 1000440,
+            "differ_gt_2": 0,
+            "max_diff": 0
+          }
+        ]
+      },
+      "PDFium": {
+        "default theme vs light build": [
+          {
+            "same_size": true,
+            "pixels": 1000440,
+            "identical": 1000440,
+            "differ_gt_2": 0,
+            "max_diff": 0
+          }
+        ],
+        "dark theme vs dark build": [
+          {
+            "same_size": true,
+            "pixels": 1000440,
+            "identical": 1000440,
+            "differ_gt_2": 0,
+            "max_diff": 0
+          }
+        ]
+      }
+    },
+    "text_same_as_light_build": true,
+    "text_same_in_dark_theme": true,
+    "tags": {
+      "struct_tree_kept": true,
+      "marked_content_light": 13,
+      "marked_content_themed": 13
+    },
+    "qpdf_check": "No syntax or stream encoding errors found; the file may still contain errors that qpdf cannot detect"
+  },
+  "cv": {
+    "themes": [
+      {
+        "name": "Light",
+        "kind": "default",
+        "kept": true,
+        "passed": true,
+        "runs": 172,
+        "unmeasured": 0,
+        "lowest": 4.66,
+        "lowest_text": null,
+        "failures": []
+      },
+      {
+        "name": "Dark",
+        "kind": "author",
+        "kept": true,
+        "passed": true,
+        "runs": 172,
+        "unmeasured": 0,
+        "lowest": 4.78,
+        "lowest_text": null,
+        "failures": []
+      },
+      {
+        "name": "Light, more contrast",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "runs": 172,
+        "unmeasured": 0,
+        "lowest": 7.3,
+        "lowest_text": null,
+        "failures": []
+      },
+      {
+        "name": "Dark, more contrast",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "runs": 172,
+        "unmeasured": 0,
+        "lowest": 7.08,
+        "lowest_text": null,
+        "failures": []
+      },
+      {
+        "name": "Cream",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "runs": 172,
+        "unmeasured": 0,
+        "lowest": 4.61,
+        "lowest_text": null,
+        "failures": []
+      },
+      {
+        "name": "Peach",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "runs": 172,
+        "unmeasured": 0,
+        "lowest": 4.57,
+        "lowest_text": null,
+        "failures": []
+      },
+      {
+        "name": "Yellow",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "runs": 172,
+        "unmeasured": 0,
+        "lowest": 4.61,
+        "lowest_text": null,
+        "failures": []
+      },
+      {
+        "name": "Turquoise",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "runs": 172,
+        "unmeasured": 0,
+        "lowest": 4.66,
+        "lowest_text": null,
+        "failures": []
+      }
+    ],
+    "merge": {
+      "palettes": 4,
+      "colours": 20,
+      "replaced by Dark": 13,
+      "gradients": 1,
+      "opacities and blend modes": 9
+    },
+    "sizes": {
+      "light_as_typst_writes_it": 74883,
+      "dark_as_typst_writes_it": 73847,
+      "light": 51273,
+      "dark": 50882,
+      "themed_light_and_dark": 51902,
+      "themed": 52880,
+      "two_layers": 64945
+    },
+    "pixels": {
+      "Poppler": {
+        "default theme vs light build": [
+          {
+            "same_size": true,
+            "pixels": 2005644,
+            "identical": 2005644,
+            "differ_gt_2": 0,
+            "max_diff": 0
+          },
+          {
+            "same_size": true,
+            "pixels": 2005644,
+            "identical": 2005644,
+            "differ_gt_2": 0,
+            "max_diff": 0
+          }
+        ],
+        "dark theme vs dark build": [
+          {
+            "same_size": true,
+            "pixels": 2005644,
+            "identical": 2005644,
+            "differ_gt_2": 0,
+            "max_diff": 0
+          },
+          {
+            "same_size": true,
+            "pixels": 2005644,
+            "identical": 2005644,
+            "differ_gt_2": 0,
+            "max_diff": 0
+          }
+        ]
+      },
+      "MuPDF": {
+        "default theme vs light build": [
+          {
+            "same_size": true,
+            "pixels": 2005644,
+            "identical": 2005644,
+            "differ_gt_2": 0,
+            "max_diff": 0
+          },
+          {
+            "same_size": true,
+            "pixels": 2005644,
+            "identical": 2005644,
+            "differ_gt_2": 0,
+            "max_diff": 0
+          }
+        ],
+        "dark theme vs dark build": [
+          {
+            "same_size": true,
+            "pixels": 2005644,
+            "identical": 2005644,
+            "differ_gt_2": 0,
+            "max_diff": 0
+          },
+          {
+            "same_size": true,
+            "pixels": 2005644,
+            "identical": 2005644,
+            "differ_gt_2": 0,
+            "max_diff": 0
+          }
+        ]
+      },
+      "PDFium": {
+        "default theme vs light build": [
+          {
+            "same_size": true,
+            "pixels": 2005644,
+            "identical": 2005644,
+            "differ_gt_2": 0,
+            "max_diff": 0
+          },
+          {
+            "same_size": true,
+            "pixels": 2005644,
+            "identical": 2005644,
+            "differ_gt_2": 0,
+            "max_diff": 0
+          }
+        ],
+        "dark theme vs dark build": [
+          {
+            "same_size": true,
+            "pixels": 2005644,
+            "identical": 2005644,
+            "differ_gt_2": 0,
+            "max_diff": 0
+          },
+          {
+            "same_size": true,
+            "pixels": 2005644,
+            "identical": 2005644,
+            "differ_gt_2": 0,
+            "max_diff": 0
+          }
+        ]
+      }
+    },
+    "text_same_as_light_build": true,
+    "text_same_in_dark_theme": true,
+    "tags": {
+      "struct_tree_kept": true,
+      "marked_content_light": 180,
+      "marked_content_themed": 180
+    },
+    "qpdf_check": "No syntax or stream encoding errors found; the file may still contain errors that qpdf cannot detect"
+  },
+  "notes": "The cv entry is from the earlier run on the same date, before themed files kept their XMP metadata byte for byte; it was not rebuilt. Its build and themed sizes were saved the same way as each other, so its percentages compare fairly. The CV's text is left out; only its measurements are kept."
+}

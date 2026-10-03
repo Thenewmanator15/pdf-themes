@@ -1,0 +1,357 @@
+{
+  "engines": {
+    "Poppler": "24.02.0",
+    "MuPDF": "1.28.2",
+    "PDFium": "153.0.7999.0"
+  },
+  "sizes": {
+    "light build": 144460,
+    "dark build": 142826,
+    "light build, compressed like the themed file": 135140,
+    "dark build, compressed like the themed file": 133672,
+    "themed: Light and Dark only": 186480,
+    "themed: Light, Dark and the standard themes": 198557,
+    "one build, organised, with the standard themes": 160068
+  },
+  "two_builds": {
+    "seconds": 10.7,
+    "merge": {
+      "Type 3 fonts merged": 2,
+      "annotations": 10,
+      "annotations with their own opacity": 1,
+      "bookmark colours": 6,
+      "forms merged": 16,
+      "gradients": 12,
+      "image palettes": 4,
+      "images stored as palette indices": 4,
+      "images swapped whole": 2,
+      "inline images made into image objects": 2,
+      "opacities and blend modes": 4,
+      "structure colours": 8,
+      "thumbnails": 1,
+      "tiling patterns merged": 2,
+      "values (colour)": 9,
+      "values (da)": 4,
+      "values (outline)": 6,
+      "values (style)": 2,
+      "values (text)": 4
+    },
+    "palettes": 15,
+    "palette entries": 271,
+    "themes": [
+      {
+        "name": "Light",
+        "kind": "default",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 107,
+        "unmeasured": 2,
+        "lowest": 5.67,
+        "lowest_text": "A link (C, no border)",
+        "failures": []
+      },
+      {
+        "name": "Dark",
+        "kind": "author",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 106,
+        "unmeasured": 3,
+        "lowest": 6.16,
+        "lowest_text": "CalRGB",
+        "failures": []
+      },
+      {
+        "name": "Light, more contrast",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 107,
+        "unmeasured": 2,
+        "lowest": 5.77,
+        "lowest_text": "Gradient text",
+        "failures": []
+      },
+      {
+        "name": "Dark, more contrast",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 106,
+        "unmeasured": 3,
+        "lowest": 10.59,
+        "lowest_text": "This sentence has a highlight annotation",
+        "failures": []
+      },
+      {
+        "name": "Cream",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 107,
+        "unmeasured": 2,
+        "lowest": 5.84,
+        "lowest_text": "Gradient text",
+        "failures": []
+      },
+      {
+        "name": "Peach",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 107,
+        "unmeasured": 2,
+        "lowest": 5.83,
+        "lowest_text": "Gradient text",
+        "failures": []
+      },
+      {
+        "name": "Yellow",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 106,
+        "unmeasured": 3,
+        "lowest": 6.97,
+        "lowest_text": "A link (C, no border)",
+        "failures": []
+      },
+      {
+        "name": "Turquoise",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 106,
+        "unmeasured": 3,
+        "lowest": 6.74,
+        "lowest_text": "A link (C, no border)",
+        "failures": []
+      }
+    ],
+    "kept": [
+      "Light",
+      "Dark",
+      "Light, more contrast",
+      "Dark, more contrast",
+      "Cream",
+      "Peach",
+      "Yellow",
+      "Turquoise"
+    ],
+    "Light": {
+      "pixels": {
+        "Poppler": {
+          "pixels": 12023760,
+          "identical": 12023760,
+          "differ_gt_2": 0,
+          "max_diff": 0
+        },
+        "MuPDF": {
+          "pixels": 12023760,
+          "identical": 12023760,
+          "differ_gt_2": 0,
+          "max_diff": 0
+        },
+        "PDFium": {
+          "pixels": 12023760,
+          "identical": 11998544,
+          "differ_gt_2": 24960,
+          "max_diff": 83
+        }
+      },
+      "values": {
+        "values": 42,
+        "same": 42,
+        "differ": []
+      }
+    },
+    "Dark": {
+      "pixels": {
+        "Poppler": {
+          "pixels": 12023760,
+          "identical": 12023760,
+          "differ_gt_2": 0,
+          "max_diff": 0
+        },
+        "MuPDF": {
+          "pixels": 12023760,
+          "identical": 12023760,
+          "differ_gt_2": 0,
+          "max_diff": 0
+        },
+        "PDFium": {
+          "pixels": 12023760,
+          "identical": 11998544,
+          "differ_gt_2": 24960,
+          "max_diff": 43
+        }
+      },
+      "values": {
+        "values": 42,
+        "same": 42,
+        "differ": []
+      }
+    }
+  },
+  "one_build": {
+    "seconds": 9.5,
+    "merge": {
+      "Type 3 fonts merged": 2,
+      "annotations": 10,
+      "bookmark colours": 6,
+      "forms merged": 16,
+      "grey scans given a palette": 2,
+      "images stored as palette indices": 1,
+      "structure colours": 8,
+      "tiling patterns merged": 2,
+      "values (colour)": 9,
+      "values (da)": 4,
+      "values (outline)": 6,
+      "values (style)": 2,
+      "values (text)": 4
+    },
+    "themes": [
+      {
+        "name": "Light",
+        "kind": "default",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 107,
+        "unmeasured": 2,
+        "lowest": 5.67,
+        "lowest_text": "A link (C, no border)",
+        "failures": []
+      },
+      {
+        "name": "Dark",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 107,
+        "unmeasured": 2,
+        "lowest": 5.33,
+        "lowest_text": "AAAA",
+        "failures": []
+      },
+      {
+        "name": "Light, more contrast",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 107,
+        "unmeasured": 2,
+        "lowest": 5.77,
+        "lowest_text": "Gradient text",
+        "failures": []
+      },
+      {
+        "name": "Dark, more contrast",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 107,
+        "unmeasured": 2,
+        "lowest": 7.37,
+        "lowest_text": "AAAA",
+        "failures": []
+      },
+      {
+        "name": "Cream",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 107,
+        "unmeasured": 2,
+        "lowest": 5.84,
+        "lowest_text": "Gradient text",
+        "failures": []
+      },
+      {
+        "name": "Peach",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 107,
+        "unmeasured": 2,
+        "lowest": 5.83,
+        "lowest_text": "Gradient text",
+        "failures": []
+      },
+      {
+        "name": "Yellow",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 106,
+        "unmeasured": 3,
+        "lowest": 6.97,
+        "lowest_text": "A link (C, no border)",
+        "failures": []
+      },
+      {
+        "name": "Turquoise",
+        "kind": "derived",
+        "kept": true,
+        "passed": true,
+        "reason": null,
+        "runs": 106,
+        "unmeasured": 3,
+        "lowest": 6.74,
+        "lowest_text": "A link (C, no border)",
+        "failures": []
+      }
+    ],
+    "kept": [
+      "Light",
+      "Dark",
+      "Light, more contrast",
+      "Dark, more contrast",
+      "Cream",
+      "Peach",
+      "Yellow",
+      "Turquoise"
+    ],
+    "Light": {
+      "pixels": {
+        "Poppler": {
+          "pixels": 12023760,
+          "identical": 12023760,
+          "differ_gt_2": 0,
+          "max_diff": 0
+        },
+        "MuPDF": {
+          "pixels": 12023760,
+          "identical": 12023760,
+          "differ_gt_2": 0,
+          "max_diff": 0
+        },
+        "PDFium": {
+          "pixels": 12023760,
+          "identical": 11998800,
+          "differ_gt_2": 24960,
+          "max_diff": 83
+        }
+      },
+      "values": {
+        "values": 42,
+        "same": 42,
+        "differ": []
+      }
+    }
+  }
+}

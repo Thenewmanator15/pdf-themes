@@ -1,0 +1,784 @@
+<title>Themed PDF Viewer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap">
+<style>
+/* Layout: a reader window. The page sits on the desk on the left; the panel on
+   the right says what the reader swapped to show the theme. One column on phones. */
+:root {
+  --desk: #E7E8EC;
+  --panel: #FFFFFF;
+  --ink: #15171C;
+  --muted: #595E6A;
+  --line: #D3D6DD;
+  --accent: #1E58B4;
+  --accent-soft: rgba(30, 88, 180, 0.10);
+  --page-shadow: 0 1px 2px rgba(20, 24, 33, 0.14), 0 10px 28px rgba(20, 24, 33, 0.12);
+  --font-display: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --font-ui: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-code: "Source Code Pro", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --desk: #0E0F12;
+    --panel: #17191E;
+    --ink: #E7E8EC;
+    --muted: #A0A5B1;
+    --line: #2D3038;
+    --accent: #8FB2FF;
+    --accent-soft: rgba(143, 178, 255, 0.15);
+    --page-shadow: 0 1px 2px rgba(0, 0, 0, 0.55), 0 10px 30px rgba(0, 0, 0, 0.5);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --desk: #0E0F12;
+  --panel: #17191E;
+  --ink: #E7E8EC;
+  --muted: #A0A5B1;
+  --line: #2D3038;
+  --accent: #8FB2FF;
+  --accent-soft: rgba(143, 178, 255, 0.15);
+  --page-shadow: 0 1px 2px rgba(0, 0, 0, 0.55), 0 10px 30px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+
+[hidden] { display: none !important; }
+body {
+  background: var(--desk);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.wrap {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding-inline: 16px;
+  padding-block: 24px 48px;
+  display: grid;
+  gap: 16px;
+}
+h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(26px, 3.4vw, 34px);
+  line-height: 1.15;
+  margin: 0;
+  text-wrap: balance;
+}
+.lede {
+  margin: 8px 0 0;
+  max-width: 72ch;
+  color: var(--muted);
+}
+.controls {
+  display: grid;
+  gap: 10px;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+.row-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  min-width: 82px;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 0;
+}
+.chips button {
+  font: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 12px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.chips button[aria-pressed="true"] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+.chips .dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+}
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.status {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  min-width: 0;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+}
+.stage {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.pager button {
+  font: inherit;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 3px 10px;
+  cursor: pointer;
+}
+.pager button:disabled { opacity: 0.45; cursor: default; }
+.sheet {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+.sheet canvas {
+  display: block;
+  max-width: 100%;
+  box-shadow: var(--page-shadow);
+  border-radius: 2px;
+}
+.placeholder {
+  width: min(100%, 595px);
+  aspect-ratio: 595 / 842;
+  max-width: 100%;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  border: 1px dashed var(--line);
+  border-radius: 2px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 18px;
+  display: grid;
+  gap: 22px;
+  min-width: 0;
+}
+.panel h2 {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.panel p { margin: 0 0 8px; }
+.facts {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 4px 14px;
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+.facts dt { color: var(--muted); }
+.facts dd { margin: 0; min-width: 0; }
+code, pre, .ref { font-family: var(--font-code); font-size: 13px; }
+.swaps {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+.swaps li {
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+}
+.swaps .ref { white-space: nowrap; }
+.swaps .what { color: var(--muted); font-size: 14px; }
+.table-box { overflow-x: auto; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+  font-size: 14px;
+}
+caption {
+  text-align: left;
+  color: var(--muted);
+  font-size: 13px;
+  padding-bottom: 6px;
+}
+th, td {
+  text-align: left;
+  padding: 3px 6px;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+th { font-weight: 600; font-size: 13px; color: var(--muted); }
+.swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1px solid var(--line);
+  vertical-align: -2px;
+  margin-right: 6px;
+}
+details summary { cursor: pointer; color: var(--accent); }
+details + details { margin-top: 8px; }
+details pre {
+  margin: 10px 0 0;
+  padding: 12px;
+  background: var(--desk);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow-x: auto;
+  line-height: 1.45;
+}
+.note { color: var(--muted); font-size: 14px; }
+.error { color: var(--ink); font-weight: 600; }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Themed PDF Viewer</h1>
+    <p class="lede">Each document here is a single PDF with its content stored once and eight colour themes inside it: light, dark, two with more contrast and four tints. This page does what a theme-aware reader would. It swaps the objects a theme lists, paints the theme's paper colour and draws the page. Any PDF reader today shows the light colours.</p>
+  </header>
+
+  <div class="controls">
+    <div class="row">
+      <span class="row-label" id="doc-label">Document</span>
+      <div class="chips" id="doc-picker" role="group" aria-labelledby="doc-label"></div>
+    </div>
+    <div class="row">
+      <span class="row-label" id="theme-label">Theme</span>
+      <div class="chips" id="theme-picker" role="group" aria-labelledby="theme-label"></div>
+    </div>
+    <p class="status" id="status" aria-live="polite">Loading the PDF engine…</p>
+  </div>
+
+  <main class="layout">
+    <section class="stage" aria-label="Page">
+      <div class="pager" id="pager" hidden>
+        <button type="button" id="prev">Previous</button>
+        <span id="page-label">Page 1 of 1</span>
+        <button type="button" id="next">Next</button>
+      </div>
+      <div class="sheet" id="sheet">
+        <div class="placeholder" id="placeholder">Loading the document…</div>
+        <canvas id="page" role="img" aria-label="" hidden></canvas>
+      </div>
+    </section>
+
+    <aside class="panel" aria-label="What the reader swapped">
+      <section>
+        <h2>The file</h2>
+        <dl class="facts" id="facts"></dl>
+      </section>
+      <section>
+        <h2 id="theme-title">This theme</h2>
+        <dl class="facts" id="theme-facts"></dl>
+        <details id="swaps-box">
+          <summary id="swaps-summary">Every object swapped</summary>
+          <ol class="swaps" id="swaps"></ol>
+        </details>
+      </section>
+      <section>
+        <h2>Palettes</h2>
+        <p class="note" id="palette-note">Every solid colour on the page is an entry in a palette. The page says which entry to use, and the theme decides which colour that entry is.</p>
+        <div id="palettes"></div>
+      </section>
+      <section>
+        <details>
+          <summary>The code that swaps the theme</summary>
+          <pre><code id="code"></code></pre>
+        </details>
+      </section>
+    </aside>
+  </main>
+</div>
+
+<script src="vendor/pdf-lib.min.js"></script>
+<script type="module">
+import * as pdfjsLib from "./vendor/pdf.min.mjs";
+
+// pdf.js's worker ships as base64 text (its source holds raw control characters)
+// and starts from a blob URL.
+const workerText = await fetch("vendor/pdf-worker.base64.txt")
+  .then((r) => (r.ok ? r.text() : Promise.reject(new Error("the PDF engine's worker is missing"))));
+const workerBytes = Uint8Array.from(atob(workerText.trim()), (c) => c.charCodeAt(0));
+pdfjsLib.GlobalWorkerOptions.workerSrc = URL.createObjectURL(new Blob([workerBytes], { type: "text/javascript" }));
+const { PDFDocument, PDFName, PDFArray, PDFDict, PDFNumber, PDFRawStream, decodePDFRawStream } = window.PDFLib;
+
+const THEMES_KEY = "XXThemes";  // a private name until a standard one is agreed
+const DOCS = [
+  { id: "corpus", file: "corpus-themed.pdf", label: "Test document, 6 pages" },
+  { id: "sample", file: "sample-themed.pdf", label: "Test page" },
+  { id: "scan", file: "scan-themed.pdf", label: "Scanned page" },
+];
+const state = { mode: "auto", doc: null, page: 1 };
+const loaded = new Map();
+const $ = (id) => document.getElementById(id);
+
+// What a theme-aware reader does to show a theme. Each pair in the theme's
+// Replace array swaps places, so whatever pointed at the first object now
+// gets the second. The page content itself is never touched.
+function applyTheme(pdf, theme) {
+  const replace = theme.lookup(PDFName.of("Replace"), PDFArray);
+  for (let i = 0; i < replace.size(); i += 2) {
+    const a = replace.get(i);
+    const b = replace.get(i + 1);
+    const objectA = pdf.context.lookup(a);
+    const objectB = pdf.context.lookup(b);
+    pdf.context.assign(a, objectB);
+    pdf.context.assign(b, objectA);
+  }
+}
+
+// A reader remembers what a person chose by the theme's labels, not its name,
+// so the choice carries over to the next document. Kept in this browser only.
+const SAVED = "themed-pdf-choice";
+function savedChoice() {
+  try { return JSON.parse(localStorage.getItem(SAVED) || "null"); } catch { return null; }
+}
+function saveChoice(choice) {
+  try { localStorage.setItem(SAVED, JSON.stringify(choice)); } catch { /* storage may be off */ }
+}
+
+// Reading the file, for the panel.
+const plain = (o) => (o ? o.toString().replace(/^\//, "") : "");
+const textOf = (o) => (o && typeof o.decodeText === "function" ? o.decodeText() : plain(o));
+const num = (o) => (o instanceof PDFNumber ? o.asNumber() : Number(plain(o)));
+const refText = (r) => `${r.objectNumber} ${r.generationNumber} R`;
+const hex = (rgb) => "#" + rgb.map((v) => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, "0")).join("").toUpperCase();
+
+function readThemes(pdf) {
+  const root = pdf.catalog.lookupMaybe(PDFName.of(THEMES_KEY), PDFDict);
+  if (!root) return null;
+  const read = (dict, isDefault) => {
+    const checked = dict.lookupMaybe(PDFName.of("Checked"), PDFDict);
+    return {
+      dict,
+      isDefault,
+      name: textOf(dict.lookup(PDFName.of("Name"))),
+      scheme: plain(dict.lookup(PDFName.of("ColorScheme"))),
+      contrast: plain(dict.get(PDFName.of("Contrast"))),
+      tint: plain(dict.get(PDFName.of("Tint"))),
+      paper: (dict.lookupMaybe(PDFName.of("Paper"), PDFArray)?.asArray() ?? [1, 1, 1]).map(num),
+      checked: checked ? `${textOf(checked.lookup(PDFName.of("Standard")))} ${textOf(checked.lookup(PDFName.of("Criterion")))}, ${plain(checked.lookup(PDFName.of("Level")))}` : null,
+    };
+  };
+  const alternates = root.lookup(PDFName.of("Alternates"), PDFArray).asArray();
+  return [read(root.lookup(PDFName.of("Default"), PDFDict), true),
+          ...alternates.map((a) => read(pdf.context.lookup(a, PDFDict), false))];
+}
+
+// Palette colours for the panel, from the palette's base colour space.
+function baseOf(pdf, space) {
+  let base = pdf.context.lookup(space);
+  if (base instanceof PDFArray) {
+    const family = plain(base.get(0));
+    if (family === "ICCBased") {
+      const n = num(pdf.context.lookup(base.get(1)).dict.get(PDFName.of("N")));
+      return { family: n === 1 ? "Gray" : n === 4 ? "CMYK" : "RGB", n };
+    }
+    if (family === "CalRGB") return { family: "RGB", n: 3 };
+    if (family === "CalGray") return { family: "Gray", n: 1 };
+    if (family === "Lab") {
+      const params = pdf.context.lookup(base.get(1), PDFDict);
+      const range = params.lookupMaybe(PDFName.of("Range"), PDFArray)?.asArray().map(num) ?? [-100, 100, -100, 100];
+      return { family: "Lab", n: 3, range };
+    }
+    if (family === "DeviceN") return { family: "inks", n: pdf.context.lookup(base.get(1), PDFArray).size() };
+    if (family === "Separation") return { family: "ink", n: 1 };
+    return { family, n: 1 };
+  }
+  const family = plain(base);
+  return { family: family === "DeviceGray" ? "Gray" : family === "DeviceCMYK" ? "CMYK" : "RGB",
+           n: family === "DeviceGray" ? 1 : family === "DeviceCMYK" ? 4 : 3 };
+}
+
+function labToRgb(L, a, b) {
+  const fy = (L + 16) / 116, fx = fy + a / 500, fz = fy - b / 200;
+  const f = (t) => (t > 6 / 29 ? t ** 3 : 3 * (6 / 29) ** 2 * (t - 4 / 29));
+  const [X, Y, Z] = [0.9505 * f(fx), f(fy), 1.089 * f(fz)];
+  const lin = [3.2404542 * X - 1.5371385 * Y - 0.4985314 * Z, -0.969266 * X + 1.8760108 * Y + 0.041556 * Z,
+               0.0556434 * X - 0.2040259 * Y + 1.0572252 * Z];
+  return lin.map((c) => 255 * (c <= 0.0031308 ? 12.92 * c : 1.055 * Math.max(c, 0) ** (1 / 2.4) - 0.055));
+}
+
+function paletteColours(pdf, arr) {
+  const count = num(arr.lookup(2)) + 1;
+  const lookup = pdf.context.lookup(arr.get(3));
+  const bytes = lookup instanceof PDFRawStream ? decodePDFRawStream(lookup).decode() : lookup.asBytes();
+  const base = baseOf(pdf, arr.get(1));
+  return Array.from({ length: count }, (_, i) => {
+    const v = Array.from(bytes.slice(base.n * i, base.n * (i + 1)));
+    if (base.family === "RGB") return hex(v);
+    if (base.family === "Gray") return hex([v[0], v[0], v[0]]);
+    if (base.family === "CMYK") return hex(v.slice(0, 3).map((c) => (255 - c) * (255 - v[3]) / 255));
+    if (base.family === "Lab") {
+      const [amin, amax, bmin, bmax] = base.range;
+      return hex(labToRgb(v[0] / 2.55, amin + (v[1] / 255) * (amax - amin), bmin + (v[2] / 255) * (bmax - bmin)));
+    }
+    return null;  // spot inks: their colour comes from a function the panel doesn't run
+  });
+}
+
+function kindOf(x) {
+  if (x instanceof PDFArray && plain(x.get(0)) === "Indexed") return "palette";
+  const dict = x instanceof PDFDict ? x : x?.dict;
+  if (dict && (dict.has(PDFName.of("PatternType")) || dict.has(PDFName.of("ShadingType")))) return "gradient";
+  if (dict && (plain(dict.get(PDFName.of("Type"))) === "ExtGState"
+      || (!dict.has(PDFName.of("Subtype")) && ["CA", "ca", "BM"].some((k) => dict.has(PDFName.of(k)))))) return "graphics state";
+  if (dict && plain(dict.get(PDFName.of("Type"))) === "Annot") return "annotation";
+  if (dict && (plain(dict.get(PDFName.of("Subtype"))) === "Image" || dict.has(PDFName.of("Width")))) return "image";
+  if (x instanceof PDFArray) return "colour value";
+  if (x && typeof x.decodeText === "function") return "text style";
+  return "object";
+}
+
+// Palettes that colour an image rather than the page's own drawing.
+function imagePalettes(pdf) {
+  const refs = new Set();
+  for (const [, obj] of pdf.context.enumerateIndirectObjects()) {
+    const dict = obj?.dict;
+    if (!dict || plain(dict.get(PDFName.of("Subtype"))) !== "Image") continue;
+    const space = dict.get(PDFName.of("ColorSpace"));
+    if (space && space.objectNumber !== undefined) refs.add(refText(space));
+  }
+  return refs;
+}
+
+function describeSwaps(pdf, theme, forImages) {
+  if (theme.isDefault) return [];
+  const replace = theme.dict.lookup(PDFName.of("Replace"), PDFArray);
+  const swaps = [];
+  for (let i = 0; i < replace.size(); i += 2) {
+    const a = replace.get(i);
+    const b = replace.get(i + 1);
+    const x = pdf.context.lookup(a);
+    const y = pdf.context.lookup(b);
+    const swap = { from: refText(a), to: refText(b), kind: kindOf(x) };
+    if (swap.kind === "palette") {
+      swap.palette = [paletteColours(pdf, x), paletteColours(pdf, y)];
+      swap.forImage = forImages.has(swap.from);
+    }
+    swaps.push(swap);
+  }
+  return swaps;
+}
+
+// Loading: the default theme is the file as it is; each other theme is the
+// same bytes with that theme's swaps applied, made the first time it is shown.
+const engineOptions = { isEvalSupported: false, useWasm: false };
+
+async function load(entry) {
+  const pdf = await PDFDocument.load(entry.bytes, { updateMetadata: false });
+  const themes = readThemes(pdf);
+  if (!themes) throw new Error(`${entry.file} has no themes`);
+  const forImages = imagePalettes(pdf);
+  for (const theme of themes) theme.swaps = describeSwaps(pdf, theme, forImages);
+  return { entry, size: entry.bytes.length, themes, views: new Map() };
+}
+
+async function viewOf(doc, theme) {
+  if (!doc.views.has(theme.name)) {
+    let data = doc.entry.bytes.slice();
+    if (!theme.isDefault) {
+      const copy = await PDFDocument.load(doc.entry.bytes, { updateMetadata: false });
+      applyTheme(copy, readThemes(copy).find((t) => t.name === theme.name).dict);
+      data = await copy.save({ useObjectStreams: false, updateFieldAppearances: false });
+    }
+    doc.views.set(theme.name, pdfjsLib.getDocument({ data, ...engineOptions }).promise);
+  }
+  return doc.views.get(theme.name);
+}
+
+// Which theme to show: the one the person picked, matched by its labels;
+// otherwise the one that suits the system setting.
+function systemScheme() {
+  const set = document.documentElement.getAttribute("data-theme");
+  if (set === "dark" || set === "light") return set;
+  return matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
+function chosenTheme(doc) {
+  if (state.mode !== "auto") {
+    const c = state.mode;
+    return doc.themes.find((t) => t.scheme === c.scheme && t.contrast === c.contrast && t.tint === c.tint) ?? doc.themes[0];
+  }
+  const scheme = systemScheme() === "dark" ? "Dark" : "Light";
+  const more = matchMedia("(prefers-contrast: more)").matches ? "More" : "";
+  return doc.themes.find((t) => t.scheme === scheme && t.contrast === more && !t.tint)
+      ?? doc.themes.find((t) => t.scheme === scheme && !t.tint) ?? doc.themes[0];
+}
+
+// The controls and the panel.
+function fillThemePicker(doc) {
+  const auto = document.createElement("button");
+  auto.type = "button";
+  auto.textContent = "Auto";
+  auto.dataset.auto = "true";
+  const buttons = [auto, ...doc.themes.map((t) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    const dot = document.createElement("span");
+    dot.className = "dot";
+    dot.style.background = `rgb(${t.paper.map((v) => Math.round(v * 255)).join(", ")})`;
+    b.append(dot, document.createTextNode(t.name));
+    b.dataset.theme = t.name;
+    return b;
+  })];
+  for (const b of buttons) {
+    b.addEventListener("click", () => {
+      if (b.dataset.auto) state.mode = "auto";
+      else {
+        const t = doc.themes.find((x) => x.name === b.dataset.theme);
+        state.mode = { scheme: t.scheme, contrast: t.contrast, tint: t.tint };
+      }
+      saveChoice(state.mode);
+      draw().catch(fail);
+    });
+  }
+  $("theme-picker").replaceChildren(...buttons);
+}
+
+function markPicker(theme) {
+  for (const b of $("theme-picker").querySelectorAll("button")) {
+    const on = state.mode === "auto" ? Boolean(b.dataset.auto) : b.dataset.theme === theme.name;
+    b.setAttribute("aria-pressed", String(on));
+  }
+}
+
+function setFacts(id, rows) {
+  $(id).replaceChildren(...rows.flatMap(([k, v]) => {
+    const dt = document.createElement("dt");
+    dt.textContent = k;
+    const dd = document.createElement("dd");
+    dd.textContent = v;
+    return [dt, dd];
+  }));
+}
+
+function fillFilePanel(doc) {
+  setFacts("facts", [
+    ["Size", `${doc.size.toLocaleString("en-GB")} bytes, one file`],
+    ["Themes", `${doc.themes.length}: ${doc.themes.map((t) => t.name).join(", ")}`],
+    ["Page content", "The same bytes in every theme"],
+    ["Checked", `${doc.themes.filter((t) => t.checked).length} of ${doc.themes.length} themes`],
+  ]);
+}
+
+function fillThemePanel(doc, theme) {
+  const labels = [theme.scheme, theme.contrast && `${theme.contrast} contrast`, theme.tint && `${theme.tint} tint`]
+    .filter(Boolean).join(", ");
+  const counts = new Map();
+  for (const s of theme.swaps) counts.set(s.kind, (counts.get(s.kind) ?? 0) + 1);
+  const swapped = theme.isDefault ? "Nothing: the default is the file as written"
+    : `${theme.swaps.length} object${theme.swaps.length > 1 ? "s" : ""}: `
+      + [...counts].map(([k, n]) => `${n} ${k}${n > 1 ? "s" : ""}`).join(", ");
+  $("theme-title").textContent = `This theme: ${theme.name}`;
+  setFacts("theme-facts", [
+    ["Labels", labels],
+    ["Paper", hex(theme.paper.map((v) => v * 255))],
+    ["Checked", theme.checked ?? "Not checked"],
+    ["Swapped", swapped],
+  ]);
+  $("swaps-box").hidden = theme.isDefault;
+  $("swaps-summary").textContent = `Every object swapped for ${theme.name}`;
+  $("swaps").replaceChildren(...theme.swaps.map((s) => {
+    const li = document.createElement("li");
+    const ref = document.createElement("span");
+    ref.className = "ref";
+    ref.textContent = `${s.from} → ${s.to}`;
+    const what = document.createElement("span");
+    what.className = "what";
+    what.textContent = s.palette ? `${s.forImage ? "image palette" : "palette"}, ${s.palette[0].length} colours` : s.kind;
+    li.append(ref, what);
+    return li;
+  }));
+
+  const palettes = theme.swaps.filter((s) => s.palette)
+    .sort((a, b) => (a.forImage - b.forImage) || (b.palette[0].length - a.palette[0].length));
+  if (!palettes.length) {
+    $("palettes").replaceChildren(Object.assign(document.createElement("p"), {
+      className: "note", textContent: "The default theme swaps nothing. Pick another theme to see its palettes beside these.",
+    }));
+    return;
+  }
+  $("palettes").replaceChildren(...palettes.map((s, n) => {
+    const box = document.createElement("div");
+    box.className = "table-box";
+    const table = document.createElement("table");
+    const head = table.createTHead().insertRow();
+    for (const label of ["Entry", doc.themes[0].name, theme.name]) {
+      const th = document.createElement("th");
+      th.scope = "col";
+      th.textContent = label;
+      head.append(th);
+    }
+    const body = table.createTBody();
+    s.palette[0].forEach((colour, i) => {
+      const row = body.insertRow();
+      row.insertCell().textContent = String(i);
+      for (const c of [colour, s.palette[1][i]]) {
+        const cell = row.insertCell();
+        if (c) {
+          const sw = document.createElement("span");
+          sw.className = "swatch";
+          sw.style.background = c;
+          cell.append(sw, document.createTextNode(c));
+        } else {
+          cell.textContent = "spot ink";
+        }
+      }
+    });
+    box.append(table);
+    const details = document.createElement("details");
+    details.open = n === 0;
+    const summary = document.createElement("summary");
+    summary.textContent = `${s.forImage ? "Image palette" : "Palette"} ${s.from}, ${s.palette[0].length} colours`;
+    details.append(summary, box);
+    return details;
+  }));
+}
+
+// Drawing.
+let task = null;
+let drawing = 0;
+
+async function draw() {
+  const doc = state.doc;
+  if (!doc) return;
+  const ticket = ++drawing;
+  const theme = chosenTheme(doc);
+  markPicker(theme);
+  fillThemePanel(doc, theme);
+  $("status").textContent = state.mode === "auto"
+    ? `Auto: your system is set to ${systemScheme()}, so this is ${theme.name}.`
+    : `Showing ${theme.name}. Your choice carries over to the other documents.`;
+  const view = await viewOf(doc, theme);
+  if (ticket !== drawing) return;
+  const pages = view.numPages;
+  state.page = Math.min(Math.max(1, state.page), pages);
+  $("pager").hidden = pages < 2;
+  $("page-label").textContent = `Page ${state.page} of ${pages}`;
+  $("prev").disabled = state.page <= 1;
+  $("next").disabled = state.page >= pages;
+
+  const page = await view.getPage(state.page);
+  const base = page.getViewport({ scale: 1 });
+  const width = Math.max(200, Math.min($("sheet").clientWidth, 860));
+  const ratio = window.devicePixelRatio || 1;
+  const viewport = page.getViewport({ scale: (width / base.width) * ratio });
+  const off = document.createElement("canvas");
+  off.width = Math.floor(viewport.width);
+  off.height = Math.floor(viewport.height);
+  if (task) task.cancel();
+  const paper = `rgb(${theme.paper.map((v) => Math.round(v * 255)).join(", ")})`;
+  task = page.render({ canvas: off, viewport, background: paper });
+  try {
+    await task.promise;
+  } catch (e) {
+    if (e?.name === "RenderingCancelledException") return;
+    throw e;
+  }
+  if (ticket !== drawing) return;
+  const canvas = $("page");
+  canvas.width = off.width;
+  canvas.height = off.height;
+  canvas.style.width = `${width}px`;
+  canvas.style.aspectRatio = `${base.width} / ${base.height}`;
+  canvas.getContext("2d").drawImage(off, 0, 0);
+  canvas.setAttribute("aria-label", `${doc.entry.label}, page ${state.page} of ${pages}, drawn in the ${theme.name} theme`);
+  canvas.hidden = false;
+  $("placeholder").hidden = true;
+}
+
+function fail(error) {
+  $("status").textContent = `Something went wrong: ${error.message}`;
+  $("status").classList.add("error");
+}
+
+async function show(entry) {
+  for (const b of $("doc-picker").querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset.doc === entry.id));
+  try {
+    if (!loaded.has(entry.id)) {
+      $("status").textContent = `Loading ${entry.file}…`;
+      loaded.set(entry.id, await load(entry));
+    }
+    state.doc = loaded.get(entry.id);
+    state.page = 1;
+    fillFilePanel(state.doc);
+    fillThemePicker(state.doc);
+    await draw();
+  } catch (e) {
+    fail(e);
+  }
+}
+
+// Controls.
+$("prev").addEventListener("click", () => { state.page -= 1; draw().catch(fail); });
+$("next").addEventListener("click", () => { state.page += 1; draw().catch(fail); });
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => draw().catch(fail));
+matchMedia("(prefers-contrast: more)").addEventListener("change", () => draw().catch(fail));
+new MutationObserver(() => draw().catch(fail)).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+let resizeTimer = 0;
+new ResizeObserver(() => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => draw().catch(fail), 120); }).observe($("sheet"));
+$("code").textContent = applyTheme.toString();
+const remembered = savedChoice();
+if (remembered) state.mode = remembered;
+
+// Offer only the documents that are here.
+const available = [];
+for (const entry of DOCS) {
+  const response = await fetch(entry.file).catch(() => null);
+  if (!response?.ok) continue;
+  entry.bytes = new Uint8Array(await response.arrayBuffer());
+  available.push(entry);
+}
+$("doc-picker").replaceChildren(...available.map((entry) => {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.dataset.doc = entry.id;
+  b.textContent = entry.label;
+  b.setAttribute("aria-pressed", "false");
+  b.addEventListener("click", () => show(entry));
+  return b;
+}));
+if (available.length) show(available[0]);
+else fail(new Error("no themed PDF was found next to this page"));
+</script>
