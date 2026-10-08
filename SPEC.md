@@ -26,7 +26,7 @@ that doesn't support themes ignores them and shows the default colours.
 - **Default theme**: the colours as written in the file.
 - **Alternate theme**: a theme that replaces some objects with others.
 - **Palette**: an Indexed colour space (ISO 32000-2, 8.6.6.3) that content
-  streams use for solid colours, for example `/Th0 cs 15 sc`.
+  streams use for solid colours, for example `/Th25 CS 0 SC`.
 - **Replacement**: a pair of indirect objects. While the theme is shown, the
   first object is drawn as the second.
 - **Authored theme**: a theme the author built, with its own colours for

@@ -6,7 +6,7 @@ stored once. Wherever the builds differ in paint, the light build's value
 becomes the default and the dark build's value becomes a replacement:
 
 - solid colours in content streams, in any colour space, become entries in
-  Indexed palettes (`/Th0 cs 15 sc`), one palette per pair of base spaces;
+  Indexed palettes (`/Th25 CS 0 SC`), one palette per pair of base spaces;
   a colour may even be in a different space in each build;
 - gradients (shading patterns and the `sh` operator), graphics states
   (opacity and blend mode), soft masks and images are merged or swapped as
