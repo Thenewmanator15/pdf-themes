@@ -758,7 +758,7 @@ def add_authored_themes(merger, themes):
 
 def add_themes(merger, light_paper=(1.0, 1.0, 1.0), dark_paper=(0.0, 0.0, 0.0), derived=True):
     """Give an organised document its themes. Given a list of Theme (from
-    pdfthemes.themes) in place of the papers, it writes those, one per build:
+    pdfthemes.theme) in place of the papers, it writes those, one per build:
     see add_authored_themes.
 
     Otherwise: the light build as the default, the dark build (if there was

@@ -31,7 +31,8 @@ import pikepdf
 from . import core
 from .contrast import check, summary
 from .derive import add_themes
-from .merge import merge
+from .merge import merge, merge_builds
+from .theme import STANDARD, Theme, standard
 
 SAVE = core.SAVE
 
@@ -75,13 +76,102 @@ def write(m, args, reports):
         print(f"  note: {note}")
 
 
+# The mode a document is built in, for each standard theme.
+MODES = {"light": "Light", "dark": "Dark", "light-contrast": "Light, more contrast",
+         "dark-contrast": "Dark, more contrast", "cream": "Cream", "peach": "Peach", "yellow": "Yellow",
+         "turquoise": "Turquoise"}
+
+
+def theme_spec(text, error):
+    """A --theme option: NAME=FILE, then ;scheme=, ;contrast=, ;tint= and
+    ;paper= for a theme that isn't one of the standard ones."""
+    head, *options = text.split(";")
+    name, sep, file = head.partition("=")
+    if not sep or not name or not file:
+        error(f"{text!r} is not a theme like Dark=dark.pdf")
+    given = {}
+    for option in options:
+        key, sep, value = option.partition("=")
+        if not sep or key not in ("scheme", "contrast", "tint", "paper"):
+            error(f"{option!r} in --theme {name} is not scheme=, contrast=, tint= or paper=")
+        given[key] = value
+    paper = None
+    if "paper" in given:
+        try:
+            paper = hex_colour(given.pop("paper"))
+        except argparse.ArgumentTypeError as e:
+            error(str(e))
+    if name in STANDARD and not given:
+        return standard(name, paper), pathlib.Path(file)
+    if given.get("scheme") not in ("Light", "Dark"):
+        if name in STANDARD:
+            error(f"{name} is a standard theme; give it another name to change its labels")
+        error(f"{name} isn't a standard theme, so it needs scheme=Light or scheme=Dark")
+    if name in STANDARD:
+        error(f"{name} is a standard theme; give it another name to change its labels")
+    return Theme(name, given["scheme"], given.get("contrast"), given.get("tint"),
+                 paper if paper is not None else STANDARD[given["scheme"]].paper), pathlib.Path(file)
+
+
+def with_papers(themes, papers, error):
+    """The themes with any --paper NAME=RRGGBB applied."""
+    by_name = dict(papers)
+    for name in by_name:
+        if name not in [t.name for t in themes]:
+            error(f"--paper names {name}, which isn't one of the themes")
+    return [standard(t.name, by_name[t.name]) if t.name in STANDARD and t.name in by_name
+            else Theme(t.name, t.scheme, t.contrast, t.tint, by_name.get(t.name, t.paper)) for t in themes]
+
+
+def paper_option(text):
+    name, sep, value = text.partition("=")
+    if not sep or not name:
+        raise argparse.ArgumentTypeError(f"{text!r} is not a paper like Dark=1C1C1E")
+    return name, hex_colour(value)
+
+
+def check_themes(themes, derive, error):
+    names = [t.name for t in themes]
+    for name in names:
+        if names.count(name) > 1:
+            error(f"two themes are called {name}")
+    if len(themes) < 2:
+        error("merging needs at least two builds")
+    if derive and names != ["Light", "Dark"]:
+        error("--derive works from a Light and a Dark build only")
+
+
+def merge_themes(builds, themes, derive):
+    """The merged document and a report per theme. Without `derive`, only
+    the themes the author built go in."""
+    if derive:
+        m = merge(builds[0], builds[1], organise=True)
+        return m, add_themes(m, themes[0].paper, themes[1].paper)
+    m = merge_builds(builds)
+    return m, add_themes(m, themes)
+
+
 def cmd_merge(args) -> int:
+    if args.builds and args.theme:
+        args.error("give the builds either as two files or with --theme, not both")
+    if args.builds:
+        if len(args.builds) != 2:
+            args.error("give a light and a dark build, or use --theme for each build")
+        themes = [standard("Light", args.light_paper), standard("Dark", args.dark_paper)]
+        files = list(args.builds)
+    else:
+        specs = [theme_spec(text, args.error) for text in args.theme]
+        themes, files = [t for t, _ in specs], [f for _, f in specs]
+    check_themes(themes, args.derive, args.error)
+    themes = with_papers(themes, args.paper, args.error)
+    for file in files:
+        if not file.is_file():
+            args.error(f"no such file: {file}")
     try:
-        m = merge(args.light, args.dark, organise=not args.only_dark)
+        m, reports = merge_themes(files, themes, args.derive)
     except core.MergeError as e:
         print(f"Can't merge: {e}", file=sys.stderr)
         return 1
-    reports = add_themes(m, args.light_paper, args.dark_paper, derived=not args.only_dark)
     write(m, args, reports)
     return 0
 
@@ -137,26 +227,36 @@ def cmd_typst(args) -> int:
     program = args.typst if args.typst is not None else shutil.which("typst")
     root = args.root or args.document.parent
     standards = [s for value in args.pdf_standard for s in value.split(",") if s]
+    if args.modes:
+        values = [v for v in args.modes.split(",") if v]
+        for value in values:
+            if value not in MODES:
+                args.error(f"mode {value} has no standard theme; the modes are {', '.join(MODES)}")
+        themes = [standard(MODES[value]) for value in values]
+    else:
+        values = [args.light, args.dark]
+        themes = [standard("Light", args.light_paper), standard("Dark", args.dark_paper)]
+    check_themes(themes, args.derive, args.error)
+    themes = with_papers(themes, args.paper, args.error)
     with tempfile.TemporaryDirectory() as tmp:
-        builds = {}
-        for mode, value in (("light", args.light), ("dark", args.dark)):
-            builds[mode] = pathlib.Path(tmp) / f"{mode}.pdf"
+        builds = []
+        for value in values:
+            builds.append(pathlib.Path(tmp) / f"{len(builds)}.pdf")
             inputs = {**dict(args.input), args.input_name: value}
             try:
-                compile_typst(args.document, builds[mode], root, inputs, args.font_path, args.ignore_system_fonts,
+                compile_typst(args.document, builds[-1], root, inputs, args.font_path, args.ignore_system_fonts,
                               standards, program)
             except TypstFailed as e:
                 print(f"Typst couldn't compile {args.document} with {args.input_name}={value}:\n{e}", file=sys.stderr)
                 return 1
         # Read the builds into memory: an open file can't be deleted on Windows,
         # and the merged Pdf outlives the temporary directory.
-        opened = {mode: pikepdf.open(io.BytesIO(path.read_bytes())) for mode, path in builds.items()}
+        opened = [pikepdf.open(io.BytesIO(path.read_bytes())) for path in builds]
         try:
-            m = merge(opened["light"], opened["dark"], organise=not args.only_dark)
+            m, reports = merge_themes(opened, themes, args.derive)
         except core.MergeError as e:
-            print(f"Can't merge the two builds: {e}", file=sys.stderr)
+            print(f"Can't merge the builds: {e}", file=sys.stderr)
             return 1
-        reports = add_themes(m, args.light_paper, args.dark_paper, derived=not args.only_dark)
         write(m, args, reports)
     return 0
 
@@ -243,13 +343,24 @@ def main(argv=None) -> int:
         parser.add_argument("--dark-paper", type=hex_colour, default=hex_colour("000000"), metavar="RRGGBB",
                             help="the paper colour for dark themes (default 000000)")
 
-    t = sub.add_parser("typst", help="compile a Typst document in light and dark modes and merge the two builds")
+    def authored(parser):
+        parser.add_argument("--paper", type=paper_option, action="append", default=[], metavar="NAME=RRGGBB",
+                            help="a theme's paper colour, by the theme's name; give it again for more")
+        parser.add_argument("--derive", action="store_true",
+                            help="also work out the standard themes from a Light and a Dark build "
+                                 "(by default only the themes you built go in)")
+        parser.add_argument("--only-dark", action="store_true", help=argparse.SUPPRESS)  # now the default
+        parser.set_defaults(error=parser.error)
+
+    t = sub.add_parser("typst", help="compile a Typst document once per theme and merge the builds")
     t.add_argument("document", type=pathlib.Path)
     t.add_argument("-o", "--output", type=pathlib.Path, required=True)
     t.add_argument("--input-name", default="mode", metavar="KEY",
                    help="the sys.inputs key the document reads to pick its mode (default mode)")
     t.add_argument("--light", default="light", metavar="VALUE", help="its value for the light build (default light)")
     t.add_argument("--dark", default="dark", metavar="VALUE", help="its value for the dark build (default dark)")
+    t.add_argument("--modes", metavar="MODE,MODE,...",
+                   help="one build per mode, the first the default, each a standard theme: " + ", ".join(MODES))
     t.add_argument("--input", type=key_value, action="append", default=[], metavar="KEY=VALUE",
                    help="another input for both builds; give it again for more")
     t.add_argument("--root", type=pathlib.Path, help="the project root (default: the document's folder)")
@@ -260,17 +371,20 @@ def main(argv=None) -> int:
     t.add_argument("--typst", metavar="PROGRAM",
                    help="the typst program to run (default: typst on the path, otherwise the typst Python package)")
     papers(t)
-    t.add_argument("--only-dark", action="store_true",
-                   help="add the dark build's theme only, not the standard themes")
+    authored(t)
     t.set_defaults(func=cmd_typst)
 
-    m = sub.add_parser("merge", help="merge a light and a dark build of one document into one themed PDF")
-    m.add_argument("light", type=pathlib.Path)
-    m.add_argument("dark", type=pathlib.Path)
+    m = sub.add_parser("merge", help="merge the builds of one document, one per theme, into one themed PDF")
+    m.add_argument("builds", type=pathlib.Path, nargs="*", metavar="light dark",
+                   help="a light and a dark build; for more themes use --theme")
+    m.add_argument("--theme", action="append", default=[], metavar="NAME=FILE",
+                   help="a build and the theme it is, the default first: a standard name (Light, Dark, "
+                        "'Light, more contrast', 'Dark, more contrast', Cream, Peach, Yellow, Turquoise), or "
+                        "another name with ;scheme=Light or ;scheme=Dark and optionally ;contrast=More, "
+                        ";tint=NAME and ;paper=RRGGBB")
     m.add_argument("-o", "--output", type=pathlib.Path, required=True)
     papers(m)
-    m.add_argument("--only-dark", action="store_true",
-                   help="add the dark build's theme only, not the standard themes")
+    authored(m)
     m.set_defaults(func=cmd_merge)
 
     a = sub.add_parser("add", help="add the standard themes, a dark one included, to a single PDF")

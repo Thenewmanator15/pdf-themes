@@ -7,7 +7,7 @@ from pikepdf import Name
 
 from pdfthemes import THEMES_KEY, describe, merge_builds, themes
 from pdfthemes.derive import add_themes
-from pdfthemes.themes import STANDARD, Theme, standard
+from pdfthemes.theme import STANDARD, Theme, standard
 
 BLACK, WHITE = "0 0 0", "1 1 1"
 
