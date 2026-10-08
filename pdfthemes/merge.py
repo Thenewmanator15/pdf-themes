@@ -883,7 +883,12 @@ class Merger:
         bpc = int(x.get("/BitsPerComponent", 8))
         if bpc not in (1, 2, 4, 8):
             return None
-        samples = _unpack(x.read_bytes(), int(x.Width), int(x.Height), bpc, C.components(space))
+        try:
+            # Specialised, so qpdf decodes RunLengthDecode as well.
+            data = x.read_bytes(decode_level=pikepdf.StreamDecodeLevel.specialized)
+        except pikepdf.PdfError:
+            return None
+        samples = _unpack(data, int(x.Width), int(x.Height), bpc, C.components(space))
         return None if samples is None else (samples, space, bpc)
 
     def merge_image(self, xl, xd, context="paint"):
@@ -1026,6 +1031,14 @@ class Merger:
     def merge_inline(self, a, b, R, res_d, context, out):
         il, idd = a.iimage, b.iimage
         same = il.unparse() == idd.unparse()
+        cs = il.obj.get("/ColorSpace")
+        if same and isinstance(cs, pikepdf.Name) and str(cs) not in DEVICE_SPACES:
+            # A named space lives in the resources, so it can differ between
+            # the builds while the image itself reads the same.
+            try:
+                same = canon(C.resolve(R.base, str(cs))) == canon(C.resolve(res_d, str(cs)))
+            except KeyError:
+                pass
         if same and (not self.organise or il.image_mask):
             self.keep_inline(a, R, out)
             return

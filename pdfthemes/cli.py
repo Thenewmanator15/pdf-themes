@@ -299,4 +299,9 @@ def main(argv=None) -> int:
     c.set_defaults(func=cmd_check)
 
     args = p.parse_args(argv)
+    # Reports quote the document's own text, which a Windows console or pipe
+    # (often cp1252) may not be able to show. Escape it rather than stop.
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(errors="backslashreplace")
     return args.func(args)

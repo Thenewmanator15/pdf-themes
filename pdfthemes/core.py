@@ -92,7 +92,9 @@ class Grafter:
         self.memo: dict[tuple[int, int], object] = {}
         self.streams: dict[tuple, pikepdf.Stream] = {}
         for obj in target.objects:
-            if isinstance(obj, pikepdf.Stream):
+            # Not the file's own streams: a cross-reference stream points at
+            # the catalog, so its key would take in the whole document.
+            if isinstance(obj, pikepdf.Stream) and obj.get("/Type") not in ("/XRef", "/ObjStm"):
                 self.streams.setdefault(self._stream_key(obj), obj)
 
     @staticmethod

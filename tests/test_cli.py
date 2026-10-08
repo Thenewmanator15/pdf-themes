@@ -110,3 +110,16 @@ def test_typst_command_reports_a_typst_error_without_a_traceback(tmp_path, monke
     err = capsys.readouterr().err
     assert "Typst couldn't compile" in err and "Traceback" not in err
     assert not (tmp_path / "out.pdf").exists()
+
+
+def test_text_the_console_cant_show_is_escaped(monkeypatch):
+    # A Windows console or pipe is often cp1252, and a report quotes the
+    # document's own text, which can be in any script.
+    import io
+    from pdfthemes import cli
+    raw = io.BytesIO()
+    monkeypatch.setattr(sys, "stdout", io.TextIOWrapper(raw, encoding="cp1252"))
+    monkeypatch.setattr(cli, "cmd_info", lambda args: print(chr(0x65E5)) or 0)
+    assert main(["info", "any.pdf"]) == 0
+    sys.stdout.flush()
+    assert raw.getvalue().strip() == b"\\u65e5"
