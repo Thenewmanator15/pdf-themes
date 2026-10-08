@@ -29,8 +29,11 @@ that doesn't support themes ignores them and shows the default colours.
   streams use for solid colours, for example `/Th0 cs 15 sc`.
 - **Replacement**: a pair of indirect objects. While the theme is shown, the
   first object is drawn as the second.
+- **Authored theme**: a theme the author built, with its own colours for
+  text, charts and pictures.
 - **Derived theme**: an alternate theme the writer worked out from the default
-  theme rather than one the author designed.
+  theme rather than one the author built. A fallback for a file with no
+  source to build from.
 - **Contrast ratio**: as WCAG 2.2 defines it, from the relative luminance of
   two colours. Success criteria are cited by number and name, for example
   1.4.3 Contrast (Minimum).
@@ -110,9 +113,14 @@ document to the next. `Name` is for people and may be translated.
   over its own grey space in which each entry is the grey of its own index.
   It draws exactly as before, its data isn't changed, and a theme replaces the
   palette. Scans that share a colour space and bit depth can share a palette.
-- A writer should offer the standard themes in section 7, deriving any the
-  author didn't design, and should leave out a derived theme that fails its
-  check or that draws every page exactly as the default theme does.
+- The themes in a file should be ones its author built: the document made
+  once per theme, from one source, with every build drawing the same text and
+  shapes. A writer should make this easy, and should let the author look at
+  each theme before the file goes out.
+- A writer may derive a theme only where the author asks for it or there is
+  no source to build from, and should leave out a derived theme that fails
+  its check or that draws every page exactly as the default theme does.
+- A writer shall not change a colour in an authored theme.
 
 ## 7. Standard themes
 
@@ -129,6 +137,9 @@ select foreground and background colours. A reader that recolours the page
 meets that today, at the cost of the design. The standard themes give the
 person a set to select from in which each one has been checked.
 
+This is the set an author is asked to build. A file need not carry all of
+them, and may carry others.
+
 This draft doesn't specify how a writer works out a derived theme, only its
 labels and the check it shall pass. The proof of concept's method is in
 `pdfthemes/derive.py`.
@@ -137,6 +148,9 @@ labels and the check it shall pass. The proof of concept's method is in
 
 A writer should check each theme before writing it, at least the contrast of
 all text against what is drawn behind it, using the WCAG 2.2 contrast ratio.
+For an authored theme the writer reports what fails, with the page and the
+text, and leaves the fixing to the author. It writes the theme either way,
+without `Checked` if it failed.
 The check should be made on the drawn page, so it sees gradients, images and
 transparency as a reader shows them. Themes with `Contrast` `More` should be
 held to 1.4.6 Contrast (Enhanced) (7:1, level AAA), others to 1.4.3 Contrast

@@ -1,16 +1,19 @@
 # pdf-themes
 
-Colour themes for PDF: one file, its content stored once, with light, dark,
-higher contrast and tinted themes, each checked before it goes in.
+Colour themes for PDF: one file, its content stored once, with the light,
+dark, higher contrast and tinted themes its author built, each checked before
+it goes in.
 
 PDF readers that offer a dark mode make it up themselves. They invert the page
 or swap its colours, which spoils colour designs and charts, because the file
 never says what each colour is for. Readers who need tinted backgrounds or
-more contrast get the same treatment. This project tries another way. Every
-colour in the file becomes an entry in a small palette, and a theme is another
-set of palettes, plus any gradient, opacity or colour value that also changes.
-A reader that knows about themes swaps those few objects. A reader that
-doesn't shows the default colours, exactly as today.
+more contrast get the same treatment. This project tries another way. The
+author builds the document once per theme, with its charts and pictures
+adjusted for each, and the builds are merged into one file. Every colour in
+the file becomes an entry in a small palette, and a theme is another set of
+palettes, plus any gradient, opacity or colour value that also changes. A
+reader that knows about themes swaps those few objects. A reader that doesn't
+shows the default colours, exactly as today.
 
 Choosing a theme is a view setting, like draft mode: it changes how the pages
 are drawn, never what they say.
@@ -20,21 +23,45 @@ specification is in [SPEC.md](SPEC.md).
 
 ## Results
 
-Three documents: my CV and a test page, each built twice with Typst (light and
-dark), and a test document written to use every way a PDF can carry colour
-(`tools/corpus.py`, six pages). Every file was saved the same way, with
-compressed object streams, so the sizes compare fairly.
+Every file here was saved the same way, with compressed object streams, so
+the sizes compare fairly.
 
-| | CV, 2 pages | Test page | Test document, 6 pages |
-| --- | --- | --- | --- |
-| Light build | 51,273 bytes | 187,564 bytes | 135,140 bytes |
-| Themed file, Light and Dark | 51,902 (+1.2%) | 185,965 (−0.9%) | 186,480 (+38%) |
-| Themed file, all 8 themes | 52,880 (+3.1%) | 186,382 (−0.6%) | 198,557 (+47%) |
-| Both builds as layers, as an author can do today | 64,945 (+26.7%) | 192,715 (+2.7%) | 193,597 (+43%) |
-| Light theme against the light build | identical | identical | identical |
-| Dark theme against the dark build | identical | identical | identical |
-| Colour values outside the page (annotations, fields, bookmarks, tags) | none in the file | none in the file | 42 of 42 the same |
-| Themes that passed their contrast check | 8 of 8 | 8 of 8 | 8 of 8 |
+Themes built from source, one build per theme:
+
+| | Theme lab, 1 page of plots | Objects test, 31 pages |
+| --- | --- | --- |
+| Builds | 8, one per standard theme | 2, light and dark |
+| Light build | 38,318 bytes | 1,900,431 bytes |
+| Themed file, Light and Dark | 38,801 (+1.3%) | 1,943,737 (+2.3%) |
+| Themed file, all 8 themes | 39,718 (+3.7%) | |
+| The builds as separate files | 304,725 | 3,800,176 |
+| Each theme against its own build, in PDFium | identical | identical but for page 2 |
+| Themes that passed their contrast check | 8 of 8 | see below |
+
+The theme lab (`tests/theme-lab`) is a Typst document with Lilaq plots. It
+sets its paper, text and rule colours per theme and fits each plot's series
+colours to the paper. The objects test (`tests/objects`) holds every kind of
+object a PDF 2.0 file can contain. Page 2 is its colour spaces page: colours
+written as decimals in Lab, calibrated and ICC spaces go through 8-bit
+palettes, and land up to 4 levels out of 255 away in light and 1 in dark. It
+also has text that is faint on purpose, so neither of its themes is marked as
+checked.
+
+The first prototype measured a test page built twice with Typst (light and
+dark) and a test document written to use every way a PDF can carry colour
+(`tools/corpus.py`, six pages). In these the six themes beyond light and dark
+were worked out by the tool:
+
+| | Test page | Test document, 6 pages |
+| --- | --- | --- |
+| Light build | 187,564 bytes | 135,140 bytes |
+| Themed file, Light and Dark | 185,965 (−0.9%) | 186,480 (+38%) |
+| Themed file, all 8 themes | 186,382 (−0.6%) | 198,557 (+47%) |
+| Both builds as layers, as an author can do today | 192,715 (+2.7%) | 193,597 (+43%) |
+| Light theme against the light build | identical | identical |
+| Dark theme against the dark build | identical | identical |
+| Colour values outside the page (annotations, fields, bookmarks, tags) | none in the file | 42 of 42 the same |
+| Themes that passed their contrast check | 8 of 8 | 8 of 8 |
 
 "Identical" means every pixel, at 144 dpi, in Poppler 24.02, MuPDF 1.28.2 and
 PDFium 153 (the engine in Chrome). There's one exception, and it's PDFium's:
@@ -50,9 +77,6 @@ themed file costs a few per cent.
 Organising a single build (no dark build at all) and adding the standard
 themes took the test document from 135,140 to 160,068 bytes, with the default
 look unchanged pixel for pixel. `results/` has every number and contact sheets.
-The CV figures come from an earlier run that saved files with slightly larger
-metadata; its build and themed files were saved the same way as each other,
-so the percentages still compare.
 
 Scanned pages work too. `tools/scan.py` draws the test page at 150 dpi in
 grey and saves it as a JPEG inside a PDF, as a scanner would, so the file has
@@ -73,7 +97,8 @@ python tools/scan.py           # a scanned page, themed from the scan alone
 The command line:
 
 ```
-pdf-themes typst document.typ -o themed.pdf --dark-paper 1C1C1E
+pdf-themes typst document.typ -o themed.pdf --modes light,dark,light-contrast,cream
+pdf-themes merge --theme Light=light.pdf --theme Dark=dark.pdf --theme Cream=cream.pdf -o themed.pdf
 pdf-themes merge light.pdf dark.pdf -o themed.pdf --dark-paper 1C1C1E
 pdf-themes add document.pdf -o themed.pdf
 pdf-themes info themed.pdf
@@ -81,16 +106,28 @@ pdf-themes apply themed.pdf --theme Cream -o cream.pdf
 pdf-themes check document.pdf
 ```
 
-`typst` compiles a Typst document twice, with `--input mode=light` and
-`--input mode=dark`, and merges the two builds. It runs the `typst` program if
-it's installed, or the typst Python package, and passes on `--root`,
-`--font-path`, `--pdf-standard` and any other `--input`. `merge` takes two
-builds that draw the same shapes and differ only in paint. `add` takes a
-single PDF and works out every theme from it, Dark included. All three add
-the standard themes by default, check each one by drawing it, and leave out
-any that fail or that would draw every page exactly like the default. `apply`
-does what a theme-aware reader would and saves the result as a plain PDF, so
-any reader can show it.
+`typst` compiles a Typst document once per mode, with `--input mode=light`,
+`--input mode=dark` and so on, and merges the builds. Each mode is a standard
+theme: light, dark, light-contrast, dark-contrast, cream, peach, yellow and
+turquoise. Without `--modes` it builds light and dark. It runs the `typst`
+program if it's installed, or the typst Python package, and passes on
+`--root`, `--font-path`, `--pdf-standard` and any other `--input`.
+
+`merge` takes one build per theme, the default first. The builds must draw
+the same shapes and text and differ only in paint. A standard name brings its
+labels and paper colour, `--paper Dark=1C1C1E` changes a paper, and any other
+name gives its own labels: `--theme "Night=night.pdf;scheme=Dark;paper=0B0C10"`.
+
+Both commands put in the themes you built and nothing else. Each theme is
+drawn and its text contrast measured. One that passes is marked as checked.
+One that fails is still written, unmarked, with a list of the text that fell
+short, and its colours are left alone: fixing it is for you, in the source.
+
+`--derive` is the fallback for when you only have a light and a dark build: it
+works the other six standard themes out from them and leaves out any that
+fail. `add` does the same from a single PDF with no source at all, Dark
+included. `apply` does what a theme-aware reader would and saves the result
+as a plain PDF, so any reader can show it.
 
 The live demo in `demo/` is a viewer that loads the themes stored in a PDF.
 It lists the themes it finds in the file, shows the one that matches the
@@ -107,7 +144,7 @@ cd demo && python -m http.server 8000
 | Theme | Labels | Who it's for |
 | --- | --- | --- |
 | Light | ColorScheme Light | The author's design. |
-| Dark | ColorScheme Dark | Light sensitivity, glare, reading at night, some low vision. The author's dark build if there is one, otherwise worked out from the light one. |
+| Dark | ColorScheme Dark | Light sensitivity, glare, reading at night, some low vision. |
 | Light, more contrast | Light, Contrast More | Low vision. Enhanced contrast: text is held to 7:1 (WCAG 1.4.6 Contrast (Enhanced), level AAA). |
 | Dark, more contrast | Dark, Contrast More | Low vision with light sensitivity. Also 7:1. |
 | Cream, Peach, Yellow, Turquoise | Light, Tint | Many readers with dyslexia or visual stress find a tinted background easier, which is what a coloured overlay is for. People differ in which tint helps, so there's a range. |
@@ -119,13 +156,15 @@ still win when they're turned on. Offering a set of checked themes is a way
 to meet WCAG 1.4.8 Visual Presentation, which asks that the person can select
 foreground and background colours.
 
-The labels let a reader remember a person's choice from one document to the
-next, and match it to the system setting. The research behind the list is in
-the proposal.
+This is the set an author is asked to build. The labels let a reader
+remember a person's choice from one document to the next, and match it to the
+system setting. The research behind the list is in the proposal.
 
 ## How it works
 
-`merge` walks the content streams of the two builds side by side.
+`merge` walks the content streams of two builds side by side. With more than
+two, it merges the first two, then merges each further build into the result
+and carries the earlier themes' replacements across.
 
 - **Colours.** Every solid colour, in any colour space, becomes an entry in an
   Indexed palette. The page then says `/Th0 cs 15 sc` where it said
@@ -181,8 +220,10 @@ kept without a `Checked` entry.
 ## Making a document themeable
 
 Build it once per theme with the same layout. In Typst that's an input:
-`typst compile --input mode=dark`, and `pdf-themes typst` runs both builds and
-merges them. Then make sure both builds draw the same shapes:
+`typst compile --input mode=dark`, and `pdf-themes typst --modes ...` runs
+every build and merges them. Set each theme's colours in the source, charts
+and pictures included, as `tests/theme-lab/theme-lab.typ` does. Then make
+sure every build draws the same shapes and the same text:
 
 - if one theme fills something with a gradient, the other must use a gradient
   too (one with every stop the same colour works);
@@ -191,14 +232,22 @@ merges them. Then make sure both builds draw the same shapes:
   fill's corner radius, so this matters even when nothing else changes;
 - the same goes for glows and other layered effects.
 
-With no dark build, `pdf-themes add` works one out.
+A build that prints its own theme's name, or a figure worked out from its
+colours, has different text from the others and won't merge.
+
+With no source to build from, `pdf-themes add` works the themes out.
 
 ## Limits
 
 - Derived themes read every three-channel ICC profile as sRGB and write their
   colours in sRGB. Author-made themes keep wide-gamut colours such as Display
   P3 exactly; derived ones would lose the most saturated.
-- A gradient or image that differs between builds is swapped whole.
+- A gradient or image that differs between builds is swapped whole. An image
+  with the same shapes in the first two builds is stored once with a palette
+  for each, but a third theme that changes it gets its own copy.
+- Worked-out themes are fragile on a large file. On the 31-page objects test
+  all six fail their check and are left out, where on its first page alone
+  all six pass. Themes built from source don't have this problem.
 - From a single build, an image is recoloured only when it looks like a
   drawing on white (a chart, a diagram) or a grey scan of a page, never a
   photo.
