@@ -1,0 +1,1635 @@
+{
+ "legacy": {
+  "themes": {
+   "key": "/XXThemes",
+   "themes": [
+    {
+     "name": "Light",
+     "default": true,
+     "color_scheme": "Light",
+     "contrast": "",
+     "tint": "",
+     "paper": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "checked": {
+      "Criterion": "1.4.3 Contrast (Minimum)",
+      "Level": "AA",
+      "Standard": "WCAG 2.2"
+     }
+    },
+    {
+     "name": "Dark",
+     "default": false,
+     "color_scheme": "Dark",
+     "contrast": "",
+     "tint": "",
+     "paper": [
+      0.0941,
+      0.098,
+      0.1098
+     ],
+     "checked": {
+      "Criterion": "1.4.3 Contrast (Minimum)",
+      "Level": "AA",
+      "Standard": "WCAG 2.2"
+     },
+     "replace": [
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#FFFFFF",
+        "#1B1D21",
+        "#5D636B",
+        "#F3F4F6",
+        "#C9CDD3",
+        "#B4530E",
+        "#FFFFFF",
+        "#1F5FD1",
+        "#1F5FD1",
+        "#1565C0"
+       ],
+       "theme_colours": [
+        "#18191C",
+        "#E8EAED",
+        "#A3A9B1",
+        "#222429",
+        "#454952",
+        "#FFAB70",
+        "#18191C",
+        "#8AB4FF",
+        "#8AB4FF",
+        "#7CB7FF"
+       ]
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "text style"
+      }
+     ]
+    }
+   ]
+  },
+  "stats": {
+   "bookmark colours": 18,
+   "forms merged": 1,
+   "values (colour)": 12,
+   "values (da)": 6,
+   "values (outline)": 3,
+   "values (style)": 2
+  },
+  "notes": [],
+  "pixels_light": "58c1e45391931f9a8a3f62cf7468f20e2826f6d4b3344228bc5317bf5fa703e1",
+  "pixels_dark": "97781744ac4464a555013d864f348065f32b025c99fb0233fd7be2de3b45bdd0"
+ },
+ "portfolio": {
+  "themes": {
+   "key": "/XXThemes",
+   "themes": [
+    {
+     "name": "Light",
+     "default": true,
+     "color_scheme": "Light",
+     "contrast": "",
+     "tint": "",
+     "paper": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "checked": {
+      "Criterion": "1.4.3 Contrast (Minimum)",
+      "Level": "AA",
+      "Standard": "WCAG 2.2"
+     }
+    },
+    {
+     "name": "Dark",
+     "default": false,
+     "color_scheme": "Dark",
+     "contrast": "",
+     "tint": "",
+     "paper": [
+      0.0941,
+      0.098,
+      0.1098
+     ],
+     "checked": {
+      "Criterion": "1.4.3 Contrast (Minimum)",
+      "Level": "AA",
+      "Standard": "WCAG 2.2"
+     },
+     "replace": [
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#FFFFFF",
+        "#1B1D21",
+        "#5D636B",
+        "#C9CDD3",
+        "#F3F4F6",
+        "#C9CDD3",
+        "#1B1D21",
+        "#5D636B"
+       ],
+       "theme_colours": [
+        "#18191C",
+        "#E8EAED",
+        "#A3A9B1",
+        "#454952",
+        "#222429",
+        "#454952",
+        "#E8EAED",
+        "#A3A9B1"
+       ]
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      }
+     ]
+    }
+   ]
+  },
+  "stats": {
+   "bookmark colours": 1,
+   "values (colour)": 3,
+   "values (outline)": 1,
+   "values (text)": 2
+  },
+  "notes": [],
+  "pixels_light": "2ce90a82b0d2bba616e32cd4b09cf9ff37d62bb6b2e2343bd3b604e6fb324047",
+  "pixels_dark": "b89f061bb968b92000de9ba212fba1b90dd26e1cbea56f32cff1bff4d83143cb"
+ },
+ "figures/mpl-lines": {
+  "themes": {
+   "key": "/XXThemes",
+   "themes": [
+    {
+     "name": "Light",
+     "default": true,
+     "color_scheme": "Light",
+     "contrast": "",
+     "tint": "",
+     "paper": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "checked": {
+      "Criterion": "1.4.3 Contrast (Minimum)",
+      "Level": "AA",
+      "Standard": "WCAG 2.2"
+     }
+    },
+    {
+     "name": "Dark",
+     "default": false,
+     "color_scheme": "Dark",
+     "contrast": "",
+     "tint": "",
+     "paper": [
+      0.0941,
+      0.098,
+      0.1098
+     ],
+     "checked": {
+      "Criterion": "1.4.3 Contrast (Minimum)",
+      "Level": "AA",
+      "Standard": "WCAG 2.2"
+     },
+     "replace": [
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#F3F4F6",
+        "#C9CDD3",
+        "#5D636B",
+        "#5D636B",
+        "#1B1D21",
+        "#1F5FD1",
+        "#C62828",
+        "#2E7D32",
+        "#D7600A"
+       ],
+       "theme_colours": [
+        "#222429",
+        "#454952",
+        "#A3A9B1",
+        "#A3A9B1",
+        "#E8EAED",
+        "#8AB4FF",
+        "#FF8A80",
+        "#81C995",
+        "#FFAB70"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "stats": {},
+  "notes": [],
+  "pixels_light": "3f17376519112a70932f86c8e0fb64a0a5fb58609e635c9dfc6ec732dd0d8a6e",
+  "pixels_dark": "58fe50e39bf19a80fac625ed76e0dedab81b6e71a28da800c1a546e5583a7890"
+ },
+ "figures/mpl-heat_div": {
+  "themes": {
+   "key": "/XXThemes",
+   "themes": [
+    {
+     "name": "Light",
+     "default": true,
+     "color_scheme": "Light",
+     "contrast": "",
+     "tint": "",
+     "paper": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "checked": {
+      "Criterion": "1.4.3 Contrast (Minimum)",
+      "Level": "AA",
+      "Standard": "WCAG 2.2"
+     }
+    },
+    {
+     "name": "Dark",
+     "default": false,
+     "color_scheme": "Dark",
+     "contrast": "",
+     "tint": "",
+     "paper": [
+      0.0941,
+      0.098,
+      0.1098
+     ],
+     "checked": {
+      "Criterion": "1.4.3 Contrast (Minimum)",
+      "Level": "AA",
+      "Standard": "WCAG 2.2"
+     },
+     "replace": [
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#F3F4F6",
+        "#5D636B",
+        "#5D636B",
+        "#1B1D21"
+       ],
+       "theme_colours": [
+        "#222429",
+        "#A3A9B1",
+        "#A3A9B1",
+        "#E8EAED"
+       ]
+      },
+      {
+       "kind": "image",
+       "size": [
+        311,
+        206
+       ]
+      },
+      {
+       "kind": "image",
+       "size": [
+        17,
+        328
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "stats": {
+   "images swapped whole": 2
+  },
+  "notes": [],
+  "pixels_light": "0cb328570aa904fc4353b97cde68ee34450021548b2af714c8f69e8f8c4b55c4",
+  "pixels_dark": "aa811b346c97dc203b4b31a5b2082ce396da7d1c52fcfc51591193912dc177e9"
+ },
+ "figures/pgf_surface": {
+  "themes": {
+   "key": "/XXThemes",
+   "themes": [
+    {
+     "name": "Light",
+     "default": true,
+     "color_scheme": "Light",
+     "contrast": "",
+     "tint": "",
+     "paper": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "checked": {
+      "Criterion": "1.4.3 Contrast (Minimum)",
+      "Level": "AA",
+      "Standard": "WCAG 2.2"
+     }
+    },
+    {
+     "name": "Dark",
+     "default": false,
+     "color_scheme": "Dark",
+     "contrast": "",
+     "tint": "",
+     "paper": [
+      0.0941,
+      0.098,
+      0.1098
+     ],
+     "checked": {
+      "Criterion": "1.4.3 Contrast (Minimum)",
+      "Level": "AA",
+      "Standard": "WCAG 2.2"
+     },
+     "replace": [
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#F3F4F6",
+        "#5D636B",
+        "#1B1D21",
+        "#1565C0",
+        "#1565C0"
+       ],
+       "theme_colours": [
+        "#222429",
+        "#A3A9B1",
+        "#E8EAED",
+        "#7CB7FF",
+        "#7CB7FF"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "stats": {},
+  "notes": [],
+  "pixels_light": "e348f740849f3a7a4e4defedc21dc805025398597012a00c0f35b3536a71edc2",
+  "pixels_dark": "48c6e4eaa733a2676a43d97cf2c0267c24e746e102c5ba162f71d8ad1eac022a"
+ },
+ "objects": {
+  "themes": {
+   "key": "/XXThemes",
+   "themes": [
+    {
+     "name": "Light",
+     "default": true,
+     "color_scheme": "Light",
+     "contrast": "",
+     "tint": "",
+     "paper": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "checked": null
+    },
+    {
+     "name": "Dark",
+     "default": false,
+     "color_scheme": "Dark",
+     "contrast": "",
+     "tint": "",
+     "paper": [
+      0.0941,
+      0.098,
+      0.1098
+     ],
+     "checked": null,
+     "replace": [
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#EDF9F7",
+        "#ECF8F7",
+        "#EAF8F6",
+        "#E9F7F5",
+        "#E7F7F5",
+        "#E6F6F4",
+        "#E4F6F4",
+        "#E3F5F3",
+        "#E1F4F2",
+        "#E0F4F2",
+        "#DEF3F1",
+        "#DDF3F0",
+        "#DCF2F0",
+        "#DAF2EF",
+        "#D9F1EE",
+        "#D7F1EE",
+        "#D6F0ED",
+        "#D4F0ED",
+        "#D3EFEC",
+        "#D2EFEB",
+        "#D0EEEB",
+        "#CFEEEA",
+        "#CEEDE9",
+        "#82CEC5",
+        "#81CDC4",
+        "#80CDC4",
+        "#7ECCC3",
+        "#7DCCC2",
+        "#7CCBC2",
+        "#7BCAC1",
+        "#7ACAC1",
+        "#79C9C0",
+        "#78C9BF",
+        "#77C8BF",
+        "#76C8BE",
+        "#74C7BE",
+        "#73C7BD",
+        "#72C6BD",
+        "#71C6BC",
+        "#70C5BB",
+        "#6FC5BB",
+        "#6EC4BA",
+        "#6DC4BA",
+        "#6CC3B9",
+        "#6BC3B8",
+        "#6AC2B8",
+        "#69C2B7",
+        "#68C1B7",
+        "#67C0B6",
+        "#66C0B5",
+        "#65BFB5",
+        "#64BFB4",
+        "#63BEB4",
+        "#62BEB3",
+        "#61BDB3",
+        "#60BDB2",
+        "#5EBCB1",
+        "#5DBCB1",
+        "#5DBBB0",
+        "#5CBBB0",
+        "#5BBAAF",
+        "#5ABAAF",
+        "#59B9AE",
+        "#58B9AD",
+        "#57B8AD",
+        "#56B8AC",
+        "#55B7AC",
+        "#54B6AB",
+        "#53B6AA",
+        "#52B5AA",
+        "#51B5A9",
+        "#50B4A9",
+        "#4FB4A8",
+        "#4EB3A8",
+        "#4DB3A7",
+        "#4CB2A6",
+        "#4BB2A6",
+        "#4AB1A5",
+        "#49B1A5",
+        "#49B0A4",
+        "#48B0A4",
+        "#47AFA3",
+        "#46AFA2",
+        "#45AEA2",
+        "#44AEA1",
+        "#43ADA1",
+        "#42ACA0",
+        "#41ACA0",
+        "#41AB9F",
+        "#40AB9F",
+        "#3FAA9E",
+        "#3EAA9D",
+        "#3DA99D",
+        "#3CA99C",
+        "#3BA89C",
+        "#3BA89B",
+        "#3AA79B",
+        "#39A79A",
+        "#38A699",
+        "#37A699",
+        "#36A598",
+        "#36A598",
+        "#35A497",
+        "#34A497",
+        "#33A396",
+        "#32A396",
+        "#32A295",
+        "#31A194",
+        "#30A194",
+        "#2FA093",
+        "#2EA093",
+        "#2E9F92",
+        "#2D9F92",
+        "#2C9E91",
+        "#2B9E91",
+        "#2B9D90",
+        "#2A9D8F",
+        "#299C8F",
+        "#289C8E",
+        "#289B8E",
+        "#279B8D",
+        "#269A8D",
+        "#259A8C",
+        "#25998C",
+        "#24998B",
+        "#23988A",
+        "#22978A",
+        "#229789",
+        "#219689",
+        "#209688",
+        "#209588",
+        "#1F9587",
+        "#1E9487",
+        "#1E9486",
+        "#1D9386",
+        "#1C9385",
+        "#1C9284",
+        "#1B9284",
+        "#1A9183",
+        "#1A9183",
+        "#199082",
+        "#189082",
+        "#188F81",
+        "#178F81"
+       ],
+       "theme_colours": [
+        "#F6FDFC",
+        "#F6FDFC",
+        "#F5FDFB",
+        "#F4FCFB",
+        "#F3FCFB",
+        "#F3FCFB",
+        "#F2FCFA",
+        "#F1FCFA",
+        "#F1FCFA",
+        "#F0FBFA",
+        "#EFFBF9",
+        "#EEFBF9",
+        "#EEFBF9",
+        "#EDFBF9",
+        "#ECFBF8",
+        "#ECFAF8",
+        "#EBFAF8",
+        "#EAFAF8",
+        "#EAFAF7",
+        "#E9FAF7",
+        "#E8F9F7",
+        "#E7F9F7",
+        "#E7F9F6",
+        "#BEEFE8",
+        "#BDEFE7",
+        "#BDEEE7",
+        "#BCEEE7",
+        "#BBEEE7",
+        "#BBEEE6",
+        "#BAEEE6",
+        "#B9EEE6",
+        "#B9EDE6",
+        "#B8EDE6",
+        "#B7EDE5",
+        "#B7EDE5",
+        "#B6EDE5",
+        "#B6EDE5",
+        "#B5ECE4",
+        "#B4ECE4",
+        "#B4ECE4",
+        "#B3ECE4",
+        "#B2ECE3",
+        "#B2ECE3",
+        "#B1EBE3",
+        "#B0EBE3",
+        "#B0EBE2",
+        "#AFEBE2",
+        "#AEEBE2",
+        "#AEEAE2",
+        "#ADEAE1",
+        "#ADEAE1",
+        "#ACEAE1",
+        "#ABEAE1",
+        "#ABEAE0",
+        "#AAE9E0",
+        "#A9E9E0",
+        "#A9E9E0",
+        "#A8E9DF",
+        "#A7E9DF",
+        "#A7E9DF",
+        "#A6E8DF",
+        "#A6E8DF",
+        "#A5E8DE",
+        "#A4E8DE",
+        "#A4E8DE",
+        "#A3E8DE",
+        "#A2E7DD",
+        "#A2E7DD",
+        "#A1E7DD",
+        "#A1E7DD",
+        "#A0E7DC",
+        "#9FE7DC",
+        "#9FE6DC",
+        "#9EE6DC",
+        "#9DE6DB",
+        "#9DE6DB",
+        "#9CE6DB",
+        "#9CE5DB",
+        "#9BE5DA",
+        "#9AE5DA",
+        "#9AE5DA",
+        "#99E5DA",
+        "#99E5DA",
+        "#98E4D9",
+        "#97E4D9",
+        "#97E4D9",
+        "#96E4D9",
+        "#95E4D8",
+        "#95E4D8",
+        "#94E3D8",
+        "#94E3D8",
+        "#93E3D7",
+        "#92E3D7",
+        "#92E3D7",
+        "#91E3D7",
+        "#91E2D6",
+        "#90E2D6",
+        "#8FE2D6",
+        "#8FE2D6",
+        "#8EE2D6",
+        "#8EE2D5",
+        "#8DE1D5",
+        "#8CE1D5",
+        "#8CE1D5",
+        "#8BE1D4",
+        "#8BE1D4",
+        "#8AE0D4",
+        "#89E0D4",
+        "#89E0D3",
+        "#88E0D3",
+        "#88E0D3",
+        "#87E0D3",
+        "#87DFD3",
+        "#86DFD2",
+        "#85DFD2",
+        "#85DFD2",
+        "#84DFD2",
+        "#84DFD1",
+        "#83DED1",
+        "#82DED1",
+        "#82DED1",
+        "#81DED0",
+        "#81DED0",
+        "#80DED0",
+        "#7FDDD0",
+        "#7FDDCF",
+        "#7EDDCF",
+        "#7EDDCF",
+        "#7DDDCF",
+        "#7DDCCF",
+        "#7CDCCE",
+        "#7BDCCE",
+        "#7BDCCE",
+        "#7ADCCE",
+        "#7ADCCD",
+        "#79DBCD",
+        "#79DBCD",
+        "#78DBCD",
+        "#77DBCC",
+        "#77DBCC",
+        "#76DBCC",
+        "#76DACC",
+        "#75DACC",
+        "#75DACB"
+       ]
+      },
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#009486",
+        "#003C6B"
+       ],
+       "theme_colours": [
+        "#22DCCE",
+        "#5E69C2"
+       ]
+      },
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#00796B",
+        "#8FAA8A",
+        "#D7600A",
+        "#3C6536"
+       ],
+       "theme_colours": [
+        "#5ED3C2",
+        "#CADAC4",
+        "#FFAB70",
+        "#99B78D"
+       ]
+      },
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#A6DDD7",
+        "#00796B",
+        "#5DBCB1",
+        "#00796B"
+       ],
+       "theme_colours": [
+        "#D2F4EF",
+        "#5ED3C2",
+        "#A8E9DF",
+        "#5ED3C2"
+       ]
+      },
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#C62828",
+        "#1B1D21",
+        "#D7600A",
+        "#2E7D32",
+        "#1565C0",
+        "#6A1B9A"
+       ],
+       "theme_colours": [
+        "#FF8A80",
+        "#E8EAED",
+        "#FFAB70",
+        "#81C995",
+        "#7CB7FF",
+        "#D7A6FF"
+       ]
+      },
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#B63831",
+        "#1B1D21",
+        "#C8672A",
+        "#457B3B",
+        "#3063BA",
+        "#612194"
+       ],
+       "theme_colours": [
+        "#F09084",
+        "#E8EAED",
+        "#F3AF7A",
+        "#91C799",
+        "#89B5F9",
+        "#CFA8F9"
+       ]
+      },
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#C62828",
+        "#1B1D21",
+        "#D7600A",
+        "#2E7D32",
+        "#1565C0",
+        "#6A1B9A"
+       ],
+       "theme_colours": [
+        "#FF8A80",
+        "#E8EAED",
+        "#FFAB70",
+        "#81C995",
+        "#7CB7FF",
+        "#D7A6FF"
+       ]
+      },
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#C62928",
+        "#1B1D21",
+        "#D76009",
+        "#2F7D31",
+        "#1465C0",
+        "#6B1B9A"
+       ],
+       "theme_colours": [
+        "#FF8980",
+        "#E8EAED",
+        "#FFAC71",
+        "#81C995",
+        "#7BB7FF",
+        "#D8A6FF"
+       ]
+      },
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#C62828",
+        "#1B1D21",
+        "#D7600A",
+        "#2E7D32",
+        "#1565C0",
+        "#6A1B9A"
+       ],
+       "theme_colours": [
+        "#FF8A80",
+        "#E8EAED",
+        "#FFAB70",
+        "#81C995",
+        "#7CB7FF",
+        "#D7A6FF"
+       ]
+      },
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#1D1D1D",
+        "#FFFFFF",
+        "#626262",
+        "#656565",
+        "#CDCDCD",
+        "#CDCDCD",
+        "#656565",
+        "#626262",
+        "#FFFFFF",
+        "#1D1D1D"
+       ],
+       "theme_colours": [
+        "#EAEAEA",
+        "#191919",
+        "#A8A8A8",
+        "#B3B3B3",
+        "#494949",
+        "#494949",
+        "#B3B3B3",
+        "#A8A8A8",
+        "#191919",
+        "#EAEAEA"
+       ]
+      },
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#C62828",
+        "#FFFFFF",
+        "#D7600A",
+        "#2E7D32",
+        "#1565C0",
+        "#6A1B9A",
+        "#00FFFF",
+        "#F3F4F6",
+        "#D7600A",
+        "#1B1D21"
+       ],
+       "theme_colours": [
+        "#FF8A80",
+        "#18191C",
+        "#FFAB70",
+        "#81C995",
+        "#7CB7FF",
+        "#D7A6FF",
+        "#72FFFF",
+        "#222429",
+        "#FFAB70",
+        "#E8EAED"
+       ]
+      },
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#1D1D1D",
+        "#FFFFFF",
+        "#626262",
+        "#656565",
+        "#CDCDCD",
+        "#CDCDCD",
+        "#656565",
+        "#626262",
+        "#FFFFFF",
+        "#1D1D1D",
+        "#F4F4F4"
+       ],
+       "theme_colours": [
+        "#EAEAEA",
+        "#191919",
+        "#A8A8A8",
+        "#B3B3B3",
+        "#494949",
+        "#494949",
+        "#B3B3B3",
+        "#A8A8A8",
+        "#191919",
+        "#EAEAEA",
+        "#242424"
+       ]
+      },
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#FFFFFF",
+        "#1B1D21",
+        "#5D636B",
+        "#F3F4F6",
+        "#C9CDD3",
+        "#1F5FD1",
+        "#FFFFFF",
+        "#2E7D32",
+        "#1B1D21",
+        "#1F5FD1",
+        "#6A1B9A",
+        "#00796B",
+        "#B58A00",
+        "#D7600A",
+        "#1565C0",
+        "#C62828",
+        "#00796B",
+        "#6A1B9A",
+        "#B4530E",
+        "#AD1457",
+        "#1B1D21",
+        "#1F5FD1",
+        "#C62828",
+        "#2E7D32",
+        "#6A1B9A",
+        "#00796B",
+        "#D7600A",
+        "#B58A00",
+        "#5D636B",
+        "#C9CDD3",
+        "#C62828",
+        "#FFE066",
+        "#AD1457",
+        "#FFFFFF",
+        "#D7600A",
+        "#1565C0",
+        "#2E7D32",
+        "#1565C0",
+        "#5D636B",
+        "#124984",
+        "#327CB7",
+        "#6BACD1",
+        "#B1D5E7",
+        "#E4EEF4",
+        "#FAE9DF",
+        "#F8BFA4",
+        "#E48066",
+        "#C43B3C",
+        "#8A0B25",
+        "#B4530E"
+       ],
+       "theme_colours": [
+        "#18191C",
+        "#E8EAED",
+        "#A3A9B1",
+        "#222429",
+        "#454952",
+        "#8AB4FF",
+        "#18191C",
+        "#81C995",
+        "#E8EAED",
+        "#8AB4FF",
+        "#D7A6FF",
+        "#5ED3C2",
+        "#F2C94C",
+        "#FFAB70",
+        "#7CB7FF",
+        "#FF8A80",
+        "#5ED3C2",
+        "#D7A6FF",
+        "#FFAB70",
+        "#FF8DC0",
+        "#E8EAED",
+        "#8AB4FF",
+        "#FF8A80",
+        "#81C995",
+        "#D7A6FF",
+        "#5ED3C2",
+        "#FFAB70",
+        "#F2C94C",
+        "#A3A9B1",
+        "#454952",
+        "#FF8A80",
+        "#7A6200",
+        "#FF8DC0",
+        "#18191C",
+        "#FFAB70",
+        "#7CB7FF",
+        "#81C995",
+        "#7CB7FF",
+        "#A3A9B1",
+        "#82ADF2",
+        "#4497C6",
+        "#286886",
+        "#173C4D",
+        "#11161B",
+        "#260D01",
+        "#4A1502",
+        "#7D341E",
+        "#B06253",
+        "#E59590",
+        "#FFAB70"
+       ]
+      },
+      {
+       "kind": "gradient"
+      },
+      {
+       "kind": "gradient"
+      },
+      {
+       "kind": "gradient"
+      },
+      {
+       "kind": "gradient"
+      },
+      {
+       "kind": "gradient"
+      },
+      {
+       "kind": "gradient"
+      },
+      {
+       "kind": "gradient"
+      },
+      {
+       "kind": "gradient"
+      },
+      {
+       "kind": "gradient"
+      },
+      {
+       "kind": "gradient"
+      },
+      {
+       "kind": "gradient"
+      },
+      {
+       "kind": "gradient"
+      },
+      {
+       "kind": "gradient"
+      },
+      {
+       "kind": "gradient"
+      },
+      {
+       "kind": "gradient"
+      },
+      {
+       "kind": "gradient"
+      },
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#FFFFFF",
+        "#1B1D21",
+        "#C9CDD3",
+        "#C62828",
+        "#D7600A",
+        "#B58A00",
+        "#2E7D32",
+        "#00796B",
+        "#1565C0",
+        "#6A1B9A",
+        "#AD1457"
+       ],
+       "theme_colours": [
+        "#18191C",
+        "#E8EAED",
+        "#454952",
+        "#FF8A80",
+        "#FFAB70",
+        "#F2C94C",
+        "#81C995",
+        "#5ED3C2",
+        "#7CB7FF",
+        "#D7A6FF",
+        "#FF8DC0"
+       ]
+      },
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#FFFFFF",
+        "#1B1D21"
+       ],
+       "theme_colours": [
+        "#18191C",
+        "#E8EAED"
+       ]
+      },
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#FFFFFF",
+        "#1B1D21",
+        "#1F5FD1",
+        "#C62828"
+       ],
+       "theme_colours": [
+        "#18191C",
+        "#E8EAED",
+        "#8AB4FF",
+        "#FF8A80"
+       ]
+      },
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#FFFFFF",
+        "#1B1D21",
+        "#C9CDD3",
+        "#C62828",
+        "#D7600A",
+        "#B58A00",
+        "#2E7D32",
+        "#00796B",
+        "#1565C0",
+        "#6A1B9A",
+        "#AD1457"
+       ],
+       "theme_colours": [
+        "#18191C",
+        "#E8EAED",
+        "#454952",
+        "#FF8A80",
+        "#FFAB70",
+        "#F2C94C",
+        "#81C995",
+        "#5ED3C2",
+        "#7CB7FF",
+        "#D7A6FF",
+        "#FF8DC0"
+       ]
+      },
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#FFFFFF",
+        "#1B1D21",
+        "#C8CED4",
+        "#C62928",
+        "#D76009",
+        "#B68A00",
+        "#2F7D31",
+        "#00796B",
+        "#1465C0",
+        "#6B1B9A",
+        "#AC1557"
+       ],
+       "theme_colours": [
+        "#18191B",
+        "#E8EAED",
+        "#454952",
+        "#FF8980",
+        "#FFAC71",
+        "#F3C94D",
+        "#81C995",
+        "#5DD3C2",
+        "#7BB7FF",
+        "#D8A6FF",
+        "#FF8DBF"
+       ]
+      },
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#FFFFFF",
+        "#1B1D21",
+        "#C9CDD3",
+        "#C62828",
+        "#D7600A",
+        "#B58A00",
+        "#2E7D32",
+        "#00796B",
+        "#1565C0",
+        "#6A1B9A",
+        "#AD1457"
+       ],
+       "theme_colours": [
+        "#18191C",
+        "#E8EAED",
+        "#454952",
+        "#FF8A80",
+        "#FFAB70",
+        "#F2C94C",
+        "#81C995",
+        "#5ED3C2",
+        "#7CB7FF",
+        "#D7A6FF",
+        "#FF8DC0"
+       ]
+      },
+      {
+       "kind": "image",
+       "size": [
+        160,
+        106
+       ]
+      },
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#FFFFFF",
+        "#1B1D21",
+        "#C9CDD3",
+        "#C62828",
+        "#D7600A",
+        "#B58A00",
+        "#2E7D32",
+        "#00796B",
+        "#1565C0",
+        "#6A1B9A",
+        "#AD1457"
+       ],
+       "theme_colours": [
+        "#18191C",
+        "#E8EAED",
+        "#454952",
+        "#FF8A80",
+        "#FFAB70",
+        "#F2C94C",
+        "#81C995",
+        "#5ED3C2",
+        "#7CB7FF",
+        "#D7A6FF",
+        "#FF8DC0"
+       ]
+      },
+      {
+       "kind": "image",
+       "size": [
+        96,
+        64
+       ]
+      },
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#FFFFFF",
+        "#1B1D21",
+        "#C9CDD3",
+        "#C62828",
+        "#D7600A",
+        "#B58A00",
+        "#2E7D32",
+        "#00796B",
+        "#1565C0",
+        "#6A1B9A",
+        "#AD1457"
+       ],
+       "theme_colours": [
+        "#18191C",
+        "#E8EAED",
+        "#454952",
+        "#FF8A80",
+        "#FFAB70",
+        "#F2C94C",
+        "#81C995",
+        "#5ED3C2",
+        "#7CB7FF",
+        "#D7A6FF",
+        "#FF8DC0"
+       ]
+      },
+      {
+       "kind": "gradient"
+      },
+      {
+       "kind": "graphics state",
+       "default": {
+        "BM": "/Multiply"
+       },
+       "theme": {
+        "BM": "/Screen"
+       }
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#FFFFFF",
+        "#F3F4F6",
+        "#C9CDD3",
+        "#1B1D21",
+        "#1F5FD1"
+       ],
+       "theme_colours": [
+        "#18191C",
+        "#222429",
+        "#454952",
+        "#E8EAED",
+        "#8AB4FF"
+       ]
+      },
+      {
+       "kind": "image",
+       "size": [
+        60,
+        85
+       ]
+      },
+      {
+       "kind": "gradient"
+      },
+      {
+       "kind": "image",
+       "size": [
+        311,
+        206
+       ]
+      },
+      {
+       "kind": "image",
+       "size": [
+        17,
+        328
+       ]
+      },
+      {
+       "kind": "gradient"
+      },
+      {
+       "kind": "palette",
+       "default_colours": [
+        "#FFFFFF",
+        "#1F5FD1"
+       ],
+       "theme_colours": [
+        "#FFFFFF",
+        "#8AB4FF"
+       ]
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "text style"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      },
+      {
+       "kind": "colour value"
+      }
+     ]
+    }
+   ]
+  },
+  "stats": {
+   "Type 3 fonts merged": 1,
+   "annotations": 112,
+   "bookmark colours": 301,
+   "forms merged": 179,
+   "gradients": 19,
+   "image palettes": 10,
+   "images stored as palette indices": 1,
+   "images swapped whole": 4,
+   "inline images made into image objects": 1,
+   "opacities and blend modes": 1,
+   "structure colours": 63,
+   "thumbnails": 1,
+   "tiling patterns merged": 8,
+   "values (colour)": 23,
+   "values (da)": 16,
+   "values (outline)": 10,
+   "values (style)": 3,
+   "values (text)": 4
+  },
+  "notes": [],
+  "pixels_light": "0970a6dec39f3815ea22364ecde426604715c05369e458a8ffcdc55805498f40",
+  "pixels_dark": "50c73388570d3a34bdd2921a566f297433207ca6d3ecd93a36b07d7a63d50ff2"
+ }
+}
