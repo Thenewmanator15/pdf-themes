@@ -1,0 +1,25 @@
+\documentclass[border=2pt]{standalone}
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+\pgfplotsset{compat=1.18}
+\definecolor{paper}{HTML}{18191C}
+\definecolor{tile}{HTML}{222429}
+\definecolor{rule}{HTML}{454952}
+\definecolor{ink}{HTML}{E8EAED}
+\definecolor{muted}{HTML}{A3A9B1}
+\definecolor{accent}{HTML}{8AB4FF}
+\definecolor{red}{HTML}{FF8A80}
+\definecolor{green}{HTML}{81C995}
+\definecolor{orange}{HTML}{FFAB70}
+\definecolor{blue}{HTML}{7CB7FF}
+\pagecolor{tile}
+\color{ink}
+\pgfplotsset{every axis/.append style={axis line style={muted}, tick style={muted}, tick label style={ink, font=\tiny},
+  label style={ink, font=\tiny}, title style={ink, font=\tiny}, legend style={fill=tile, draw=rule, text=ink, font=\tiny}},
+  every colorbar/.append style={tick label style={font=\tiny}}}
+\begin{document}
+
+$\displaystyle P_r = P_t\,G_t\,G_r\left(\frac{\lambda}{4\pi d}\right)^{2}
+\qquad \nabla\times\mathbf{E} = -\frac{\partial\mathbf{B}}{\partial t}$
+\end{document}

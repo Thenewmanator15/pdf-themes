@@ -1,0 +1,129 @@
+Audit of out/objects-light.pdf
+  annotations             28 of  28
+  actions                 20 of  20
+  graphics state keys     28 of  28
+  operators               73 of  73
+  colour spaces           11 of  11
+  filters                  9 of   9
+  shading types            7 of   7
+  function types           4 of   4
+  halftone types           5 of   5
+  blend modes             16 of  16
+  text render modes        8 of   8
+  font types               7 of   7
+  font files               6 of   6
+  fields                  14 of  14
+  line caps                3 of   3
+  line joins               3 of   3
+  rendering intents        4 of   4
+
+Colour-bearing keys found:
+  3DBG.C                                   3
+  3DCrossSection.IC                        1
+  3DCrossSection.PC                        1
+  3DMeasure.3DC.C                          1
+  3DMeasure.AD3.C                          1
+  3DMeasure.LD3.C                          1
+  3DMeasure.PD3.C                          1
+  3DMeasure.RD3.C                          1
+  3DRenderMode.AC                          3
+  3DRenderMode.FC                          3
+  3DView.BG                                3
+  3DView.LS                                3
+  3DView.MA                                1
+  3DView.RM                                3
+  3DView.SA                                1
+  Annot3D.AP                               1
+  AnnotCaret.AP                            2
+  AnnotCaret.C                             2
+  AnnotCircle.AP                           3
+  AnnotCircle.BS                           2
+  AnnotCircle.C                            3
+  AnnotCircle.CA                           1
+  AnnotCircle.IC                           3
+  AnnotCircle.ca                           1
+  AnnotFileAttachment.AP                   6
+  AnnotFileAttachment.C                    6
+  AnnotFreeText.AP                         3
+  AnnotFreeText.BS                         3
+  AnnotFreeText.C                          2
+  AnnotFreeText.DA                         3
+  AnnotFreeText.DS                         1
+  AnnotFreeText.RC                         1
+  AnnotHighlight.AP                        1
+  AnnotHighlight.C                         1
+  AnnotInk.AP                              1
+  AnnotInk.BS                              1
+  AnnotInk.C                               1
+  AnnotLine.AP                             6
+  AnnotLine.BS                             6
+  AnnotLine.C                              6
+  AnnotLine.IC                             6
+  AnnotLink.BS                             1
+  AnnotLink.C                              7
+  AnnotMovie.AP                            1
+  AnnotPolyLine.AP                         1
+  AnnotPolyLine.BS                         1
+  AnnotPolyLine.C                          1
+  AnnotPolygon.AP                          1
+  AnnotPolygon.BS                          1
+  AnnotPolygon.C                           1
+  AnnotPolygon.IC                          1
+  AnnotPopup.C                             2
+  AnnotPrinterMark.AP                      2
+  AnnotProjection.AP                       1
+  AnnotProjection.C                        1
+  AnnotRedact.AP                           1
+  AnnotRedact.C                            1
+  AnnotRedact.DA                           1
+  AnnotRedact.IC                           1
+  AnnotRichMedia.AP                        1
+  AnnotScreen.AP                           1
+  AnnotScreen.MK                           1
+  AnnotSound.AP                            1
+  AnnotSound.C                             1
+  AnnotSquare.AP                           12
+  AnnotSquare.BE                           1
+  AnnotSquare.BM                           1
+  AnnotSquare.BS                           5
+  AnnotSquare.C                            12
+  AnnotSquare.IC                           11
+  AnnotSquare.OC                           1
+  AnnotSquiggly.AP                         1
+  AnnotSquiggly.C                          1
+  AnnotStamp.AP                            8
+  AnnotStamp.C                             7
+  AnnotStrikeOut.AP                        1
+  AnnotStrikeOut.C                         1
+  AnnotText.AP                             8
+  AnnotText.C                              8
+  AnnotTrapNet.AP                          1
+  AnnotUnderline.AP                        1
+  AnnotUnderline.C                         1
+  AnnotWatermark.AP                        1
+  AnnotWidget.AP                           46
+  AnnotWidget.BS                           3
+  AnnotWidget.DA                           41
+  AnnotWidget.DS                           1
+  AnnotWidget.MK                           46
+  BoxStyle.ArtBox.C                        1
+  BoxStyle.BleedBox.C                      1
+  BoxStyle.CropBox.C                       1
+  BoxStyle.TrimBox.C                       1
+  MK.AC                                    1
+  MK.BC                                    44
+  MK.BG                                    46
+  MK.CA                                    17
+  MK.I                                     2
+  MK.IF                                    2
+  MK.IX                                    2
+  MK.RC                                    1
+  MK.RI                                    2
+  MK.TP                                    2
+  MediaScreenParams.B                      1
+  OutlineItem.C                            301
+  Shading.Background                       2
+  StructAttr.BackgroundColor               28
+  StructAttr.BorderColor                   3
+  StructAttr.Color                         31
+  StructAttr.TextDecorationColor           1

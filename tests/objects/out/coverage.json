@@ -1,0 +1,1628 @@
+[
+ {
+  "object": "Fill rules: f and f*",
+  "ref": "T59",
+  "page": 1,
+  "expect": "swaps"
+ },
+ {
+  "object": "Line widths",
+  "ref": "T56, T51",
+  "page": 1,
+  "expect": "swaps"
+ },
+ {
+  "object": "Line caps: J 0, 1, 2",
+  "ref": "T53",
+  "page": 1,
+  "expect": "swaps"
+ },
+ {
+  "object": "Line joins and miter limit",
+  "ref": "T54, T56",
+  "page": 1,
+  "expect": "swaps"
+ },
+ {
+  "object": "Dash patterns",
+  "ref": "T55, T56",
+  "page": 1,
+  "expect": "swaps"
+ },
+ {
+  "object": "Curves: c, v and y",
+  "ref": "T58",
+  "page": 1,
+  "expect": "swaps"
+ },
+ {
+  "object": "Fill and stroke: B, B*, b, b*, s",
+  "ref": "T59",
+  "page": 1,
+  "expect": "swaps"
+ },
+ {
+  "object": "Clipping: W and W*",
+  "ref": "T60",
+  "page": 1,
+  "expect": "swaps"
+ },
+ {
+  "object": "Rectangles, hairlines and dots",
+  "ref": "T58, T51",
+  "page": 1,
+  "expect": "swaps"
+ },
+ {
+  "object": "Graphics state: q, Q, cm and gs",
+  "ref": "T56, T57",
+  "page": 1,
+  "expect": "swaps"
+ },
+ {
+  "object": "Stroke adjustment and flatness",
+  "ref": "T57",
+  "page": 1,
+  "expect": "viewer"
+ },
+ {
+  "object": "Strokes under a scaled CTM",
+  "ref": "T56",
+  "page": 1,
+  "expect": "swaps"
+ },
+ {
+  "object": "DeviceGray: g, G",
+  "ref": "T61, T73",
+  "page": 2,
+  "expect": "swaps"
+ },
+ {
+  "object": "DeviceRGB: rg, RG",
+  "ref": "T61, T73",
+  "page": 2,
+  "expect": "swaps"
+ },
+ {
+  "object": "DeviceCMYK: k, K",
+  "ref": "T61, T73",
+  "page": 2,
+  "expect": "swaps"
+ },
+ {
+  "object": "CalGray",
+  "ref": "T62",
+  "page": 2,
+  "expect": "swaps"
+ },
+ {
+  "object": "CalRGB",
+  "ref": "T63",
+  "page": 2,
+  "expect": "swaps"
+ },
+ {
+  "object": "Lab",
+  "ref": "T64",
+  "page": 2,
+  "expect": "swaps"
+ },
+ {
+  "object": "ICCBased: sRGB",
+  "ref": "T65, T66",
+  "page": 2,
+  "expect": "swaps"
+ },
+ {
+  "object": "ICCBased: Display P3",
+  "ref": "T65, T67",
+  "page": 2,
+  "expect": "swaps"
+ },
+ {
+  "object": "ICCBased: CMYK (FOGRA39)",
+  "ref": "T65, T68",
+  "page": 2,
+  "expect": "swaps"
+ },
+ {
+  "object": "Indexed over RGB, Lab and ICC",
+  "ref": "T61",
+  "page": 2,
+  "expect": "swaps"
+ },
+ {
+  "object": "Separation: spot, All, None",
+  "ref": "T61",
+  "page": 2,
+  "expect": "swaps"
+ },
+ {
+  "object": "DeviceN and NChannel",
+  "ref": "T70, T71",
+  "page": 2,
+  "expect": "swaps"
+ },
+ {
+  "object": "Rendering intents: ri",
+  "ref": "T69",
+  "page": 2,
+  "expect": "viewer"
+ },
+ {
+  "object": "Default colour spaces in a form",
+  "ref": "T34, T61",
+  "page": 2,
+  "expect": "swaps"
+ },
+ {
+  "object": "Overprint: OP, op and OPM",
+  "ref": "T57, T146",
+  "page": 2,
+  "expect": "viewer"
+ },
+ {
+  "object": "Type 1: function-based",
+  "ref": "T78, T42",
+  "page": 3,
+  "expect": "swaps"
+ },
+ {
+  "object": "Type 2: axial",
+  "ref": "T79, T40",
+  "page": 3,
+  "expect": "swaps"
+ },
+ {
+  "object": "Type 3: radial",
+  "ref": "T80, T41",
+  "page": 3,
+  "expect": "swaps"
+ },
+ {
+  "object": "Axial with a sampled function",
+  "ref": "T79, T39",
+  "page": 3,
+  "expect": "swaps"
+ },
+ {
+  "object": "Type 4: free-form triangle mesh",
+  "ref": "T81",
+  "page": 3,
+  "expect": "swaps"
+ },
+ {
+  "object": "Type 5: lattice-form mesh",
+  "ref": "T82",
+  "page": 3,
+  "expect": "swaps"
+ },
+ {
+  "object": "Type 6: Coons patch mesh",
+  "ref": "T83, T84",
+  "page": 3,
+  "expect": "swaps"
+ },
+ {
+  "object": "Type 7: tensor-product patch mesh",
+  "ref": "T83, T85",
+  "page": 3,
+  "expect": "swaps"
+ },
+ {
+  "object": "Mesh with a function",
+  "ref": "T81",
+  "page": 3,
+  "expect": "swaps"
+ },
+ {
+  "object": "Axial shading in Lab",
+  "ref": "T79, T64",
+  "page": 3,
+  "expect": "swaps"
+ },
+ {
+  "object": "Axial shading in DeviceN",
+  "ref": "T79, T70",
+  "page": 3,
+  "expect": "swaps"
+ },
+ {
+  "object": "Background, BBox and AntiAlias",
+  "ref": "T77",
+  "page": 3,
+  "expect": "swaps"
+ },
+ {
+  "object": "Tiling, coloured (PaintType 1)",
+  "ref": "T74",
+  "page": 4,
+  "expect": "swaps"
+ },
+ {
+  "object": "Tiling, uncoloured (PaintType 2)",
+  "ref": "T74",
+  "page": 4,
+  "expect": "swaps"
+ },
+ {
+  "object": "Tiling types 1, 2, 3 and a Matrix",
+  "ref": "T74",
+  "page": 4,
+  "expect": "swaps"
+ },
+ {
+  "object": "Shading pattern: fill",
+  "ref": "T75",
+  "page": 4,
+  "expect": "swaps"
+ },
+ {
+  "object": "Shading pattern: stroke",
+  "ref": "T75",
+  "page": 4,
+  "expect": "swaps"
+ },
+ {
+  "object": "Shading pattern: text",
+  "ref": "T75, T104",
+  "page": 4,
+  "expect": "swaps"
+ },
+ {
+  "object": "Pattern inside a pattern",
+  "ref": "T74",
+  "page": 4,
+  "expect": "swaps"
+ },
+ {
+  "object": "Shading pattern with ExtGState",
+  "ref": "T75, T57",
+  "page": 4,
+  "expect": "swaps"
+ },
+ {
+  "object": "Uncoloured pattern over a spot colour",
+  "ref": "T74, T61",
+  "page": 4,
+  "expect": "swaps"
+ },
+ {
+  "object": "Standard 14 fonts, not embedded",
+  "ref": "T108, T109",
+  "page": 5,
+  "expect": "swaps"
+ },
+ {
+  "object": "Type 1, embedded (FontFile)",
+  "ref": "T109, T124",
+  "page": 5,
+  "expect": "swaps"
+ },
+ {
+  "object": "TrueType, embedded (FontFile2)",
+  "ref": "T109, T124",
+  "page": 5,
+  "expect": "swaps"
+ },
+ {
+  "object": "Bare CFF (FontFile3 /Type1C)",
+  "ref": "T124, T125",
+  "page": 5,
+  "expect": "swaps"
+ },
+ {
+  "object": "OpenType CFF (FontFile3 /OpenType)",
+  "ref": "T124, T125",
+  "page": 5,
+  "expect": "swaps"
+ },
+ {
+  "object": "Type 0 with CIDFontType2, Identity-H",
+  "ref": "T115, T119",
+  "page": 5,
+  "expect": "swaps"
+ },
+ {
+  "object": "Type 0 with CIDFontType0 (CFF CIDs)",
+  "ref": "T115, T119",
+  "page": 5,
+  "expect": "swaps"
+ },
+ {
+  "object": "Vertical writing: Identity-V",
+  "ref": "T115, T116",
+  "page": 5,
+  "expect": "swaps"
+ },
+ {
+  "object": "Text state: Tc, Tw, Tz, Ts, TL, TJ",
+  "ref": "T103, T106, T107",
+  "page": 5,
+  "expect": "swaps"
+ },
+ {
+  "object": "Text matrix: Tm",
+  "ref": "T106",
+  "page": 5,
+  "expect": "swaps"
+ },
+ {
+  "object": "Type 3, uncoloured glyphs (d1)",
+  "ref": "T110, T111",
+  "page": 6,
+  "expect": "swaps"
+ },
+ {
+  "object": "Type 3, coloured glyphs (d0)",
+  "ref": "T110, T111",
+  "page": 6,
+  "expect": "swaps"
+ },
+ {
+  "object": "Type 3 glyph with a bitmap",
+  "ref": "T110",
+  "page": 6,
+  "expect": "stays"
+ },
+ {
+  "object": "Rendering modes 0 to 3: Tr",
+  "ref": "T104",
+  "page": 6,
+  "expect": "swaps"
+ },
+ {
+  "object": "Rendering modes 4 to 7: clip",
+  "ref": "T104",
+  "page": 6,
+  "expect": "swaps"
+ },
+ {
+  "object": "Text knockout: TK",
+  "ref": "T57",
+  "page": 6,
+  "expect": "swaps"
+ },
+ {
+  "object": "Invisible text over a scan",
+  "ref": "T104",
+  "page": 6,
+  "expect": "stays"
+ },
+ {
+  "object": "Fill, stroke and pattern together",
+  "ref": "T104, T75",
+  "page": 6,
+  "expect": "swaps"
+ },
+ {
+  "object": "Tiny, huge and scaled text",
+  "ref": "T103",
+  "page": 6,
+  "expect": "swaps"
+ },
+ {
+  "object": "DeviceGray, 8-bit photo",
+  "ref": "T87, T61",
+  "page": 7,
+  "expect": "stays"
+ },
+ {
+  "object": "DeviceGray at 1, 2 and 4 bits",
+  "ref": "T87, T88",
+  "page": 7,
+  "expect": "stays"
+ },
+ {
+  "object": "DeviceRGB, 8-bit photo",
+  "ref": "T87",
+  "page": 7,
+  "expect": "stays"
+ },
+ {
+  "object": "DeviceRGB, 16-bit samples",
+  "ref": "T87",
+  "page": 7,
+  "expect": "stays"
+ },
+ {
+  "object": "DeviceCMYK photo",
+  "ref": "T87, T61",
+  "page": 7,
+  "expect": "stays"
+ },
+ {
+  "object": "Lab photo",
+  "ref": "T87, T64",
+  "page": 7,
+  "expect": "stays"
+ },
+ {
+  "object": "ICCBased: sRGB and Display P3",
+  "ref": "T87, T65",
+  "page": 7,
+  "expect": "stays"
+ },
+ {
+  "object": "Indexed, 8-bit diagram",
+  "ref": "T87, T61",
+  "page": 7,
+  "expect": "swaps"
+ },
+ {
+  "object": "Indexed at 1, 2 and 4 bits",
+  "ref": "T87, T61",
+  "page": 7,
+  "expect": "swaps"
+ },
+ {
+  "object": "Indexed over Lab and ICC",
+  "ref": "T87, T61",
+  "page": 7,
+  "expect": "swaps"
+ },
+ {
+  "object": "Separation image (spot ink)",
+  "ref": "T87, T61",
+  "page": 7,
+  "expect": "swaps"
+ },
+ {
+  "object": "DeviceN image (two spot inks)",
+  "ref": "T87, T70",
+  "page": 7,
+  "expect": "swaps"
+ },
+ {
+  "object": "FlateDecode",
+  "ref": "T6, T8",
+  "page": 8,
+  "expect": "stays"
+ },
+ {
+  "object": "FlateDecode with PNG predictor",
+  "ref": "T8, T9, T10",
+  "page": 8,
+  "expect": "stays"
+ },
+ {
+  "object": "LZWDecode",
+  "ref": "T6, T7, T8",
+  "page": 8,
+  "expect": "stays"
+ },
+ {
+  "object": "RunLengthDecode",
+  "ref": "T6",
+  "page": 8,
+  "expect": "swaps"
+ },
+ {
+  "object": "ASCIIHexDecode then Flate",
+  "ref": "T6",
+  "page": 8,
+  "expect": "stays"
+ },
+ {
+  "object": "ASCII85Decode",
+  "ref": "T6",
+  "page": 8,
+  "expect": "stays"
+ },
+ {
+  "object": "DCTDecode (JPEG), baseline",
+  "ref": "T6, T13",
+  "page": 8,
+  "expect": "stays"
+ },
+ {
+  "object": "DCTDecode, progressive greyscale",
+  "ref": "T6, T13",
+  "page": 8,
+  "expect": "stays"
+ },
+ {
+  "object": "DCTDecode, CMYK (Adobe)",
+  "ref": "T6, T13, T88",
+  "page": 8,
+  "expect": "stays"
+ },
+ {
+  "object": "JPXDecode (JPEG 2000)",
+  "ref": "T6",
+  "page": 8,
+  "expect": "stays"
+ },
+ {
+  "object": "CCITTFaxDecode, Group 4",
+  "ref": "T6, T11",
+  "page": 8,
+  "expect": "stays"
+ },
+ {
+  "object": "CCITTFaxDecode, Group 3",
+  "ref": "T6, T11",
+  "page": 8,
+  "expect": "stays"
+ },
+ {
+  "object": "JBIG2Decode (generic region, MMR)",
+  "ref": "T6, T12",
+  "page": 8,
+  "expect": "stays"
+ },
+ {
+  "object": "Interpolate: false and true",
+  "ref": "T87",
+  "page": 8,
+  "expect": "stays"
+ },
+ {
+  "object": "Alternates and a Decode array",
+  "ref": "T87, T89, T88",
+  "page": 8,
+  "expect": "stays"
+ },
+ {
+  "object": "Stencil mask (ImageMask)",
+  "ref": "T87, T88",
+  "page": 9,
+  "expect": "swaps"
+ },
+ {
+  "object": "Stencil mask with Decode [1 0]",
+  "ref": "T88",
+  "page": 9,
+  "expect": "swaps"
+ },
+ {
+  "object": "Explicit mask (Mask stream)",
+  "ref": "T87",
+  "page": 9,
+  "expect": "stays"
+ },
+ {
+  "object": "Colour-key mask (Mask array)",
+  "ref": "T87",
+  "page": 9,
+  "expect": "swaps"
+ },
+ {
+  "object": "Soft mask (SMask)",
+  "ref": "T87, T143",
+  "page": 9,
+  "expect": "stays"
+ },
+ {
+  "object": "Soft mask with Matte",
+  "ref": "T144",
+  "page": 9,
+  "expect": "stays"
+ },
+ {
+  "object": "JPEG 2000 with SMaskInData",
+  "ref": "T87",
+  "page": 9,
+  "expect": "stays"
+ },
+ {
+  "object": "Inline images: grey, RGB, Indexed",
+  "ref": "T90, T91, T92",
+  "page": 9,
+  "expect": "swaps"
+ },
+ {
+  "object": "Inline stencil mask",
+  "ref": "T91",
+  "page": 9,
+  "expect": "swaps"
+ },
+ {
+  "object": "Fill opacity: ca",
+  "ref": "T57, T136",
+  "page": 10,
+  "expect": "swaps"
+ },
+ {
+  "object": "Stroke opacity: CA",
+  "ref": "T57",
+  "page": 10,
+  "expect": "swaps"
+ },
+ {
+  "object": "Alpha is shape: AIS",
+  "ref": "T57",
+  "page": 10,
+  "expect": "swaps"
+ },
+ {
+  "object": "All sixteen blend modes: BM",
+  "ref": "T134, T135",
+  "page": 10,
+  "expect": "swaps"
+ },
+ {
+  "object": "Highlighter: Multiply, or Screen in dark",
+  "ref": "T134",
+  "page": 10,
+  "expect": "swaps"
+ },
+ {
+  "object": "Screen and Lighten on paper",
+  "ref": "T134",
+  "page": 10,
+  "expect": "swaps"
+ },
+ {
+  "object": "Difference and Exclusion on text",
+  "ref": "T134",
+  "page": 10,
+  "expect": "swaps"
+ },
+ {
+  "object": "Isolated and knockout groups: I and K",
+  "ref": "T94, T145",
+  "page": 11,
+  "expect": "swaps"
+ },
+ {
+  "object": "Group colour space: CS",
+  "ref": "T145",
+  "page": 11,
+  "expect": "swaps"
+ },
+ {
+  "object": "Luminosity soft mask with BC",
+  "ref": "T142",
+  "page": 11,
+  "expect": "swaps"
+ },
+ {
+  "object": "Alpha soft mask",
+  "ref": "T142",
+  "page": 11,
+  "expect": "swaps"
+ },
+ {
+  "object": "Soft mask with a transfer function",
+  "ref": "T142",
+  "page": 11,
+  "expect": "swaps"
+ },
+ {
+  "object": "SMask None resets the mask",
+  "ref": "T57",
+  "page": 11,
+  "expect": "swaps"
+ },
+ {
+  "object": "Transparency group reused",
+  "ref": "T94",
+  "page": 11,
+  "expect": "swaps"
+ },
+ {
+  "object": "One form, placed four times",
+  "ref": "T93, T86",
+  "page": 12,
+  "expect": "swaps"
+ },
+ {
+  "object": "Nested forms, three deep",
+  "ref": "T93",
+  "page": 12,
+  "expect": "swaps"
+ },
+ {
+  "object": "Form drawn in the caller's colour",
+  "ref": "T93",
+  "page": 12,
+  "expect": "swaps"
+ },
+ {
+  "object": "BBox clips and Matrix maps",
+  "ref": "T93",
+  "page": 12,
+  "expect": "swaps"
+ },
+ {
+  "object": "Form with Measure and PtData (PDF 2.0)",
+  "ref": "T93, T266, T272",
+  "page": 12,
+  "expect": "swaps"
+ },
+ {
+  "object": "Reference XObject (Ref)",
+  "ref": "T93, T95",
+  "page": 12,
+  "expect": "swaps"
+ },
+ {
+  "object": "Form in a tiling pattern cell",
+  "ref": "T74, T93",
+  "page": 12,
+  "expect": "swaps"
+ },
+ {
+  "object": "Form with its own Group and Matrix",
+  "ref": "T93, T94",
+  "page": 12,
+  "expect": "swaps"
+ },
+ {
+  "object": "Image inside a form, reused",
+  "ref": "T93, T87",
+  "page": 12,
+  "expect": "stays"
+ },
+ {
+  "object": "Default on",
+  "ref": "T96, T99",
+  "page": 13,
+  "expect": "swaps"
+ },
+ {
+  "object": "Default off",
+  "ref": "T96, T99",
+  "page": 13,
+  "expect": "swaps"
+ },
+ {
+  "object": "View and print usage",
+  "ref": "T100, T101",
+  "page": 13,
+  "expect": "swaps"
+ },
+ {
+  "object": "Print-only layer",
+  "ref": "T100, T101",
+  "page": 13,
+  "expect": "swaps"
+ },
+ {
+  "object": "Zoom-dependent layer",
+  "ref": "T100",
+  "page": 13,
+  "expect": "swaps"
+ },
+ {
+  "object": "Language layers",
+  "ref": "T100",
+  "page": 13,
+  "expect": "swaps"
+ },
+ {
+  "object": "Radio-button layers: RBGroups",
+  "ref": "T99",
+  "page": 13,
+  "expect": "swaps"
+ },
+ {
+  "object": "Visibility expression: OCMD VE",
+  "ref": "T97",
+  "page": 13,
+  "expect": "swaps"
+ },
+ {
+  "object": "Locked layer, layered annotation and form",
+  "ref": "T99, T166, T93",
+  "page": 13,
+  "expect": "swaps"
+ },
+ {
+  "object": "Text (sticky note) with appearance",
+  "ref": "T175, T186",
+  "page": 14,
+  "expect": "swaps"
+ },
+ {
+  "object": "Review state and a reply: IRT, RT, State",
+  "ref": "T172, T174, T175",
+  "page": 14,
+  "expect": "swaps"
+ },
+ {
+  "object": "FreeText with DA, DS and RC",
+  "ref": "T177",
+  "page": 14,
+  "expect": "swaps"
+ },
+ {
+  "object": "FreeText callout: CL, LE, IT",
+  "ref": "T177, T179",
+  "page": 14,
+  "expect": "swaps"
+ },
+ {
+  "object": "FreeText typewriter",
+  "ref": "T177",
+  "page": 14,
+  "expect": "swaps"
+ },
+ {
+  "object": "Line: all ten line endings",
+  "ref": "T178, T179",
+  "page": 14,
+  "expect": "swaps"
+ },
+ {
+  "object": "Line dimension with Measure",
+  "ref": "T178, T266, T267",
+  "page": 14,
+  "expect": "swaps"
+ },
+ {
+  "object": "Square and Circle with IC",
+  "ref": "T180, T168",
+  "page": 14,
+  "expect": "swaps"
+ },
+ {
+  "object": "Cloudy border: BE",
+  "ref": "T169",
+  "page": 14,
+  "expect": "swaps"
+ },
+ {
+  "object": "Polygon and PolyLine",
+  "ref": "T181",
+  "page": 14,
+  "expect": "swaps"
+ },
+ {
+  "object": "Ink: InkList",
+  "ref": "T185",
+  "page": 14,
+  "expect": "swaps"
+ },
+ {
+  "object": "C and IC in grey, CMYK and none",
+  "ref": "T166, T180",
+  "page": 14,
+  "expect": "swaps"
+ },
+ {
+  "object": "Highlight",
+  "ref": "T182",
+  "page": 15,
+  "expect": "swaps"
+ },
+ {
+  "object": "Underline, Squiggly, StrikeOut",
+  "ref": "T182",
+  "page": 15,
+  "expect": "swaps"
+ },
+ {
+  "object": "Caret: Sy P and None",
+  "ref": "T183",
+  "page": 15,
+  "expect": "swaps"
+ },
+ {
+  "object": "Stamp: drawn and image",
+  "ref": "T184",
+  "page": 15,
+  "expect": "swaps"
+ },
+ {
+  "object": "Stamp names, with appearances",
+  "ref": "T184",
+  "page": 15,
+  "expect": "swaps"
+ },
+ {
+  "object": "Popup, open",
+  "ref": "T186",
+  "page": 15,
+  "expect": "viewer"
+ },
+ {
+  "object": "Redact (marked, not applied)",
+  "ref": "T195",
+  "page": 15,
+  "expect": "swaps"
+ },
+ {
+  "object": "FileAttachment: six icon names",
+  "ref": "T187, T43",
+  "page": 15,
+  "expect": "swaps"
+ },
+ {
+  "object": "Watermark with FixedPrint",
+  "ref": "T193, T194",
+  "page": 15,
+  "expect": "swaps"
+ },
+ {
+  "object": "PrinterMark: colour bar and target",
+  "ref": "T398, T399",
+  "page": 15,
+  "expect": "stays"
+ },
+ {
+  "object": "Annotation BM and ca (PDF 2.0), R and D",
+  "ref": "T166, T170",
+  "page": 15,
+  "expect": "swaps"
+ },
+ {
+  "object": "TrapNet (deprecated in PDF 2.0)",
+  "ref": "T403, T404",
+  "page": 15,
+  "expect": "stays"
+ },
+ {
+  "object": "Link with a border colour: C",
+  "ref": "T176, T210",
+  "page": 16,
+  "expect": "viewer"
+ },
+ {
+  "object": "Highlight modes: H",
+  "ref": "T176",
+  "page": 16,
+  "expect": "viewer"
+ },
+ {
+  "object": "Link over two lines: QuadPoints",
+  "ref": "T176",
+  "page": 16,
+  "expect": "viewer"
+ },
+ {
+  "object": "Link with a dashed border style: BS",
+  "ref": "T168, T176",
+  "page": 16,
+  "expect": "viewer"
+ },
+ {
+  "object": "Destinations: XYZ, Fit, FitH, FitR, FitB",
+  "ref": "T149",
+  "page": 16,
+  "expect": "swaps"
+ },
+ {
+  "object": "Named, remote and embedded go-to",
+  "ref": "T202, T203, T204, T205",
+  "page": 16,
+  "expect": "swaps"
+ },
+ {
+  "object": "Named actions",
+  "ref": "T215, T216",
+  "page": 16,
+  "expect": "swaps"
+ },
+ {
+  "object": "Hide action and the Hidden flag",
+  "ref": "T214, T167",
+  "page": 16,
+  "expect": "swaps"
+ },
+ {
+  "object": "JavaScript action and Next",
+  "ref": "T221, T196",
+  "page": 16,
+  "expect": "viewer"
+ },
+ {
+  "object": "Launch, Thread and Transition actions",
+  "ref": "T207, T209, T219",
+  "page": 16,
+  "expect": "viewer"
+ },
+ {
+  "object": "Flags: NoView, Print off, ToggleNoView",
+  "ref": "T167",
+  "page": 16,
+  "expect": "viewer"
+ },
+ {
+  "object": "Page and document additional actions",
+  "ref": "T197, T198, T200",
+  "page": 16,
+  "expect": "viewer"
+ },
+ {
+  "object": "Text field",
+  "ref": "T226, T228, T232",
+  "page": 17,
+  "expect": "swaps"
+ },
+ {
+  "object": "Multiline text field",
+  "ref": "T231",
+  "page": 17,
+  "expect": "swaps"
+ },
+ {
+  "object": "Password field",
+  "ref": "T231",
+  "page": 17,
+  "expect": "swaps"
+ },
+ {
+  "object": "Comb field: MaxLen 6",
+  "ref": "T231, T232",
+  "page": 17,
+  "expect": "swaps"
+ },
+ {
+  "object": "File-select field",
+  "ref": "T231",
+  "page": 17,
+  "expect": "swaps"
+ },
+ {
+  "object": "Rich text field: RV and DS",
+  "ref": "T228, T231",
+  "page": 17,
+  "expect": "swaps"
+ },
+ {
+  "object": "Alignment: Q 1 and Q 2",
+  "ref": "T228",
+  "page": 17,
+  "expect": "swaps"
+ },
+ {
+  "object": "Border styles: beveled, inset, underline",
+  "ref": "T168, T192",
+  "page": 17,
+  "expect": "swaps"
+ },
+ {
+  "object": "Required and read-only flags",
+  "ref": "T227",
+  "page": 17,
+  "expect": "swaps"
+ },
+ {
+  "object": "Number format script: red negatives",
+  "ref": "T199, T221",
+  "page": 17,
+  "expect": "viewer"
+ },
+ {
+  "object": "Calculated field: CO",
+  "ref": "T199, T224",
+  "page": 17,
+  "expect": "viewer"
+ },
+ {
+  "object": "List box",
+  "ref": "T233, T234",
+  "page": 17,
+  "expect": "swaps"
+ },
+ {
+  "object": "Multi-select list box",
+  "ref": "T233, T234",
+  "page": 17,
+  "expect": "swaps"
+ },
+ {
+  "object": "Combo box",
+  "ref": "T233",
+  "page": 17,
+  "expect": "swaps"
+ },
+ {
+  "object": "Editable combo box",
+  "ref": "T233",
+  "page": 17,
+  "expect": "swaps"
+ },
+ {
+  "object": "Check boxes: six styles",
+  "ref": "T229, T230, T192",
+  "page": 18,
+  "expect": "swaps"
+ },
+ {
+  "object": "Radio group",
+  "ref": "T229, T230",
+  "page": 18,
+  "expect": "swaps"
+ },
+ {
+  "object": "Push button: N, R and D appearances",
+  "ref": "T229, T170, T192, T241",
+  "page": 18,
+  "expect": "swaps"
+ },
+ {
+  "object": "Icon buttons: MK I, RI, IX, IF and TP",
+  "ref": "T192, T250",
+  "page": 18,
+  "expect": "swaps"
+ },
+ {
+  "object": "Submit button",
+  "ref": "T239, T240",
+  "page": 18,
+  "expect": "viewer"
+ },
+ {
+  "object": "Signature field, unsigned",
+  "ref": "T235, T236, T237",
+  "page": 18,
+  "expect": "swaps"
+ },
+ {
+  "object": "Focus and blur scripts recolour a field",
+  "ref": "T197, T221",
+  "page": 18,
+  "expect": "viewer"
+ },
+ {
+  "object": "Hidden field shown by a button",
+  "ref": "T167, T214",
+  "page": 18,
+  "expect": "swaps"
+ },
+ {
+  "object": "Field hierarchy: a.b names",
+  "ref": "T226",
+  "page": 18,
+  "expect": "swaps"
+ },
+ {
+  "object": "Read-only check box and NoExport",
+  "ref": "T227",
+  "page": 18,
+  "expect": "swaps"
+ },
+ {
+  "object": "Import data action",
+  "ref": "T243",
+  "page": 18,
+  "expect": "viewer"
+ },
+ {
+  "object": "MK colours in grey and CMYK",
+  "ref": "T192",
+  "page": 18,
+  "expect": "swaps"
+ },
+ {
+  "object": "Screen with a Rendition action",
+  "ref": "T190, T218, T282, T293",
+  "page": 19,
+  "expect": "swaps"
+ },
+ {
+  "object": "Rendition actions: play, pause, stop",
+  "ref": "T218",
+  "page": 19,
+  "expect": "viewer"
+ },
+ {
+  "object": "RichMedia (video)",
+  "ref": "T333, T334, T335, T338, T339, T340, T341, T342, T222",
+  "page": 19,
+  "expect": "swaps"
+ },
+ {
+  "object": "Movie annotation (deprecated)",
+  "ref": "T189, T306, T307, T213",
+  "page": 19,
+  "expect": "swaps"
+ },
+ {
+  "object": "Sound annotation and action (deprecated)",
+  "ref": "T188, T305, T212",
+  "page": 19,
+  "expect": "swaps"
+ },
+ {
+  "object": "3D annotation (U3D)",
+  "ref": "T309, T310, T311, T315, T317, T318, T320, T322, T323, T326-T331",
+  "page": 19,
+  "expect": "swaps"
+ },
+ {
+  "object": "GoTo3DView actions, 3D markup",
+  "ref": "T220, T173, T324",
+  "page": 19,
+  "expect": "viewer"
+ },
+ {
+  "object": "Projection annotation (PDF 2.0)",
+  "ref": "T172, T332, T327",
+  "page": 19,
+  "expect": "swaps"
+ },
+ {
+  "object": "Selector rendition with MH and BE",
+  "ref": "T277, T278, T279, T283",
+  "page": 19,
+  "expect": "viewer"
+ },
+ {
+  "object": "Floating window colour",
+  "ref": "T293, T294, T295",
+  "page": 19,
+  "expect": "swaps"
+ },
+ {
+  "object": "Embedded media files",
+  "ref": "T43, T44, T45",
+  "page": 19,
+  "expect": "stays"
+ },
+ {
+  "object": "What viewers show",
+  "ref": "",
+  "page": 19,
+  "expect": "viewer"
+ },
+ {
+  "object": "Page boxes and BoxColorInfo",
+  "ref": "T31, T396, T397",
+  "page": 20,
+  "expect": "viewer"
+ },
+ {
+  "object": "Thumbnail: Thumb",
+  "ref": "T31",
+  "page": 20,
+  "expect": "swaps"
+ },
+ {
+  "object": "Transition and display time",
+  "ref": "T31, T164",
+  "page": 20,
+  "expect": "viewer"
+ },
+ {
+  "object": "Article thread: beads",
+  "ref": "T162, T163",
+  "page": 20,
+  "expect": "viewer"
+ },
+ {
+  "object": "Viewport with a scale: Measure RL",
+  "ref": "T265, T266, T267, T268",
+  "page": 20,
+  "expect": "swaps"
+ },
+ {
+  "object": "Geospatial viewport: GEO, PROJCS, PtData",
+  "ref": "T265, T269, T270, T271, T272",
+  "page": 20,
+  "expect": "swaps"
+ },
+ {
+  "object": "Navigation steps: PresSteps",
+  "ref": "T165",
+  "page": 20,
+  "expect": "viewer"
+ },
+ {
+  "object": "Document parts and GoToDp",
+  "ref": "T206, T408, T409",
+  "page": 20,
+  "expect": "swaps"
+ },
+ {
+  "object": "Associated file on a page: AF",
+  "ref": "T31, T43, T45",
+  "page": 20,
+  "expect": "stays"
+ },
+ {
+  "object": "Outlines with colour and style",
+  "ref": "T151, T152",
+  "page": 20,
+  "expect": "swaps"
+ },
+ {
+  "object": "Page labels",
+  "ref": "T161",
+  "page": 20,
+  "expect": "viewer"
+ },
+ {
+  "object": "Page output intent, by reference",
+  "ref": "T31, T401, T402",
+  "page": 20,
+  "expect": "stays"
+ },
+ {
+  "object": "Content on a rotated page",
+  "ref": "T31",
+  "page": 21,
+  "expect": "swaps"
+ },
+ {
+  "object": "NoRotate and NoZoom flags",
+  "ref": "T167",
+  "page": 21,
+  "expect": "viewer"
+ },
+ {
+  "object": "Article thread continues",
+  "ref": "T163",
+  "page": 21,
+  "expect": "viewer"
+ },
+ {
+  "object": "Last bead",
+  "ref": "T163",
+  "page": 21,
+  "expect": "viewer"
+ },
+ {
+  "object": "UserUnit page",
+  "ref": "T31",
+  "page": 22,
+  "expect": "swaps"
+ },
+ {
+  "object": "Table with Layout colours",
+  "ref": "T371, T377, T378, T384",
+  "page": 23,
+  "expect": "swaps"
+ },
+ {
+  "object": "List with numbering",
+  "ref": "T370, T382",
+  "page": 23,
+  "expect": "swaps"
+ },
+ {
+  "object": "Underline with TextDecorationColor",
+  "ref": "T380",
+  "page": 23,
+  "expect": "swaps"
+ },
+ {
+  "object": "Attribute class: ClassMap and C",
+  "ref": "T354, T355, T360",
+  "page": 23,
+  "expect": "swaps"
+ },
+ {
+  "object": "FENote, E and Lang (PDF 2.0 namespace)",
+  "ref": "T355, T356, T366, T368",
+  "page": 23,
+  "expect": "swaps"
+ },
+ {
+  "object": "Formula with a MathML file",
+  "ref": "T374, T43",
+  "page": 23,
+  "expect": "swaps"
+ },
+ {
+  "object": "Ruby and Warichu",
+  "ref": "T369",
+  "page": 23,
+  "expect": "swaps"
+ },
+ {
+  "object": "Figure with BBox and Caption",
+  "ref": "T373, T372, T379",
+  "page": 23,
+  "expect": "swaps"
+ },
+ {
+  "object": "Halftone type 1: spot functions",
+  "ref": "T126, T127, T128",
+  "page": 24,
+  "expect": "stays"
+ },
+ {
+  "object": "Halftone type 5 per colorant",
+  "ref": "T132",
+  "page": 24,
+  "expect": "stays"
+ },
+ {
+  "object": "Threshold halftones: types 6, 10, 16",
+  "ref": "T129, T130, T131",
+  "page": 24,
+  "expect": "stays"
+ },
+ {
+  "object": "Transfer functions: TR and TR2",
+  "ref": "T57",
+  "page": 24,
+  "expect": "viewer"
+ },
+ {
+  "object": "Black generation and undercolour removal",
+  "ref": "T57",
+  "page": 24,
+  "expect": "stays"
+ },
+ {
+  "object": "SM, HTO and UseBlackPtComp",
+  "ref": "T57",
+  "page": 24,
+  "expect": "stays"
+ },
+ {
+  "object": "SeparationInfo",
+  "ref": "T400",
+  "page": 24,
+  "expect": "stays"
+ },
+ {
+  "object": "Document output intent",
+  "ref": "T29, T401",
+  "page": 24,
+  "expect": "stays"
+ },
+ {
+  "object": "OPI 1.3 and 2.0 on an image (deprecated)",
+  "ref": "T405, T406, T407",
+  "page": 24,
+  "expect": "stays"
+ },
+ {
+  "object": "MMType1 font (deprecated)",
+  "ref": "T108, T109",
+  "page": 24,
+  "expect": "swaps"
+ },
+ {
+  "object": "BX/EX and marked points: MP, DP",
+  "ref": "T33, T352",
+  "page": 24,
+  "expect": "swaps"
+ },
+ {
+  "object": "Not tested: removed or invisible",
+  "ref": "",
+  "page": 24,
+  "expect": "stays"
+ },
+ {
+  "object": "Line plot: series, legend, grid",
+  "ref": "T59, T110",
+  "page": 25,
+  "expect": "swaps"
+ },
+ {
+  "object": "Scatter coloured by value",
+  "ref": "T86, T93, T87",
+  "page": 25,
+  "expect": "swaps"
+ },
+ {
+  "object": "Error bars and a confidence band",
+  "ref": "T57, T86",
+  "page": 25,
+  "expect": "swaps"
+ },
+ {
+  "object": "Histogram with hatching",
+  "ref": "T74, T57",
+  "page": 25,
+  "expect": "swaps"
+ },
+ {
+  "object": "Heatmap, diverging map",
+  "ref": "T87, T61",
+  "page": 25,
+  "expect": "swaps"
+ },
+ {
+  "object": "Heatmap, viridis in both",
+  "ref": "T87, T61",
+  "page": 25,
+  "expect": "stays"
+ },
+ {
+  "object": "Gouraud mesh (pcolormesh)",
+  "ref": "T81",
+  "page": 25,
+  "expect": "swaps"
+ },
+ {
+  "object": "Filled and labelled contours",
+  "ref": "T59, T110",
+  "page": 25,
+  "expect": "swaps"
+ },
+ {
+  "object": "3D surface (mplot3d)",
+  "ref": "T59",
+  "page": 25,
+  "expect": "stays"
+ },
+ {
+  "object": "Mass spectrum: sticks, log scale",
+  "ref": "T59, T110",
+  "page": 25,
+  "expect": "swaps"
+ },
+ {
+  "object": "Rasterised layer in a vector plot",
+  "ref": "T87, T144",
+  "page": 25,
+  "expect": "swaps"
+ },
+ {
+  "object": "Spectrogram with colour bar",
+  "ref": "T87",
+  "page": 25,
+  "expect": "stays"
+ },
+ {
+  "object": "Smith chart",
+  "ref": "T59",
+  "page": 26,
+  "expect": "swaps"
+ },
+ {
+  "object": "Constellation: 16-QAM",
+  "ref": "T57, T86",
+  "page": 26,
+  "expect": "swaps"
+ },
+ {
+  "object": "Eye diagram",
+  "ref": "T57",
+  "page": 26,
+  "expect": "swaps"
+ },
+ {
+  "object": "Ion image with a scale bar",
+  "ref": "T87",
+  "page": 26,
+  "expect": "stays"
+ },
+ {
+  "object": "Antenna pattern: polar axes",
+  "ref": "T59",
+  "page": 26,
+  "expect": "swaps"
+ },
+ {
+  "object": "pgfplots surface and colour bar",
+  "ref": "T75, T82, T79",
+  "page": 26,
+  "expect": "stays"
+ },
+ {
+  "object": "pgfplots: band, error bars, pattern",
+  "ref": "T74, T57",
+  "page": 26,
+  "expect": "swaps"
+ },
+ {
+  "object": "Equations from LaTeX",
+  "ref": "T109, T124",
+  "page": 26,
+  "expect": "swaps"
+ },
+ {
+  "object": "100,000 points in one path",
+  "ref": "T58",
+  "page": 26,
+  "expect": "swaps"
+ },
+ {
+  "object": "Chemical structure: element colours",
+  "ref": "T59",
+  "page": 26,
+  "expect": "swaps"
+ },
+ {
+  "object": "Results table: colours that mean something",
+  "ref": "T371, T378, T384",
+  "page": 26,
+  "expect": "swaps"
+ },
+ {
+  "object": "The data behind a plot: AF, Data",
+  "ref": "T43, T45, T373",
+  "page": 26,
+  "expect": "stays"
+ }
+]
