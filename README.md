@@ -92,8 +92,11 @@ any that fail or that would draw every page exactly like the default. `apply`
 does what a theme-aware reader would and saves the result as a plain PDF, so
 any reader can show it.
 
-The live demo in `demo/` opens a themed PDF in the browser and follows the
-system's dark mode. Serve the folder and open it:
+The live demo in `demo/` is a viewer that loads the themes stored in a PDF.
+It lists the themes it finds in the file, shows the one that matches the
+system's light or dark setting, and switches when you pick another. Nothing
+is worked out in the viewer: every colour it shows comes from the file. Serve
+the folder and open it:
 
 ```
 cd demo && python -m http.server 8000
@@ -105,9 +108,16 @@ cd demo && python -m http.server 8000
 | --- | --- | --- |
 | Light | ColorScheme Light | The author's design. |
 | Dark | ColorScheme Dark | Light sensitivity, glare, reading at night, some low vision. The author's dark build if there is one, otherwise worked out from the light one. |
-| Light, more contrast | Light, Contrast More | Low vision. Text is held to 7:1 (WCAG 1.4.6, level AAA). |
+| Light, more contrast | Light, Contrast More | Low vision. Enhanced contrast: text is held to 7:1 (WCAG 1.4.6 Contrast (Enhanced), level AAA). |
 | Dark, more contrast | Dark, Contrast More | Low vision with light sensitivity. Also 7:1. |
-| Cream, Peach, Yellow, Turquoise | Light, Tint | Many readers with dyslexia or visual stress find a tinted background easier. People differ in which tint helps, so there's a range. |
+| Cream, Peach, Yellow, Turquoise | Light, Tint | Many readers with dyslexia or visual stress find a tinted background easier, which is what a coloured overlay is for. People differ in which tint helps, so there's a range. |
+
+The other themes are held to 4.5:1 (WCAG 1.4.3 Contrast (Minimum), level AA).
+The labels follow the CSS preferences `prefers-color-scheme` and
+`prefers-contrast`, and forced colours, such as a Windows contrast theme,
+still win when they're turned on. Offering a set of checked themes is a way
+to meet WCAG 1.4.8 Visual Presentation, which asks that the person can select
+foreground and background colours.
 
 The labels let a reader remember a person's choice from one document to the
 next, and match it to the system setting. The research behind the list is in
@@ -202,6 +212,8 @@ With no dark build, `pdf-themes add` works one out.
   original on a few per cent of pixels. It lets the browser decode a plain
   grey JPEG but decodes one with a palette itself, and the two decoders round
   differently.
+- Only text contrast is checked. Chart lines, icons and other graphics, which
+  WCAG 1.4.11 Non-text Contrast holds to 3:1, aren't measured yet.
 - Uses the private key `/XXThemes`. Files shared beyond testing should use a
   registered developer prefix until a standard key exists.
 
@@ -213,6 +225,10 @@ intent, structure tree and marked content, and use no colour space the build
 didn't already use (`tools/conformance.py build.pdf themed.pdf`). That covers
 what theming touches, but it isn't a full validation. That needs veraPDF,
 which couldn't be installed where this was built.
+
+PDF/UA covers structure and tagging and leaves colour contrast to WCAG, so
+the two sit side by side: the tags are the same in every theme, and each
+theme records the WCAG success criterion it was checked against.
 
 ## Licence
 

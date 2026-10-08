@@ -274,7 +274,7 @@ details pre {
 <div class="wrap">
   <header>
     <h1>Themed PDF Viewer</h1>
-    <p class="lede">Each document here is a single PDF with its content stored once and eight colour themes inside it: light, dark, two with more contrast and four tints. This page does what a theme-aware reader would. It swaps the objects a theme lists, paints the theme's paper colour and draws the page. Any PDF reader today shows the light colours.</p>
+    <p class="lede">Each document here is a single PDF with its content stored once and its colour themes inside it. Some carry eight: light, dark, two with more contrast and four tints. The objects test and the figure carry the two their author made, light and dark. This page loads the themes it finds in the file and does what a theme-aware reader would. It swaps the objects a theme lists, paints the theme's paper colour and draws the page. Any PDF reader today shows the light colours.</p>
   </header>
 
   <div class="controls">
@@ -347,6 +347,8 @@ const DOCS = [
   { id: "corpus", file: "corpus-themed.pdf", label: "Test document, 6 pages" },
   { id: "sample", file: "sample-themed.pdf", label: "Test page" },
   { id: "scan", file: "scan-themed.pdf", label: "Scanned page" },
+  { id: "objects", file: "objects-themed.pdf", label: "Objects test, 31 pages" },
+  { id: "figure", file: "figure-themed.pdf", label: "Matplotlib figure" },
 ];
 const state = { mode: "auto", doc: null, page: 1 };
 const loaded = new Map();

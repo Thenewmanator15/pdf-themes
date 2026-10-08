@@ -31,6 +31,13 @@ that doesn't support themes ignores them and shows the default colours.
   first object is drawn as the second.
 - **Derived theme**: an alternate theme the writer worked out from the default
   theme rather than one the author designed.
+- **Contrast ratio**: as WCAG 2.2 defines it, from the relative luminance of
+  two colours. Success criteria are cited by number and name, for example
+  1.4.3 Contrast (Minimum).
+- **Enhanced contrast**: WCAG's term for the 7:1 level of success criterion
+  1.4.6. A theme with `Contrast` `More` is an enhanced contrast theme.
+- **Forced colours**: a mode in which the person's own colours replace the
+  document's, such as a Windows contrast theme (CSS `forced-colors`).
 
 ## 3. The themes dictionary
 
@@ -48,7 +55,7 @@ The document catalog's `Themes` entry is a dictionary:
 | Type | name | (Optional) `Theme`. |
 | Name | text string | (Required) The name a reader shows, for example `(Dark)`. Unique within the file. |
 | ColorScheme | name | (Required) `Light` or `Dark`: the setting this theme suits, as in CSS `prefers-color-scheme`. |
-| Contrast | name | (Optional) `More` for a theme made for people who ask for more contrast, as in CSS `prefers-contrast: more`. Absent means standard contrast. |
+| Contrast | name | (Optional) `More` for an enhanced contrast theme (WCAG 1.4.6), made for people who ask for more contrast, as in CSS `prefers-contrast: more`. Absent means standard contrast. |
 | Tint | name | (Optional) The tint of a tinted theme, from section 7, for example `Cream`. Absent means no tint. |
 | Paper | array | (Optional) Three numbers from 0 to 1: the sRGB colour a reader paints before drawing each page. Default: `[1 1 1]`. |
 | Checked | dictionary | (Optional) What the writer checked this theme against (section 8). |
@@ -113,9 +120,14 @@ document to the next. `Name` is for people and may be translated.
 | --- | --- | --- | --- | --- |
 | Light | Light | | | The author's design. |
 | Dark | Dark | | | Light sensitivity, glare, reading in the dark, some low vision. |
-| Light, more contrast | Light | More | | Low vision. |
-| Dark, more contrast | Dark | More | | Low vision with light sensitivity. |
-| Cream, Peach, Yellow, Turquoise | Light | | the same as the name | Readers who find a tinted background easier, including many with dyslexia or visual stress. Which tint helps differs from person to person, hence a range. |
+| Light, more contrast | Light | More | | Low vision. Enhanced contrast. |
+| Dark, more contrast | Dark | More | | Low vision with light sensitivity. Enhanced contrast. |
+| Cream, Peach, Yellow, Turquoise | Light | | the same as the name | Readers who find a tinted background easier, including many with dyslexia or visual stress. It does the job of a coloured overlay. Which tint helps differs from person to person, hence a range. |
+
+WCAG 2.2 success criterion 1.4.8 Visual Presentation asks that the person can
+select foreground and background colours. A reader that recolours the page
+meets that today, at the cost of the design. The standard themes give the
+person a set to select from in which each one has been checked.
 
 This draft doesn't specify how a writer works out a derived theme, only its
 labels and the check it shall pass. The proof of concept's method is in
@@ -127,11 +139,18 @@ A writer should check each theme before writing it, at least the contrast of
 all text against what is drawn behind it, using the WCAG 2.2 contrast ratio.
 The check should be made on the drawn page, so it sees gradients, images and
 transparency as a reader shows them. Themes with `Contrast` `More` should be
-held to WCAG 1.4.6 (7:1, level AAA), others to 1.4.3 (4.5:1, level AA).
+held to 1.4.6 Contrast (Enhanced) (7:1, level AAA), others to 1.4.3 Contrast
+(Minimum) (4.5:1, level AA).
 Screens, brightness and room light all change how contrast looks, so a writer
 fixing a colour should aim a little above the minimum.
 
-`Checked` records what was checked:
+This draft asks for a check of text only. Graphics that carry meaning, such
+as chart lines, icons and the borders of form fields, come under 1.4.11
+Non-text Contrast (3:1), and a chart that tells its series apart by colour
+alone comes under 1.4.1 Use of Color. A writer may check those as well (open
+question 13).
+
+`Checked` records the success criterion the theme conforms to:
 
 | Key | Type | Value |
 | --- | --- | --- |
@@ -142,6 +161,12 @@ fixing a colour should aim a little above the minimum.
 
 A writer shall not write `Checked` for a theme that failed the check, or for
 one in which there was no text to check.
+
+PDF/UA-1, PDF/UA-2 and WTPDF cover structure and tagging and leave colour
+contrast to WCAG. The rules public bodies work to, such as EN 301 549 in
+Europe and Section 508 in the United States, apply WCAG's level AA criteria to
+documents, and 1.4.3 is one of them. `Checked` is where a themed file says
+which criterion each theme meets.
 
 ## 9. Readers
 
@@ -157,7 +182,8 @@ one in which there was no text to check.
 - Theme colours are colour managed like any other colours in the file.
 - A reader should print the default theme unless the person chooses another.
 - When the person has turned on forced colours (for example a Windows
-  contrast theme), the reader's forced colours take precedence over any theme.
+  contrast theme, CSS `forced-colors: active`), the reader's forced colours
+  take precedence over any theme.
 - A reader shall ignore a theme it cannot apply, for example one whose
   replacements break the rules in section 5, and show the default theme.
 
@@ -213,6 +239,9 @@ cannot change content streams, the check is narrow:
     Should `Checked` record what was checked (a digest of the page content,
     for example), so a reader can tell when the themes no longer match the
     pages and fall back to the default?
+13. Should the check cover 1.4.11 Non-text Contrast, so chart lines and other
+    graphics are held to 3:1 in every theme? Should a theme be able to say it
+    was made for colour vision deficiency?
 
 ## 13. Example
 
