@@ -544,15 +544,7 @@ class Deriver:
     def verify(self, default_info, info, pairs, paper, enhanced=False, drawn=None):
         """Draw one theme as a reader would and check its text contrast.
         drawn: as for contrast.check, a list that gets each page's fingerprint."""
-        write_themes(self.pdf, default_info, [(info, pairs)] if pairs is not None else [])
-        buf = io.BytesIO()
-        self.pdf.save(buf, fix_metadata_version=False)  # pikepdf would otherwise rewrite the file's XMP in place
-        with pikepdf.open(io.BytesIO(buf.getvalue())) as copy:
-            apply(copy, str(info["/Name"]))
-            paint_paper(copy, paper)
-            out = io.BytesIO()
-            copy.save(out)
-        return check(out.getvalue(), paper=paper, enhanced=enhanced, drawn=drawn)
+        return verify(self.pdf, default_info, info, pairs, paper, enhanced, drawn)
 
     def derive(self, default_info, specs, checked_fn, rounds=4, default_drawn=None):
         """Work out each theme, check it, and fix colours that fall short.
@@ -706,28 +698,82 @@ def checked_now(enhanced=False):
                        "/Level": Name(level), "/Date": String("D:" + datetime.date.today().strftime("%Y%m%d"))})
 
 
+def verify(pdf, default_info, info, pairs, paper, enhanced=False, drawn=None):
+    """Draw one theme as a reader would and check its text contrast.
+    drawn: as for contrast.check, a list that gets each page's fingerprint."""
+    write_themes(pdf, default_info, [(info, pairs)] if pairs is not None else [])
+    buf = io.BytesIO()
+    pdf.save(buf, fix_metadata_version=False)  # pikepdf would otherwise rewrite the file's XMP in place
+    with pikepdf.open(io.BytesIO(buf.getvalue())) as copy:
+        apply(copy, str(info["/Name"]))
+        paint_paper(copy, paper)
+        out = io.BytesIO()
+        copy.save(out)
+    return check(out.getvalue(), paper=paper, enhanced=enhanced, drawn=drawn)
+
+
+def _report(name, kind, report, kept):
+    lowest = report.get("lowest") if report else None
+    return {"name": name, "kind": kind, "kept": kept,
+            "passed": bool(report) and report.get("runs", 0) > 0 and not report["failures"],
+            "reason": None if kept else report.get("reason", "failed"),
+            "runs": report.get("runs", 0) if report else 0,
+            "unmeasured": report.get("unmeasured", 0) if report else 0,
+            "lowest": lowest["ratio"] if lowest else None,
+            "lowest_text": lowest["text"] if lowest else None,
+            "failures": [{k: f[k] for k in ("page", "text", "colour", "background", "ratio", "needs")}
+                         for f in (report.get("failures", []) if report else [])[:8]]}
+
+
+def add_authored_themes(merger, themes):
+    """Write the themes an author built, one per build: `themes[0]` describes
+    the default and the rest the alternates, in the order of the builds. Each
+    is drawn and its text contrast measured. A theme that passes carries a
+    Checked entry. One that fails is still written, without it, and nothing
+    about it is changed: fixing it is for the author, in the source."""
+    names = [t.name for t in themes]
+    if len(themes) != 1 + len(merger.replaces):
+        raise ValueError(f"{len(themes)} themes for {1 + len(merger.replaces)} builds")
+    for name in names:
+        if names.count(name) > 1:
+            raise ValueError(f"two themes are called {name}")
+    reports = []
+
+    def checked(theme, info, pairs, kind):
+        report = summary(verify(merger.pdf, default, info, pairs, tuple(theme.paper), theme.enhanced))
+        if report["runs"] > 0 and not report["failures"]:
+            info["/Checked"] = checked_now(theme.enhanced)
+        reports.append(_report(theme.name, kind, report, True))
+
+    default = themes[0].info()
+    checked(themes[0], default, None, "default")
+    alternates = []
+    for theme, pairs in zip(themes[1:], merger.replaces):
+        info = theme.info()
+        checked(theme, info, pairs, "author")
+        alternates.append((info, pairs))
+    write_themes(merger.pdf, default, alternates)
+    return reports
+
+
 def add_themes(merger, light_paper=(1.0, 1.0, 1.0), dark_paper=(0.0, 0.0, 0.0), derived=True):
-    """Give an organised document its themes: the light build as the
-    default, the dark build (if there was one) as Dark, and the standard
-    derived themes that pass their contrast check. Every theme is checked;
-    only those whose text was measured and passed carry a Checked entry.
-    Derived themes that fail, or that draw every page exactly like the
-    default, are left out. Returns one report per theme; a theme left out
-    has a reason, "failed" or "unchanged"."""
+    """Give an organised document its themes. Given a list of Theme (from
+    pdfthemes.themes) in place of the papers, it writes those, one per build:
+    see add_authored_themes.
+
+    Otherwise: the light build as the default, the dark build (if there was
+    one) as Dark, and the standard derived themes that pass their contrast
+    check. Every theme is checked; only those whose text was measured and
+    passed carry a Checked entry. Derived themes that fail, or that draw
+    every page exactly like the default, are left out. Returns one report
+    per theme; a theme left out has a reason, "failed" or "unchanged"."""
+    if isinstance(light_paper, list):
+        return add_authored_themes(merger, light_paper)
     d = Deriver(merger, light_paper, dark_paper)
     reports = []
 
     def note(name, kind, report, kept):
-        lowest = report.get("lowest") if report else None
-        reports.append({"name": name, "kind": kind, "kept": kept,
-                        "passed": bool(report) and report.get("runs", 0) > 0 and not report["failures"],
-                        "reason": None if kept else report.get("reason", "failed"),
-                        "runs": report.get("runs", 0) if report else 0,
-                        "unmeasured": report.get("unmeasured", 0) if report else 0,
-                        "lowest": lowest["ratio"] if lowest else None,
-                        "lowest_text": lowest["text"] if lowest else None,
-                        "failures": [{k: f[k] for k in ("page", "text", "colour", "background", "ratio", "needs")}
-                                     for f in (report.get("failures", []) if report else [])[:8]]})
+        reports.append(_report(name, kind, report, kept))
 
     def passed(report):
         return report["runs"] > 0 and not report["failures"]
