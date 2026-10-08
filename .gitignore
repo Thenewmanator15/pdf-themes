@@ -3,3 +3,4 @@ __pycache__/
 *.egg-info/
 .pytest_cache/
 !tests/objects/out/
+!tests/theme-lab/out/
