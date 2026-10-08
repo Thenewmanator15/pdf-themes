@@ -18,6 +18,7 @@ out too.
 from __future__ import annotations
 
 import argparse
+import io
 import json
 import pathlib
 import shutil
@@ -147,8 +148,11 @@ def cmd_typst(args) -> int:
             except TypstFailed as e:
                 print(f"Typst couldn't compile {args.document} with {args.input_name}={value}:\n{e}", file=sys.stderr)
                 return 1
+        # Read the builds into memory: an open file can't be deleted on Windows,
+        # and the merged Pdf outlives the temporary directory.
+        opened = {mode: pikepdf.open(io.BytesIO(path.read_bytes())) for mode, path in builds.items()}
         try:
-            m = merge(builds["light"], builds["dark"], organise=not args.only_dark)
+            m = merge(opened["light"], opened["dark"], organise=not args.only_dark)
         except core.MergeError as e:
             print(f"Can't merge the two builds: {e}", file=sys.stderr)
             return 1

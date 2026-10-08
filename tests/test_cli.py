@@ -64,6 +64,10 @@ def test_typst_command_runs_the_typst_program_once_per_mode(tmp_path):
         "        if a == '--input' and args[k + 1].startswith('mode=')][0]\n"
         f"shutil.copy({{'light': {str(builds['light'])!r}, 'dark': {str(builds['dark'])!r}}}[mode], args[2])\n")
     fake.chmod(fake.stat().st_mode | stat.S_IEXEC)
+    if sys.platform == "win32":
+        # Windows doesn't read the first line, so a batch file runs the script.
+        script, fake = fake, tmp_path / "typst.cmd"
+        fake.write_text(f'@"{sys.executable}" "{script}" %*\n')
     out = tmp_path / "themed.pdf"
     code = main(["typst", str(SAMPLE), "-o", str(out), "--typst", str(fake), "--font-path", str(FONTS),
                  "--ignore-system-fonts", "--input", "paper=a5", "--pdf-standard", "a-2b"])
