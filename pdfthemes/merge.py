@@ -22,10 +22,17 @@ becomes the default and the dark build's value becomes a replacement:
 With organise=True every colour goes into a palette even where the builds
 agree. That is what lets derive.py add further themes (dark, more contrast,
 tints) by computing new palettes. merge(pdf) organises a single PDF.
+
+merge_builds([default, alternate, ...]) takes one build per theme. It merges
+the first two as above, then merges each further build into the result: the
+merged file is the light side, and wherever the new build differs from it the
+new theme gets a replacement. The replacements of the themes already there
+are carried across to any object that was copied on the way.
 """
 
 from __future__ import annotations
 
+import re
 import zlib
 from collections import Counter, defaultdict
 
@@ -229,8 +236,12 @@ class Palette:
     """An Indexed colour space shared by content streams. Each entry has a
     light value (the default) and a dark value, each in its own base space."""
 
-    def __init__(self, merger, number, space_l, space_d, context):
+    def __init__(self, merger, number, space_l, space_d, context, origin=None):
         self.name = f"/Th{number}"
+        # A palette from an earlier merge that this one's entries were painted
+        # through, and each entry's index in it.
+        self.origin = origin
+        self.origin_idx: list[int] = []
         space_l, space_d = _palette_base(merger.pdf, space_l), _palette_base(merger.pdf, space_d)
         self.space_l, self.space_d = space_l, space_d
         self.rng_l, self.rng_d = C.ranges(space_l), C.ranges(space_d)
@@ -242,17 +253,20 @@ class Palette:
         self.roles: list[Counter] = []
         self.area: list[float] = []
 
-    def index(self, vl, vd, role="graphic"):
+    def index(self, vl, vd, role="graphic", origin_idx=None):
         """The entry for this pair of colours used this way. Text, fills and
         strokes get their own entries, so a theme can strengthen text and
-        lines without touching a box or a highlight of the same colour."""
+        lines without touching a box or a highlight of the same colour. Two
+        uses that came through different entries of an earlier palette stay
+        apart too, because an earlier theme may tell them apart."""
         key = (C.quantise(vl, self.rng_l), C.quantise(vd, self.rng_d),
-               role if role in ("text", "fill", "stroke") else "graphic")
+               role if role in ("text", "fill", "stroke") else "graphic", origin_idx)
         if key not in self.keys:
             if len(self.entries) >= PALETTE_SIZE:
                 return None
             self.keys[key] = len(self.entries)
             self.entries.append(key[:2])
+            self.origin_idx.append(origin_idx)
             self.roles.append(Counter())
             self.area.append(0.0)
         return self.keys[key]
@@ -359,10 +373,18 @@ def _mul(m, n):
 # ── The merger ───────────────────────────────────────────────────────────────
 
 class Merger:
-    def __init__(self, light: pikepdf.Pdf, dark: pikepdf.Pdf, organise: bool = False):
+    def __init__(self, light: pikepdf.Pdf, dark: pikepdf.Pdf, organise: bool = False, earlier=None):
         self.pdf = light
         self.dark = dark
         self.organise = organise
+        # Merging a further build into a file that already has themes:
+        # `earlier` is each of those themes' replacements, and stand_ins says
+        # which new objects took the place of one of their base objects.
+        self.earlier = {b.objgen for pairs in (earlier or []) for b, _ in pairs}
+        self.stand_ins: dict[tuple, list] = defaultdict(list)
+        self.palette_offset = _next_palette_number(light)
+        self._replaces = None
+        self.alts = [dark] if dark is not light else []
         self.graft = Grafter(light) if dark is not light else None
         self.palettes: dict[tuple, list[Palette]] = defaultdict(list)
         self.palette_list: list[Palette] = []
@@ -379,6 +401,26 @@ class Merger:
             return obj
         return self.graft.copy(obj)
 
+    @property
+    def replaces(self):
+        """Each alternate theme's replacements, in the order of the builds."""
+        if self._replaces is not None:
+            return self._replaces
+        return [self.replace] if self.dark is not self.pdf else []
+
+    def ident(self, obj):
+        """The object number of a base object from an earlier merge, else None."""
+        if self.earlier and getattr(obj, "is_indirect", False) and obj.objgen in self.earlier:
+            return obj.objgen
+        return None
+
+    def stands_in(self, old, new):
+        """Note that `new` now sits where `old`, an earlier theme's base, did."""
+        ident = self.ident(old)
+        if ident is not None:
+            self.stand_ins[ident].append(new)
+        return new
+
     def fresh(self, obj):
         """A new indirect object with the same content, for a theme to replace."""
         if isinstance(obj, pikepdf.Stream):
@@ -386,30 +428,58 @@ class Merger:
             for k, v in obj.items():
                 if k != "/Length":
                     s[k] = v
-            return self.pdf.make_indirect(s)
-        if isinstance(obj, pikepdf.Dictionary):
-            return self.pdf.make_indirect(_direct_copy(obj))
-        if isinstance(obj, pikepdf.Array):
-            return self.pdf.make_indirect(Array(list(obj)))
-        return self.pdf.make_indirect(_scalar(self.pdf, obj))
+            new = self.pdf.make_indirect(s)
+        elif isinstance(obj, pikepdf.Dictionary):
+            new = self.pdf.make_indirect(_direct_copy(obj))
+        elif isinstance(obj, pikepdf.Array):
+            new = self.pdf.make_indirect(Array(list(obj)))
+        else:
+            new = self.pdf.make_indirect(_scalar(self.pdf, obj))
+        return self.stands_in(obj, new)
+
+    def carried(self, earlier):
+        """The earlier themes' replacements after this merge: what they had,
+        plus a replacement for every object this merge put in a base's place."""
+        out = []
+        for pairs in earlier:
+            by_base = {b.objgen: a for b, a in pairs}
+            new = list(pairs)
+            for pal in self.palette_list:
+                old = by_base.get(pal.origin.objgen) if pal.origin is not None else None
+                if old is not None:
+                    n = C.components(old[1])
+                    lookup = C.indexed_lookup(old)
+                    data = b"".join(lookup[i * n:(i + 1) * n] for i in pal.origin_idx)
+                    new.append((pal.base, self.pdf.make_indirect(
+                        Array([Name.Indexed, old[1], max(len(pal.entries) - 1, 0), String(data)]))))
+            for ident, copies in self.stand_ins.items():
+                if ident in by_base:
+                    new.extend((copy, by_base[ident]) for copy in copies)
+            out.append(new)
+        return out
 
     def swap(self, base, alt):
         self.replace.append((base, self.pdf.make_indirect(alt) if not alt.is_indirect else alt))
 
     # Palettes ----------------------------------------------------------------
-    def palette(self, space_l, vl, space_d, vd, context, role="graphic"):
+    def palette(self, space_l, vl, space_d, vd, context, role="graphic", origin=None):
+        """`origin`: the earlier palette and index the light side painted through."""
         key = (canon(space_l), canon(space_d), context)
+        from_pal, from_idx = origin if origin is not None else (None, None)
+        if from_pal is not None:
+            key += (from_pal.objgen,)
         if context == "paint" and not self.organise and key[0] == key[1] and \
                 C.quantise(vl, C.ranges(space_l)) == C.quantise(vd, C.ranges(space_d)):
             return None, None  # the same colour in both builds
         for pal in self.palettes[key]:
-            i = pal.index(vl, vd, role)
+            i = pal.index(vl, vd, role, from_idx)
             if i is not None:
                 return pal, i
-        pal = Palette(self, len(self.palette_list), space_l, self.from_dark(space_d), context)
+        pal = Palette(self, self.palette_offset + len(self.palette_list), space_l, self.from_dark(space_d), context,
+                      from_pal)
         self.palettes[key].append(pal)
         self.palette_list.append(pal)
-        return pal, pal.index(vl, vd, role)
+        return pal, pal.index(vl, vd, role, from_idx)
 
     # Colour values outside content streams ------------------------------------
     def theme_value(self, owner, key, vl, vd, kind):
@@ -425,7 +495,7 @@ class Merger:
             return canon(vl) != canon(vd)
         if canon(vl) == canon(vd) and not self.organise:
             return
-        ck = ("value", canon(vl), canon(vd), kind)
+        ck = ("value", canon(vl), canon(vd), kind, self.ident(vl))
         if ck not in self.cache:
             base = self.fresh(vl)
             alt = None
@@ -527,7 +597,27 @@ class Merger:
                 return resolved[key]
             cl, cd = colour_of(res_l, el.space, el.operands), colour_of(res_d, ed.space, ed.operands)
             cs_op, sc_op = ("CS", "SCN") if stroke else ("cs", "scn")
-            if cl[0] == "pattern" and cd[0] == "pattern":
+            # The light side may paint through a palette an earlier merge made.
+            origin = None
+            through = cl[3] if cl[0] == "pattern" else cl[3] if C.family(cl[3]) == "/Indexed" else None
+            if through is not None and self.ident(through) is not None:
+                origin = (through, int(round(float(el.operands[0]))))
+            if cl[0] == "pattern" and cd[0] == "pattern" and origin is not None:
+                name = self.merge_pattern(cl[1], cd[1], res_l, res_d, R, context)
+                if cd[3] is None:
+                    raise MergeError("a pattern is coloured in one build and uncoloured in the other")
+                base_l, vals_l = C.indexed_resolve(through, origin[1])
+                pal, idx = self.palette(base_l, vals_l, cd[3], cd[2], context, role, origin=origin)
+                if pal is None:  # the colour it already has: write it as it was
+                    R.use("/ColorSpace", el.space)
+                    result = (("pattern", name, cl[2], el.space),
+                              [([Name(el.space)], cs_op), ([*el.operands[:-1], Name(name)], sc_op)], None)
+                else:
+                    space = self.cache.setdefault(("pattern-space", pal.name), Array([Name.Pattern, pal.base]))
+                    space_name = R.add("/ColorSpace", space, "TPs")
+                    result = (("pattern", name, pal.name, idx),
+                              [([Name(space_name)], cs_op), ([idx, Name(name)], sc_op)], (pal, idx))
+            elif cl[0] == "pattern" and cd[0] == "pattern":
                 name = self.merge_pattern(cl[1], cd[1], res_l, res_d, R, context)
                 if cl[2] == cd[2] and canon(cl[3]) == canon(cd[3]) and not (self.organise and cl[2]):
                     if cl[3] is None:
@@ -548,7 +638,7 @@ class Merger:
             elif "pattern" in (cl[0], cd[0]):
                 raise MergeError("a pattern in one build is a solid colour in the other")
             else:
-                pal, idx = self.palette(cl[1], cl[2], cd[1], cd[2], context, role)
+                pal, idx = self.palette(cl[1], cl[2], cd[1], cd[2], context, role, origin=origin)
                 if pal is None:  # the same colour in both builds: write it as it was
                     if el.op in DEVICE_OPS:
                         ops = [(list(el.operands), el.op)]
@@ -590,6 +680,16 @@ class Merger:
             if na != nb:
                 # Paint set in one build only: a graphics state or a colour
                 # change. The other build keeps what it had.
+                # A colour change first: the builds may set colours at
+                # different points around a graphics state they both set.
+                if na in ("FILL", "STROKE"):
+                    st_l[-1].colour[na == "STROKE"] = a
+                    i += 1
+                    continue
+                if nb in ("FILL", "STROKE"):
+                    st_d[-1].colour[nb == "STROKE"] = b
+                    j += 1
+                    continue
                 if na == "gs":
                     dl = gs_dict(res_l, a.operands[0])
                     do_gs(dl, synthetic(st_d[-1], dl), str(a.operands[0]))
@@ -600,14 +700,20 @@ class Merger:
                     do_gs(synthetic(st_l[-1], dd), dd, None)
                     j += 1
                     continue
-                if na in ("FILL", "STROKE"):
-                    st_l[-1].colour[na == "STROKE"] = a
-                    i += 1
-                    continue
-                if nb in ("FILL", "STROKE"):
-                    st_d[-1].colour[nb == "STROKE"] = b
-                    j += 1
-                    continue
+                if na == "Do" and nb == "INLINE IMAGE":
+                    # An earlier merge made this inline image an image object.
+                    xl = R.lookup("/XObject", str(a.operands[0]))
+                    if xl.get("/Subtype") == Name.Image and not xl.get("/ImageMask"):
+                        flush()
+                        merged = self.merge_image(xl, self.inline_to_xobject(b.iimage, res_d, dark=True), context)
+                        if merged is xl:
+                            R.use("/XObject", str(a.operands[0]))
+                            emit([a.operands[0]], "Do")
+                        else:
+                            emit([Name(R.add("/XObject", merged, "TI"))], "Do")
+                        i += 1
+                        j += 1
+                        continue
                 raise MergeError(f"the builds draw differently at operator {i} ({na}) and {j} ({nb})")
             i += 1
             j += 1
@@ -717,12 +823,12 @@ class Merger:
             if name_l is not None:
                 R.use("/ExtGState", name_l)
             return name_l
-        key = ("gs", canon(dl), canon(dd))
+        key = ("gs", canon(dl), canon(dd), self.ident(dl))
         if key not in self.cache:
             base = _direct_copy(dl)
             if isinstance(smask, pikepdf.Dictionary) or "/SMask" in dl:
                 base["/SMask"] = smask
-            base = self.pdf.make_indirect(base)
+            base = self.stands_in(dl, self.pdf.make_indirect(base))
             if paint_differs:
                 alt = _direct_copy(base)
                 for k in GS_PAINT:
@@ -834,7 +940,7 @@ class Merger:
         return R.add("/Pattern", base, "TPat")
 
     def themed_shading(self, sl, sd, kind, context="paint"):
-        key = (kind, canon(sl), canon(sd), context)
+        key = (kind, canon(sl), canon(sd), context, self.ident(sl))
         if key in self.cache:
             return self.cache[key]
         differs = canon(sl) != canon(sd)
@@ -968,7 +1074,8 @@ class Merger:
             colours = [C.to_srgb(space_l, C.dequantise(tuple(int(v) for v in row[:n_l]), rng_l)) for row in pairs]
             if not _diagram_like(colours, counts):
                 return xl
-        pal = Palette(self, len(self.palette_list), space_l, self.from_dark(space_d), pal_context)
+        pal = Palette(self, self.palette_offset + len(self.palette_list), space_l, self.from_dark(space_d),
+                      pal_context)
         for row in pairs:
             entry = (tuple(int(v) for v in row[:n_l]), tuple(int(v) for v in row[n_l:]))
             pal.keys[entry] = len(pal.entries)
@@ -992,7 +1099,7 @@ class Merger:
             if k in xl:
                 img[k] = xl[k]
         self.stats["images stored as palette indices"] += 1
-        return self.pdf.make_indirect(img)
+        return self.stands_in(xl, self.pdf.make_indirect(img))
 
     def grey_scan(self, x):
         """A grey image of a page, with dark marks on light paper, gets an
@@ -1314,4 +1421,91 @@ def merge(light, dark=None, *, organise=False):
         m.merge_page(pl, pd)
     m.merge_document()
     m.finish()
+    return m
+
+
+def _next_palette_number(pdf):
+    """One past the highest /ThN colour space name already in the file."""
+    highest = -1
+    for obj in pdf.objects:
+        if not isinstance(obj, (pikepdf.Dictionary, pikepdf.Stream)):
+            continue
+        res = obj.get("/Resources")
+        for holder in (obj, res if isinstance(res, pikepdf.Dictionary) else None):
+            spaces = holder.get("/ColorSpace") if holder is not None else None
+            if isinstance(spaces, pikepdf.Dictionary):
+                for name in spaces.keys():
+                    found = re.fullmatch(r"/Th(\d+)", name)
+                    if found:
+                        highest = max(highest, int(found.group(1)))
+    return highest + 1
+
+
+def _reach(obj, seen):
+    """Add every indirect object reachable from `obj` to `seen`."""
+    stack = [obj]
+    while stack:
+        o = stack.pop()
+        if getattr(o, "is_indirect", False):  # a string can be a base object too (DA, DS, RC)
+            if o.objgen in seen:
+                continue
+            seen.add(o.objgen)
+        if not isinstance(o, (pikepdf.Dictionary, pikepdf.Array, pikepdf.Stream)):
+            continue
+        stack.extend(o if isinstance(o, pikepdf.Array) else [v for _, v in o.items()])
+
+
+def _in_use(pdf, replaces):
+    """Each theme's replacements without those whose base object nothing
+    draws any more: later merges copy objects, and the copies carry on."""
+    live = set()
+    _reach(pdf.Root, live)
+    grown = True
+    followed = set()
+    while grown:  # a replacement can itself lead to base objects (an annotation's appearance)
+        grown = False
+        for pairs in replaces:
+            for base, alt in pairs:
+                if base.objgen in live and alt.objgen not in followed:
+                    followed.add(alt.objgen)
+                    before = len(live)
+                    _reach(alt, live)
+                    grown = grown or len(live) > before
+    return [[(b, a) for b, a in pairs if b.objgen in live] for pairs in replaces]
+
+
+def merge_builds(builds, *, organise=False):
+    """Merge one build per theme (paths or open Pdfs). The first build is
+    the default; each of the others becomes an alternate theme, and
+    `replaces` on the result holds their replacements in the same order."""
+    pdfs = [b if isinstance(b, pikepdf.Pdf) else pikepdf.open(b) for b in builds]
+    if len(pdfs) < 2:
+        raise MergeError("merging needs at least two builds")
+    if organise and len(pdfs) > 2:
+        raise MergeError("working themes out isn't supported with more than two builds")
+    default = pdfs[0]
+    for k, alt in enumerate(pdfs[1:], start=2):
+        if len(alt.pages) != len(default.pages):
+            raise MergeError(f"theme {k} has {len(alt.pages)} pages, the default has {len(default.pages)}")
+    replaces, palettes, stats, notes = [], [], Counter(), []
+    m = None
+    for k, alt in enumerate(pdfs[1:], start=2):
+        m = Merger(default, alt, organise=organise, earlier=replaces)
+        pages = list(alt.pages)
+        for n, page in enumerate(default.pages):
+            try:
+                m.merge_page(page, pages[n])
+            except MergeError as e:
+                raise MergeError(f"theme {k}, page {n + 1}: {e}") from None
+        try:
+            m.merge_document()
+        except MergeError as e:
+            raise MergeError(f"theme {k}: {e}") from None
+        m.finish()
+        replaces = m.carried(replaces) + [m.replace]
+        palettes += m.palette_list
+        stats.update(m.stats)
+        notes += [note for note in m.notes if note not in notes]
+    m._replaces = _in_use(default, replaces) if len(pdfs) > 2 else replaces
+    m.palette_list, m.stats, m.notes, m.alts = palettes, stats, notes, pdfs[1:]
     return m
