@@ -168,11 +168,11 @@ two, it merges the first two, then merges each further build into the result
 and carries the earlier themes' replacements across.
 
 - **Colours.** Every solid colour, in any colour space, becomes an entry in an
-  Indexed palette. The page then says `/Th0 cs 15 sc` where it said
-  `0.604 0.125 0.714 scn`. A colour is written just before the operator that
-  paints with it, so text, fills and strokes get their own entries. That's
-  what lets a theme strengthen text without touching a highlight of the same
-  colour.
+  Indexed palette. The page then says `/Th25 CS 0 SC` where it said
+  `/c1 CS 0.7529412 0.5137255 0.16470589 SCN`. A colour is written just before
+  the operator that paints with it, so text, fills and strokes get their own
+  entries. That's what lets a theme strengthen text without touching a
+  highlight of the same colour.
 - **Inside other objects.** Form XObjects, tiling patterns, Type 3 glyphs,
   annotation appearances and soft mask groups are walked the same way, so
   their colours join the palettes.
