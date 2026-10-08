@@ -667,9 +667,14 @@ class Merger:
                 o.emitted[stroke] = what
             record(entry, role, area)
 
+        def keep(instruction):
+            """Write an instruction exactly as the light build has it. Its
+            numbers stay as they were written: pikepdf rounds a number given
+            back to it as a Python value, and a very small one becomes 0."""
+            out.append(instruction)
+
         def flush():
-            for operands, op in pending:
-                emit(operands, op)
+            out.extend(pending)
             pending.clear()
 
         while i < len(ops_l) or j < len(ops_d):
@@ -731,7 +736,7 @@ class Merger:
                 elif na in ("m", "l", "c", "v", "y"):
                     vals = [_num(v) for v in A]
                     path.extend(zip(vals[0::2], vals[1::2]))
-                pending.append((A, na))
+                pending.append(a)
                 continue
             if na in FILL_OPS or na in STROKE_OPS or na == "n":
                 if na in FILL_OPS:
@@ -740,7 +745,7 @@ class Merger:
                     ensure(True, "stroke")
                 flush()
                 path.clear()
-                emit(A, na)
+                keep(a)
                 continue
             flush()  # a path left without a painting operator: written as it was
             if na == "q":
@@ -758,12 +763,12 @@ class Merger:
                 if canon(Array(A)) != canon(Array(B)):
                     raise MergeError(f"the builds place things differently at operator {i - 1} (cm)")
                 os_[-1].ctm = _mul(tuple(_num(v) for v in A), os_[-1].ctm)
-                emit(A, "cm")
+                keep(a)
             elif na == "gs":
                 do_gs(gs_dict(res_l, A[0]), gs_dict(res_d, B[0]), str(A[0]))
             elif na == "Tr":
                 os_[-1].tr = int(A[0])
-                emit(A, na)
+                keep(a)
             elif na in TEXT_SHOW:
                 if canon(Array(A)) != canon(Array(B)):
                     raise MergeError(f"the builds show different text at operator {i - 1}")
@@ -772,7 +777,7 @@ class Merger:
                     ensure(False, "text")
                 if tr in (1, 2, 5, 6):
                     ensure(True, "text")
-                emit(A, na)
+                keep(a)
             elif na == "Do":
                 xl = R.lookup("/XObject", str(A[0]))
                 if xl.get("/Subtype") == Name.Form:  # it may paint in the colours set here
@@ -798,11 +803,11 @@ class Merger:
                 if pd is None or canon(pl) != canon(pd):
                     raise MergeError(f"marked content properties differ at operator {i - 1}")
                 R.use("/Properties", str(A[1]))
-                emit(A, na)
+                keep(a)
             else:
                 if canon(Array(A)) != canon(Array(B)):
                     raise MergeError(f"the builds differ at operator {i - 1} ({na}): {A!r} vs {B!r}")
-                emit(A, na)
+                keep(a)
         flush()
         return out, R
 

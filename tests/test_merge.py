@@ -121,3 +121,17 @@ def test_inline_image_follows_a_named_colour_space_that_differs(tmp_path):
         pdf.save(tmp_path / "as-dark.pdf")
     assert render(tmp_path / "themed.pdf")[5, 5].tolist() == [255, 0, 0]
     assert render(tmp_path / "as-dark.pdf")[5, 5].tolist() == [0, 0, 255]
+
+
+def test_a_number_too_small_to_round_is_written_as_it_was():
+    # Typst writes a quarter turn as 0.00000000000000006123234 1 1 ..., not 0 1 1 ...
+    # Rounding it to 0 moves the anti-aliasing of rotated text in MuPDF and Poppler.
+    def turned(colour):
+        pdf = pikepdf.new()
+        pdf.add_blank_page(page_size=(10, 10))
+        pdf.pages[0].obj.Contents = pdf.make_stream(
+            f"q 0.00000000000000006123234 1 1 -0.00000000000000006123234 4 5 cm {colour} rg 0 0 3 3 re f Q".encode())
+        return pdf
+    m = merge(turned("1 0 0"), turned("0 0 1"))
+    written = m.pdf.pages[0].Contents.read_bytes()
+    assert b"0.00000000000000006123234 1 1 -0.00000000000000006123234 4 5 cm" in written
