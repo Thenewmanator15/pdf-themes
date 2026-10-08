@@ -32,15 +32,16 @@ Themes built from source, one build per theme:
 | --- | --- | --- |
 | Builds | 8, one per standard theme | 2, light and dark |
 | Light build | 38,318 bytes | 1,900,431 bytes |
-| Themed file, Light and Dark | 38,801 (+1.3%) | 1,943,737 (+2.3%) |
-| Themed file, all 8 themes | 39,718 (+3.7%) | |
+| Themed file, Light and Dark | 39,034 (+1.9%) | 1,943,737 (+2.3%) |
+| Themed file, all 8 themes | 39,966 (+4.3%) | |
 | The builds as separate files | 304,725 | 3,800,176 |
-| Each theme against its own build, in PDFium | identical | identical but for page 2 |
+| Each theme against its own build | identical in Poppler, MuPDF and PDFium | identical in PDFium but for page 2 |
 | Themes that passed their contrast check | 8 of 8 | see below |
 
 The theme lab (`tests/theme-lab`) is a Typst document with Lilaq plots. It
 sets its paper, text and rule colours per theme and fits each plot's series
-colours to the paper. The objects test (`tests/objects`) holds every kind of
+colours to the paper. It was drawn at 144 dpi in Poppler 25.07, MuPDF 1.28.2
+and PDFium 156, and the objects test at 72 dpi in PDFium. The objects test (`tests/objects`) holds every kind of
 object a PDF 2.0 file can contain. Page 2 is its colour spaces page: colours
 written as decimals in Lab, calibrated and ICC spaces go through 8-bit
 palettes, and land up to 4 levels out of 255 away in light and 1 in dark. It
@@ -196,12 +197,15 @@ The themes then sit in the catalog under `/XXThemes`:
 ```
 /XXThemes <<
   /Default << /Type /Theme /Name (Light) /ColorScheme /Light /Paper [1 1 1] /Checked << ... >> >>
-  /Alternates [ << /Type /Theme /Name (Dark) /ColorScheme /Dark /Paper [0 0 0]
-                   /Replace [ 67 0 R 230 0 R  68 0 R 220 0 R ... ] >>
+  /Alternates [ << /Type /Theme /Name (Dark) /ColorScheme /Dark /Paper [0.0941 0.098 0.1098]
+                   /Replace [ 94 0 R 160 0 R  99 0 R 177 0 R ... ] >>
                 << /Type /Theme /Name (Cream) /ColorScheme /Light /Tint /Cream
-                   /Paper [0.988 0.953 0.855] /Replace [ ... ] >> ... ]
+                   /Paper [0.9922 0.9647 0.8902] /Replace [ 99 0 R 186 0 R ... ] >> ... ]
 >>
 ```
+
+That one is from the theme lab's file in `demo/`, shortened. `pdf-themes info`
+lists the themes in a file and what each one swaps.
 
 `apply` swaps each pair in `Replace`, so anything that pointed at the first
 object now gets the second. In the demo that's about ten lines of JavaScript.

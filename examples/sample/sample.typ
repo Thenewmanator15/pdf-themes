@@ -1,8 +1,8 @@
-// Theme test page: the parts of a document the CV doesn't have.
+// Theme test page: a heading, body text and three kinds of picture.
 // No page fill, so the theme's paper colour shows through; a vector chart
 // with a key; a chart as an image; and a full-colour image left as it is.
 //
-//   typst compile --font-path ../../cv/fonts --pdf-standard 2.0 sample.typ
+//   typst compile --font-path ../fonts --pdf-standard 2.0 sample.typ
 //   add --input mode=dark for the dark build
 
 #let mode = sys.inputs.at("mode", default: "light")

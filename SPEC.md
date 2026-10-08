@@ -264,18 +264,22 @@ cannot change content streams, the check is narrow:
 << /Type /Catalog /Pages 2 0 R
    /Themes <<
      /Default << /Type /Theme /Name (Light) /ColorScheme /Light /Paper [1 1 1] >>
-     /Alternates [ << /Type /Theme /Name (Dark) /ColorScheme /Dark /Paper [0 0 0]
-                      /Replace [ 67 0 R 230 0 R ] >>
+     /Alternates [ << /Type /Theme /Name (Dark) /ColorScheme /Dark /Paper [0.0941 0.098 0.1098]
+                      /Replace [ 99 0 R 177 0 R ] >>
                    << /Type /Theme /Name (Cream) /ColorScheme /Light /Tint /Cream
-                      /Paper [0.988 0.953 0.855] /Replace [ 67 0 R 240 0 R ] >> ]
+                      /Paper [0.9922 0.9647 0.8902] /Replace [ 99 0 R 186 0 R ] >> ]
    >>
 >>
 endobj
 
-67 0 obj  [/Indexed [/ICCBased 231 0 R] 16 <F5F5F7 FFFFFF ... 9A20B6 FFFFFF>] endobj
-230 0 obj [/Indexed [/ICCBased 231 0 R] 16 <000000 2E2838 ... C47BFF 160A24>] endobj
-240 0 obj [/Indexed [/ICCBased 231 0 R] 16 <F9F1DA FCF3DA ... 9A20B6 FCF3DA>] endobj
+99 0 obj  [/Indexed [/ICCBased 987 0 R] 5 <C0832A 879594 C0832A 879594 9F9464 6C9C9F>] endobj
+177 0 obj [/Indexed [/ICCBased 987 0 R] 5 <FFA90E 94A4A2 FFA90E 94A4A2 B9AC70 92DADD>] endobj
+186 0 obj [/Indexed [/ICCBased 987 0 R] 5 <B47C2C 808E8D B47C2C 808E8D 968D60 669295>] endobj
 
 % in a content stream, the same bytes in every theme:
-/Th0 cs 15 sc
+/Th25 CS 0 SC
 ```
+
+The numbers are from one palette of the theme lab's file in `demo/`: six plot
+colours, as fitted to white paper, to dark paper and to cream. The file's
+other palettes and its other six themes are left out.

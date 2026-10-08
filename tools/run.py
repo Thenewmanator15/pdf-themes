@@ -2,8 +2,8 @@
 with the standard themes, and measure the result.
 
 Run from the project folder:
-    python tools/run.py                      # the test page in examples/sample
-    python tools/run.py --cv path/to/cv.typ  # also a Typst CV that takes a mode input
+    python tools/run.py                              # the test page in examples/sample
+    python tools/run.py --document path/to/doc.typ   # also a Typst document of your own
 Needs typst, pikepdf, pymupdf, pypdfium2, numpy, pillow, and poppler-utils
 (pdftoppm, pdftotext) and qpdf on the path.
 
@@ -161,12 +161,14 @@ def pair_picture(a_path, b_path, target, page=0, scale=1.25):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--cv", type=pathlib.Path, help="a Typst CV that takes --input mode=light|dark")
-    parser.add_argument("--cv-fonts", type=pathlib.Path, help="the CV's font folder (default: fonts/ beside it)")
+    parser.add_argument("--document", type=pathlib.Path,
+                        help="a Typst document of your own that takes --input mode=light|dark")
+    parser.add_argument("--fonts", type=pathlib.Path, help="its font folder (default: fonts/ beside it)")
     opts = parser.parse_args()
-    if opts.cv:
-        DOCS = {"cv": dict(source=opts.cv.resolve(), fonts=(opts.cv_fonts or opts.cv.resolve().parent / "fonts"),
-                           paper={"Light": (1, 1, 1), "Dark": (0, 0, 0)}), **DOCS}
+    if opts.document:
+        source = opts.document.resolve()
+        DOCS = {source.stem: dict(source=source, fonts=opts.fonts or source.parent / "fonts",
+                                  paper={"Light": (1, 1, 1), "Dark": (0, 0, 0)}), **DOCS}
     OUT.mkdir(exist_ok=True)
     for old in OUT.glob("*"):
         if old.name.split("-")[0] in DOCS or old.name == "results.json":

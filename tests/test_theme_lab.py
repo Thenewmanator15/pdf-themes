@@ -4,6 +4,8 @@ every theme has to draw like the build it came from."""
 
 import io
 import pathlib
+import shutil
+import subprocess
 
 import numpy as np
 import pikepdf
@@ -51,13 +53,32 @@ def test_theme_lab_carries_the_eight_themes_its_author_built(merged):
     assert all(r["kept"] for r in merged[1])
 
 
+def drawn(data, engine, tmp_path):
+    """Page 1 at 144 dpi, as each engine draws it."""
+    if engine == "PDFium":
+        pdfium = pytest.importorskip("pypdfium2")
+        return np.asarray(pdfium.PdfDocument(data)[0].render(scale=2).to_pil().convert("RGB")).astype(int)
+    if engine == "MuPDF":
+        pymupdf = pytest.importorskip("pymupdf")
+        pix = pymupdf.open(stream=data, filetype="pdf")[0].get_pixmap(matrix=pymupdf.Matrix(2, 2))
+        return np.frombuffer(pix.samples, dtype=np.uint8).reshape(pix.height, pix.width, pix.n)[:, :, :3].astype(int)
+    if not shutil.which("pdftoppm"):
+        pytest.skip("pdftoppm (Poppler) is not installed")
+    Image = pytest.importorskip("PIL.Image")
+    (tmp_path / "page.pdf").write_bytes(data)
+    subprocess.run(["pdftoppm", "-r", "144", "-png", "-singlefile", str(tmp_path / "page.pdf"), str(tmp_path / "page")],
+                   check=True)
+    return np.asarray(Image.open(tmp_path / "page.png").convert("RGB")).astype(int)
+
+
+@pytest.mark.parametrize("engine", ["PDFium", "MuPDF", "Poppler"])
 @pytest.mark.parametrize("mode", MODES)
-def test_each_theme_draws_like_its_own_build(merged, mode):
+def test_each_theme_draws_like_its_own_build(merged, mode, engine, tmp_path):
     with pikepdf.open(io.BytesIO(merged[0])) as pdf:
         apply(pdf, MODES[mode][0])
-        shown = pages(saved(pdf))
-    built = pages((OUT / f"{mode}.pdf").read_bytes())
-    assert max(int(np.abs(a - b).max()) for a, b in zip(shown, built)) == 0
+        shown = drawn(saved(pdf), engine, tmp_path)
+    built = drawn((OUT / f"{mode}.pdf").read_bytes(), engine, tmp_path)
+    assert shown.shape == built.shape and int(np.abs(shown - built).max()) == 0
 
 
 def test_eight_themes_cost_less_than_two_builds(merged):
