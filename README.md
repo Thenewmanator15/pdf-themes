@@ -19,7 +19,8 @@ Choosing a theme is a view setting, like draft mode: it changes how the pages
 are drawn, never what they say.
 
 It's a proof of concept for a proposal to the PDF Association. The draft
-specification is in [SPEC.md](SPEC.md).
+specification is in [SPEC.md](SPEC.md). You can switch themes in the
+[live demo](https://thenewmanator15.github.io/pdf-themes/).
 
 ## Results
 
