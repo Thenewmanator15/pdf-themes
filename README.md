@@ -48,6 +48,14 @@ palettes, and land up to 4 levels out of 255 away in light and 1 in dark. It
 also has text that is faint on purpose, so neither of its themes is marked as
 checked.
 
+The proposal itself is a themed file too (`demo/proposal-themed.pdf`). It's a
+tagged PDF/A-2a and PDF/UA-1 document with pictures, tables and two plots,
+built once in each of the eight themes from one Typst source. Its light build
+is 725 kB and the seven extra themes add about 500 bytes. Each theme draws
+pixel for pixel like its own build in Poppler, MuPDF and PDFium, the text and
+the tagged content are the same in every theme, and all eight pass their
+contrast check.
+
 The first prototype measured a test page built twice with Typst (light and
 dark) and a test document written to use every way a PDF can carry colour
 (`tools/corpus.py`, six pages). In these the six themes beyond light and dark
@@ -104,7 +112,7 @@ pdf-themes merge light.pdf dark.pdf -o themed.pdf --dark-paper 1C1C1E
 pdf-themes add document.pdf -o themed.pdf
 pdf-themes info themed.pdf
 pdf-themes apply themed.pdf --theme Cream -o cream.pdf
-pdf-themes check document.pdf
+pdf-themes check document.pdf                 # text contrast, then lines and shapes
 ```
 
 `typst` compiles a Typst document once per mode, with `--input mode=light`,
@@ -265,19 +273,41 @@ With no source to build from, `pdf-themes add` works the themes out.
   original on a few per cent of pixels. It lets the browser decode a plain
   grey JPEG but decodes one with a palette itself, and the two decoders round
   differently.
-- Only text contrast is checked. Chart lines, icons and other graphics, which
-  WCAG 1.4.11 Non-text Contrast holds to 3:1, aren't measured yet.
+- Only text contrast decides whether a theme is marked as checked. Lines and
+  shapes are measured against the colour drawn beside them, and the ones
+  under the 3:1 of WCAG 1.4.11 Non-text Contrast are listed, but the tool
+  can't tell which of them carry meaning, so the list is for the author to
+  look over. Shapes that are see-through or filled with a gradient aren't
+  measured.
 - Uses the private key `/XXThemes`. Files shared beyond testing should use a
   registered developer prefix until a standard key exists.
 
 ## PDF/A and PDF/UA
 
-Typst writes PDF/A-2b and PDF/UA-1. Themed versions of the test page in each,
+Typst writes PDF/A and PDF/UA-1. Themed versions of the test page in each,
 and in both at once, keep their XMP metadata byte for byte, their output
 intent, structure tree and marked content, and use no colour space the build
 didn't already use (`tools/conformance.py build.pdf themed.pdf`). That covers
-what theming touches, but it isn't a full validation. That needs veraPDF,
-which couldn't be installed where this was built.
+what theming touches, but it isn't a full validation.
+
+veraPDF 1.28.2 is the full validation, and themed files pass it:
+
+| File | Standard | Light build | Themed file | Each theme as a reader shows it |
+| --- | --- | --- | --- | --- |
+| Theme lab, 8 themes | PDF/A-2b | passes | passes | 7 of 7 pass |
+| Theme lab, 8 themes | PDF/A-2u | passes | passes | 7 of 7 pass |
+| Theme lab, 8 themes | PDF/A-4 | passes | passes | 7 of 7 pass |
+| The proposal, 8 themes | PDF/A-2a | passes | passes | 7 of 7 pass |
+| The proposal, 8 themes | PDF/UA-1 | passes | passes | 7 of 7 pass |
+
+A validator only checks what the pages reach, and nothing reaches an alternate
+theme's objects until that theme is shown. So `tools/verapdf.py themed.pdf`
+validates the file as stored and then each theme as a file of its own, with
+its objects swapped in. The theme lab can't be built as PDF/A-1b, because its
+heatmap has transparency, or as a tagged standard, because its plots have no
+alt text, which is why the tagged standards were tested on the proposal.
+`tests/test_conformance.py` runs the proposal through veraPDF when it's
+installed.
 
 PDF/UA covers structure and tagging and leaves colour contrast to WCAG, so
 the two sit side by side: the tags are the same in every theme, and each

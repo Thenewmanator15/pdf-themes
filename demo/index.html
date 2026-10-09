@@ -274,7 +274,7 @@ details pre {
 <div class="wrap">
   <header>
     <h1>Themed PDF Viewer</h1>
-    <p class="lede">Each document here is a single PDF with its content stored once and its colour themes inside it. This page loads the themes it finds in the file and does what a theme-aware reader would. It swaps the objects a theme lists, paints the theme's paper colour and draws the page. In the theme lab, the objects test and the figure, every theme is one the author built from the source, plots and all. In the three older test documents only light and dark were built, and the other six were worked out by the tool. Any PDF reader today shows the light colours.</p>
+    <p class="lede">Each document here is a single PDF with its content stored once and its colour themes inside it. This page loads the themes it finds in the file and does what a theme-aware reader would. It swaps the objects a theme lists, paints the theme's paper colour and draws the page. The first document is the proposal itself, a tagged PDF/A-2a and PDF/UA-1 file. In the proposal, the theme lab, the objects test and the figure, every theme is one the author built from the source, plots and all. In the three older test documents only light and dark were built, and the other six were worked out by the tool. Any PDF reader today shows the light colours.</p>
   </header>
 
   <div class="controls">
@@ -344,6 +344,7 @@ const { PDFDocument, PDFName, PDFArray, PDFDict, PDFNumber, PDFRawStream, decode
 
 const THEMES_KEY = "XXThemes";  // a private name until a standard one is agreed
 const DOCS = [
+  { id: "proposal", file: "proposal-themed.pdf", label: "The proposal, in eight themes" },
   { id: "lab", file: "theme-lab-themed.pdf", label: "Theme lab: plots in eight themes" },
   { id: "corpus", file: "corpus-themed.pdf", label: "Test document, 6 pages" },
   { id: "sample", file: "sample-themed.pdf", label: "Test page" },
