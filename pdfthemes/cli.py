@@ -29,7 +29,7 @@ import tempfile
 import pikepdf
 
 from . import core
-from .contrast import check, summary
+from .contrast import check, check_shapes, shapes_summary, summary
 from .derive import add_themes
 from .merge import merge, merge_builds
 from .theme import STANDARD, Theme, standard
@@ -62,6 +62,28 @@ def print_reports(reports):
             for f in r["failures"]:
                 print(f"      page {f['page']}: {f['text']!r} {f['colour']} on {f['background']} "
                       f"is {f['ratio']}:1, needs {f['needs']}:1")
+        print_shapes(r.get("shapes", {}).get("low", []), "      ")
+
+
+def print_shapes(low, indent="  "):
+    """Lines and shapes below 3:1. Not a failure: a grid can be faint on
+    purpose, so the author looks these over."""
+    if low:
+        print(f"{indent}lines and shapes under {low[0]['needs']:g}:1, which they need if they carry meaning:")
+    rows = {}  # one row for a colour and what it is against, however many pages it is on
+    for s in low:
+        row = rows.setdefault((s["kind"], s["colour"], s["against"]), {**s, "pages": [], "count": 0})
+        row["pages"].append(s["page"])
+        row["count"] += s["count"]
+        row["ratio"] = min(row["ratio"], s["ratio"])
+    rows = sorted(rows.values(), key=lambda row: row["ratio"])
+    for row in rows[:8]:
+        pages = row["pages"]
+        where = f"page {pages[0]}" if len(pages) == 1 else f"{len(pages)} pages from page {pages[0]}"
+        print(f"{indent}  {where}: {row['kind']} {row['colour']} against {row['against']} is {row['ratio']:.1f}:1"
+              f"{' (' + str(row['count']) + ' of them)' if row['count'] > 1 else ''}")
+    if len(rows) > 8:
+        print(f"{indent}  and {len(rows) - 8} more")
 
 
 def write(m, args, reports):
@@ -330,6 +352,11 @@ def cmd_check(args) -> int:
     for f in s["failures"]:
         print(f"  page {f['page']}: {f['text']!r} {f['colour']} on {f['background']} "
               f"is {f['ratio']}:1, needs {f['needs']}:1")
+    shapes = shapes_summary(check_shapes(str(args.document), paper=args.paper))
+    if shapes["colours"]:
+        print(f"{shapes['colours']} colour{'s' if shapes['colours'] > 1 else ''} of lines and shapes measured, "
+              f"lowest {shapes['lowest']['ratio']:.1f}:1")
+        print_shapes(shapes["low"])
     return 1 if s["failures"] else 0
 
 

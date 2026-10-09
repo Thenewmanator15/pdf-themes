@@ -31,7 +31,7 @@ import pikepdf
 from pikepdf import Array, Dictionary, Name, String
 
 from . import colour as C
-from .contrast import check, summary
+from .contrast import check, check_shapes, shapes_summary, summary
 from .core import THEMES_KEY, apply, paint_paper
 
 TINTS = {  # OKLCH paper colours: soft pastels, light enough for dark text
@@ -698,9 +698,10 @@ def checked_now(enhanced=False):
                        "/Level": Name(level), "/Date": String("D:" + datetime.date.today().strftime("%Y%m%d"))})
 
 
-def verify(pdf, default_info, info, pairs, paper, enhanced=False, drawn=None):
+def verify(pdf, default_info, info, pairs, paper, enhanced=False, drawn=None, shapes=None):
     """Draw one theme as a reader would and check its text contrast.
-    drawn: as for contrast.check, a list that gets each page's fingerprint."""
+    drawn: as for contrast.check, a list that gets each page's fingerprint.
+    shapes: a list that gets the theme's lines and shapes, from check_shapes."""
     write_themes(pdf, default_info, [(info, pairs)] if pairs is not None else [])
     buf = io.BytesIO()
     pdf.save(buf, fix_metadata_version=False)  # pikepdf would otherwise rewrite the file's XMP in place
@@ -709,6 +710,8 @@ def verify(pdf, default_info, info, pairs, paper, enhanced=False, drawn=None):
         paint_paper(copy, paper)
         out = io.BytesIO()
         copy.save(out)
+    if shapes is not None:
+        shapes.extend(check_shapes(out.getvalue(), paper=paper))
     return check(out.getvalue(), paper=paper, enhanced=enhanced, drawn=drawn)
 
 
@@ -740,10 +743,15 @@ def add_authored_themes(merger, themes):
     reports = []
 
     def checked(theme, info, pairs, kind):
-        report = summary(verify(merger.pdf, default, info, pairs, tuple(theme.paper), theme.enhanced))
+        shapes = []
+        report = summary(verify(merger.pdf, default, info, pairs, tuple(theme.paper), theme.enhanced, shapes=shapes))
         if report["runs"] > 0 and not report["failures"]:
             info["/Checked"] = checked_now(theme.enhanced)
         reports.append(_report(theme.name, kind, report, True))
+        # Lines and shapes are reported and never marked: only the author
+        # knows which of them carry meaning.
+        found = shapes_summary(shapes)
+        reports[-1]["shapes"] = {"colours": found["colours"], "low": found["low"]}
 
     default = themes[0].info()
     checked(themes[0], default, None, "default")
