@@ -52,7 +52,7 @@ checked.
 The proposal itself is a themed file too (`demo/proposal-themed.pdf`). It's a
 tagged PDF/A-2a and PDF/UA-1 document with pictures, tables and two plots,
 built once in each of the eight themes from one Typst source. Its light build
-is 745 kB and the seven extra themes add about a kilobyte. Each theme draws
+is about 0.75 MB and the seven extra themes add about 0.1%. Each theme draws
 pixel for pixel like its own build in Poppler, MuPDF and PDFium, the text and
 the tagged content are the same in every theme, and all eight pass their
 contrast check.

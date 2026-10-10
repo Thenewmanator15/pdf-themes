@@ -232,7 +232,12 @@ cannot change content streams, the check is narrow:
 
 1. A catalog key, or an extension of optional content configurations?
 2. Should a theme be allowed to change line width, so a higher contrast theme
-   can thicken thin lines?
+   can thicken thin lines? `LW` in a replacement graphics state would do it,
+   and Poppler, MuPDF and PDFium already draw it. Readers with low vision
+   find grid lines and tick marks in charts too thin and too pale
+   ([Wang, Zhao and Kim 2024](https://doi.org/10.1145/3613904.3642188)), but
+   nobody has measured how much bolder lines help, and it would need a limit
+   so a line can't cover what is beside it.
 3. Paper as sRGB, or as a palette entry? Should it also colour the space
    around pages?
 4. Which theme prints when the default theme is dark?
