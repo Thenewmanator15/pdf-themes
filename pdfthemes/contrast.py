@@ -31,6 +31,20 @@ SAME = 6            # a shape within this many levels of what is round it can't 
 MOST = 40           # shapes of one colour measured on a page; any more are taken to match them
 
 
+def _luminances(rgb):
+    """Relative luminance of each row of sRGB values from 0 to 1, as colour.luminance."""
+    linear = np.where(rgb <= 0.04045, rgb / 12.92, ((rgb + 0.055) / 1.055) ** 2.4)
+    return 0.2126 * linear[:, 0] + 0.7152 * linear[:, 1] + 0.0722 * linear[:, 2]
+
+
+def _contrasts(fg, bg):
+    """colour.contrast for many pairs at once. A run of text is measured against up to
+    600 pixels, and a page of a LaTeX paper has hundreds of runs: one at a time, this
+    was nearly all the time `add` took."""
+    a, b = _luminances(fg), _luminances(bg)
+    return (np.maximum(a, b) + 0.05) / (np.minimum(a, b) + 0.05)
+
+
 def _runs(textpage):
     """Visible text as runs of characters sharing a colour, size and line.
     Spaces join a run rather than end it, so a run is usually a phrase."""
@@ -129,7 +143,7 @@ def check(path_or_bytes, paper=(1.0, 1.0, 1.0), scale=3.0, enhanced=False, drawn
             if len(far) > 600:
                 far = far[np.linspace(0, len(far) - 1, 600).astype(int)]
             shown = np.clip(run["alpha"] * fg + (1 - run["alpha"]) * far, 0, 255)
-            ratios = np.array([contrast(s / 255, f / 255) for s, f in zip(shown, far)])
+            ratios = _contrasts(shown / 255, far / 255)
             worst = float(np.percentile(ratios, 10)) if len(ratios) else 21.0
             behind = far[np.argsort(ratios)[int(0.1 * (len(ratios) - 1))]] if len(ratios) else far[0]
             large = run["size"] >= 18 or (run["size"] >= 14 and run["bold"])
