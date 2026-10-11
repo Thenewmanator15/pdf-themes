@@ -139,6 +139,12 @@ def initial_colour(space):
     return [min(max(0.0, lo), hi) for lo, hi in C.ranges(space)]
 
 
+def _matted(x):
+    """Whether an image's soft mask has a Matte entry (ISO 32000-2, 11.6.5.3)."""
+    smask = x.get("/SMask")
+    return smask is not None and "/Matte" in smask
+
+
 def _diagram_like(colours, counts):
     """A white background covering a good share, and a few colours making up
     nearly all the rest: a chart or a drawing, which a theme can recolour,
@@ -1035,6 +1041,11 @@ class Merger:
         if masks_differ or isinstance(xl.get("/Mask"), pikepdf.Array):
             # Colour-key masking is written in the image's own colour values,
             # so such an image keeps them.
+            return xl if same else self.swap_image(xl, xd)
+        if _matted(xl) or _matted(xd):
+            # The colours were blended with a matte colour beforehand, and a reader
+            # undoes that by arithmetic on the colour components. Indices can't carry
+            # that arithmetic, so the image keeps its own values.
             return xl if same else self.swap_image(xl, xd)
         pal_context = "mask" if context == "mask" else "image"
         if same and context != "mask":
