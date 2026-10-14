@@ -77,6 +77,9 @@ def _runs(textpage):
                     max(abs(x - y) for x, y in zip(colour, (r2.value, g2.value, b2.value))) > DRAWN:
                 colour = None
         alpha = a.value / 255
+        if alpha == 0:  # drawn at opacity 0: nothing of it is seen
+            current = None
+            continue
         size = round(pdfium_c.FPDFText_GetFontSize(raw, i), 1)
         weight = pdfium_c.FPDFText_GetFontWeight(raw, i)
         if pdfium_c.FPDFText_GetLooseCharBox(raw, i, loose):
@@ -132,7 +135,10 @@ def check(path_or_bytes, paper=(1.0, 1.0, 1.0), scale=3.0, enhanced=False, drawn
                 continue
             fg = np.array(run["colour"] if run["colour"] is not None else (0, 0, 0), dtype=float)
             dist = np.abs(region - fg).max(axis=1)
-            if run["colour"] is None or dist.min() > DRAWN:
+            # Text that isn't opaque is drawn as its colour blended with what is behind it,
+            # the pixel least like its colour, and that blend is what to look for.
+            seen = run["alpha"] * fg + (1 - run["alpha"]) * region[np.argmax(dist)]
+            if run["colour"] is None or np.abs(region - seen).max(axis=1).min() > DRAWN:
                 results.append({"page": pno + 1, "text": run["text"][:40], "size": run["size"], "large": False,
                                 "colour": "#%02X%02X%02X" % run["colour"] if run["colour"] else None,
                                 "background": None, "ratio": None, "needs": None})
