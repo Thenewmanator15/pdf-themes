@@ -263,7 +263,12 @@ class Deriver:
                 lum = C.luminance(c)
                 lighter = [b for b in backgrounds if C.luminance(b) > lum]
                 darker = [b for b in backgrounds if C.luminance(b) < lum]
-                behind = lighter if len(lighter) >= len(darker) else darker  # the side most surfaces are on
+                # The side most surfaces are on, and on a tie the paper's side: one band in the
+                # text's own colour doesn't outvote the page the text is printed on.
+                if len(lighter) != len(darker):
+                    behind = lighter if len(lighter) > len(darker) else darker
+                else:
+                    behind = lighter if C.luminance(paper) > lum else darker
                 target = spec.text_target if k == "text" else spec.graphic_target
                 if k == "graphic" and spec.contrast != "More":
                     continue  # graphics keep the author's colours unless more contrast is asked for
