@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import decimal
 import hashlib
+import zlib
 
 import pikepdf
 from pikepdf import Array, Dictionary, Name
@@ -31,6 +32,16 @@ ALPHA_KEYS = ("/CA", "/ca")
 # otherwise rewrite the metadata, which a PDF/A file is better without.
 SAVE = dict(compress_streams=True, object_stream_mode=pikepdf.ObjectStreamMode.generate, deterministic_id=True,
             fix_metadata_version=False)
+
+
+def save(pdf: pikepdf.Pdf, target):
+    """Save with SAVE. A stream with no data is first written as a whole, empty Flate
+    stream: compressing on save, qpdf writes it as /FlateDecode with no bytes at all, which
+    has no header and isn't a Flate stream, and MuPDF says so."""
+    for obj in pdf.objects:
+        if isinstance(obj, pikepdf.Stream) and "/Filter" not in obj and not obj.read_raw_bytes():
+            obj.write(zlib.compress(b""), filter=Name.FlateDecode)
+    pdf.save(target, **SAVE)
 
 
 class MergeError(Exception):

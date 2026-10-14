@@ -87,7 +87,7 @@ def print_shapes(low, indent="  "):
 
 
 def write(m, args, reports):
-    m.pdf.save(args.output, **SAVE)
+    core.save(m.pdf, args.output)
     size = pathlib.Path(args.output).stat().st_size
     scans = m.stats["grey scans given a palette"]
     print(f"Wrote {args.output} ({size:,} bytes): {len(m.palette_list)} palette(s), "
@@ -304,7 +304,7 @@ def cmd_apply(args) -> int:
             return 1
         if not args.no_paper:
             core.paint_paper(pdf, paper)
-        pdf.save(args.output, **SAVE)
+        core.save(pdf, args.output)
     print(f"Wrote {args.output}: the {args.theme} theme as a plain PDF that any reader shows.")
     return 0
 
