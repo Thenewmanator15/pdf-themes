@@ -203,10 +203,13 @@ class Colour:
         self.op = op
 
 
-def colour_events(ops, res):
-    """A content stream's instructions, with each colour change as a Colour."""
+def colour_events(ops, res, inherit=False, at=None):
+    """A content stream's instructions, with each colour change as a Colour.
+    `at` is filled with the fill and stroke colour spaces in force at each
+    `Do` and `gs`, under the instruction's id: a name from the resources, or
+    None while the stream has its caller's (`inherit`) and hasn't set one."""
     out = []
-    spaces = [["/DeviceGray", "/DeviceGray"]]  # fill, stroke
+    spaces = [[None, None] if inherit else ["/DeviceGray", "/DeviceGray"]]  # fill, stroke
     for k, ins in enumerate(ops):
         op = str(ins.operator)
         if op == "q":
@@ -225,13 +228,15 @@ def colour_events(ops, res):
             continue
         if op in ("sc", "scn", "SC", "SCN"):
             stroke = op.isupper()
-            out.append(Colour(stroke, spaces[-1][stroke], ins.operands, op))
+            out.append(Colour(stroke, spaces[-1][stroke] or "/DeviceGray", ins.operands, op))
             continue
         if op in DEVICE_OPS:
             space, stroke = DEVICE_OPS[op]
             spaces[-1][stroke] = space
             out.append(Colour(stroke, space, ins.operands, op))
             continue
+        if at is not None and op in ("Do", "gs"):
+            at[id(ins)] = tuple(spaces[-1])
         out.append(ins)
     return out
 
@@ -523,7 +528,8 @@ class Merger:
         `inherit`: the stream starts with its caller's colours (a form or a
         glyph) rather than black."""
         R = out_res if out_res is not None else OutRes(res_l)
-        ops_l, ops_d = colour_events(ops_l, res_l), colour_events(ops_d, res_d)
+        at_l, at_d = {}, {}
+        ops_l, ops_d = colour_events(ops_l, res_l, inherit, at_l), colour_events(ops_d, res_d, inherit, at_d)
         out = []
         st_l, st_d = [Side(inherit)], [Side(inherit)]
         os_ = [Out(inherit)]
@@ -569,12 +575,31 @@ class Merger:
                     raise MergeError(f"graphics state {k} is set in one build only")
             return d
 
-        def do_gs(dl, dd, name_l):
+        def in_force(at, ins, res):
+            """The fill and stroke colour spaces at a `Do` or a `gs`, None where
+            they are the caller's or aren't in the resources."""
+            found = []
+            for name in at.get(id(ins), (None, None)):
+                try:
+                    found.append(None if name is None else _space(res, name))
+                except MergeError:
+                    found.append(None)
+            return tuple(found)
+
+        def do_gs(dl, dd, name_l, in_l=(None, None), in_d=(None, None)):
             for side, d in ((st_l[-1], dl), (st_d[-1], dd)):
                 for k in GS_PAINT + ("/SMask",):
                     if k in d:
                         side.gs[k] = d[k]
-            name = self.merge_gs(dl, dd, name_l, R, context)
+            # A soft mask's form starts with the colour space in force here.
+            made = (self.explicit_mask(dl.get("/SMask"), in_l), self.explicit_mask(dd.get("/SMask"), in_d, dark=True))
+            masks = None
+            if made[0] is not None or made[1] is not None:
+                masks = tuple(m if m is not None else d.get("/SMask", Name("/None")) for m, d in zip(made, (dl, dd)))
+                for side, m in zip((st_l[-1], st_d[-1]), made):
+                    if m is not None:
+                        side.gs["/SMask"] = m
+            name = self.merge_gs(dl, dd, name_l, R, context, masks)
             if name is not None:
                 emit([Name(name)], "gs")
 
@@ -703,12 +728,12 @@ class Merger:
                     continue
                 if na == "gs":
                     dl = gs_dict(res_l, a.operands[0])
-                    do_gs(dl, synthetic(st_d[-1], dl), str(a.operands[0]))
+                    do_gs(dl, synthetic(st_d[-1], dl), str(a.operands[0]), in_l=in_force(at_l, a, res_l))
                     i += 1
                     continue
                 if nb == "gs":
                     dd = gs_dict(res_d, b.operands[0])
-                    do_gs(synthetic(st_l[-1], dd), dd, None)
+                    do_gs(synthetic(st_l[-1], dd), dd, None, in_d=in_force(at_d, b, res_d))
                     j += 1
                     continue
                 if na == "Do" and nb == "INLINE IMAGE":
@@ -771,7 +796,8 @@ class Merger:
                 os_[-1].ctm = _mul(tuple(_num(v) for v in A), os_[-1].ctm)
                 keep(a)
             elif na == "gs":
-                do_gs(gs_dict(res_l, A[0]), gs_dict(res_d, B[0]), str(A[0]))
+                do_gs(gs_dict(res_l, A[0]), gs_dict(res_d, B[0]), str(A[0]), in_force(at_l, a, res_l),
+                      in_force(at_d, b, res_d))
             elif na == "Tr":
                 os_[-1].tr = int(A[0])
                 keep(a)
@@ -791,7 +817,8 @@ class Merger:
                     ensure(True, "stroke")
                 elif xl.get("/ImageMask"):  # a stencil, painted in the fill colour
                     ensure(False, "fill")
-                emit([Name(self.merge_xobject(str(A[0]), str(B[0]), res_l, res_d, R, context))], "Do")
+                emit([Name(self.merge_xobject(str(A[0]), str(B[0]), res_l, res_d, R, context,
+                                              in_force(at_l, a, res_l), in_force(at_d, b, res_d)))], "Do")
             elif na == "sh":
                 emit([Name(self.merge_shading(str(A[0]), str(B[0]), res_l, res_d, R, context))], "sh")
             elif na == "INLINE IMAGE":
@@ -818,11 +845,13 @@ class Merger:
         return out, R
 
     # Graphics states -----------------------------------------------------------
-    def merge_gs(self, dl, dd, name_l, R, context):
+    def merge_gs(self, dl, dd, name_l, R, context, masks=None):
+        """`masks`: the two soft masks to use in place of the dictionaries' own,
+        when their forms had to stop leaning on the caller's colour space."""
         for k in (set(dl.keys()) | set(dd.keys())) - {"/Type", "/SMask"} - set(GS_PAINT):
             if canon(dl.get(k)) != canon(dd.get(k)):
                 raise MergeError(f"graphics state {k} differs between the builds")
-        sm_l, sm_d = dl.get("/SMask", Name("/None")), dd.get("/SMask", Name("/None"))
+        sm_l, sm_d = masks or (dl.get("/SMask", Name("/None")), dd.get("/SMask", Name("/None")))
         smask = sm_l
         if canon(sm_l) != canon(sm_d):
             if not (isinstance(sm_l, pikepdf.Dictionary) and isinstance(sm_d, pikepdf.Dictionary)):
@@ -830,11 +859,11 @@ class Merger:
             smask = self.merge_smask(sm_l, sm_d)
         paint_differs = any(canon(dl.get(k, GS_DEFAULT[k])) != canon(dd.get(k, GS_DEFAULT[k])) for k in GS_PAINT)
         darkens = self.organise and context == "paint" and str(dl.get("/BM", "")) in DARKENING_BLENDS
-        if not paint_differs and smask is sm_l and not darkens:
+        if not paint_differs and smask is sm_l and not darkens and masks is None:
             if name_l is not None:
                 R.use("/ExtGState", name_l)
             return name_l
-        key = ("gs", canon(dl), canon(dd), self.ident(dl))
+        key = ("gs", canon(dl), canon(dd), self.ident(dl)) + ((canon(sm_l), canon(sm_d)) if masks else ())
         if key not in self.cache:
             base = _direct_copy(dl)
             if isinstance(smask, pikepdf.Dictionary) or "/SMask" in dl:
@@ -869,6 +898,107 @@ class Merger:
         return new
 
     # Forms, patterns, shadings, images, fonts ---------------------------------
+    def explicit(self, form, spaces, parent=None, dark=False):
+        """A form that doesn't lean on its caller's colour space. A form starts
+        with the colour space of whatever draws it (ISO 32000-2, 8.10.1), so it
+        may write `0.4 0.7 0.7 scn` with no `cs` of its own. A merged stream
+        writes its colours through palettes, which changes the space such a
+        form would start with. `spaces` is the caller's fill and stroke space
+        in the form's own build, None where it isn't known here. Wherever the
+        form sets a colour in one of them, the copy sets the space first, and
+        the forms and soft masks it reaches while still in one get the same."""
+        if spaces[0] is None and spaces[1] is None:
+            return form
+        dark = dark and self.dark is not self.pdf
+        key = ("explicit", dark, form.objgen, canon(spaces[0]), canon(spaces[1]))
+        if key in self.cache:
+            return form if self.cache[key] is None else self.cache[key]
+        pdf = self.dark if dark else self.pdf
+        res = form.get("/Resources", parent)
+        added = defaultdict(dict)
+
+        def name(kind, obj, prefix):
+            taken = set(res.get(kind, {}).keys()) if res is not None else set()
+            n = 0
+            while f"/{prefix}{n}" in taken or f"/{prefix}{n}" in added[kind]:
+                n += 1
+            added[kind][f"/{prefix}{n}"] = obj
+            return Name(f"/{prefix}{n}")
+
+        def entry(kind, key):
+            entries = res.get(kind) if res is not None else None
+            return entries.get(key) if entries is not None else None
+
+        out, changed = [], False
+        own = [[s is None for s in spaces]]  # fill, stroke: set by the form itself, or not known
+        for ins in pikepdf.parse_content_stream(form):
+            op = str(ins.operator)
+            if op == "q":
+                own.append(list(own[-1]))
+            elif op == "Q" and len(own) > 1:
+                own.pop()
+            elif op in ("cs", "CS"):
+                own[-1][op == "CS"] = True
+            elif op in DEVICE_OPS:
+                own[-1][DEVICE_OPS[op][1]] = True
+            elif op in ("sc", "scn", "SC", "SCN") and not own[-1][op.isupper()]:
+                space = spaces[op.isupper()]
+                numbers = [v for v in ins.operands if not isinstance(v, pikepdf.Name)]
+                if C.family(space) != "/Pattern" and len(numbers) != C.components(space):
+                    raise MergeError(f"a form sets a colour with {len(numbers)} numbers in its caller's colour space, "
+                                     f"which takes {C.components(space)}")
+                out.append(([space if isinstance(space, pikepdf.Name) else name("/ColorSpace", space, "TC")],
+                            Operator("CS" if op.isupper() else "cs")))
+                own[-1][op.isupper()] = changed = True
+            elif op in ("Do", "gs") and not all(own[-1]):
+                still = tuple(None if mine else s for s, mine in zip(spaces, own[-1]))
+                old = entry("/XObject" if op == "Do" else "/ExtGState", ins.operands[0])
+                new = None
+                if op == "Do" and old is not None and old.get("/Subtype") == Name.Form:
+                    inner = self.explicit(old, still, res, dark)
+                    if inner.objgen != old.objgen:
+                        new = name("/XObject", inner, "TX")
+                elif op == "gs" and old is not None:
+                    mask = self.explicit_mask(old.get("/SMask"), still, dark)
+                    if mask is not None:
+                        state = _direct_copy(old)
+                        state["/SMask"] = mask
+                        new = name("/ExtGState", pdf.make_indirect(state), "TG")
+                if new is not None:
+                    out.append(([new], ins.operator))
+                    changed = True
+                    continue
+            out.append(ins)
+        if not changed:
+            self.cache[key] = None
+            return form
+        resources = _direct_copy(res) if res is not None else Dictionary()
+        for kind, entries in added.items():
+            both = _direct_copy(resources[kind]) if kind in resources else Dictionary()
+            for k, v in entries.items():
+                both[k] = v
+            resources[kind] = both
+        new = pdf.make_stream(pikepdf.unparse_content_stream(out))
+        for k, v in form.items():
+            if k not in ("/Length", "/Filter", "/DecodeParms", "/Resources"):
+                new[k] = v
+        new["/Resources"] = resources
+        self.cache[key] = pdf.make_indirect(new)
+        return self.cache[key]
+
+    def explicit_mask(self, smask, spaces, dark=False):
+        """A soft mask whose form doesn't lean on the colour space in force
+        when the mask is set (ISO 32000-2, 11.6.5.2), or None if it already
+        doesn't."""
+        if not isinstance(smask, pikepdf.Dictionary) or "/G" not in smask:
+            return None
+        form = self.explicit(smask.G, spaces, None, dark)
+        if form.objgen == smask.G.objgen:
+            return None
+        new = _direct_copy(smask)
+        new["/G"] = form
+        return new
+
     def merge_form(self, xl, xd, context, parent_l=None, parent_d=None, inherit=True):
         key = ("form", xl.objgen, xd.objgen, context, inherit)
         if key in self.cache:
@@ -893,7 +1023,8 @@ class Merger:
         self.cache[key] = new
         return new
 
-    def merge_xobject(self, name_l, name_d, res_l, res_d, R, context):
+    def merge_xobject(self, name_l, name_d, res_l, res_d, R, context, in_l=(None, None), in_d=(None, None)):
+        """`in_l`, `in_d`: the colour spaces in force where each build draws it."""
         xl = R.lookup("/XObject", name_l)
         group_d = res_d.get("/XObject") if res_d is not None else None
         if group_d is None or name_d not in group_d:
@@ -903,7 +1034,8 @@ class Merger:
         if sub_l != sub_d:
             raise MergeError("an XObject is a form in one build and an image in the other")
         if sub_l == "/Form":
-            merged = self.merge_form(xl, xd, context, res_l, res_d)
+            merged = self.merge_form(self.explicit(xl, in_l, res_l), self.explicit(xd, in_d, res_d, dark=True),
+                                     context, res_l, res_d)
         else:
             merged = self.merge_image(xl, xd, context)
         if merged is xl:
