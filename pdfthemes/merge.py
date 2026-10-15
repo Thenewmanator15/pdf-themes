@@ -57,6 +57,8 @@ STROKE_OPS = {"S", "s", "B", "B*", "b", "b*"}
 PATH_OPS = {"m", "l", "c", "v", "y", "re", "h"}
 RASTER_FILTERS = {"/DCTDecode", "/JPXDecode", "/JBIG2Decode", "/CCITTFaxDecode"}
 RESOURCE_KINDS = ("/ColorSpace", "/ExtGState", "/Pattern", "/Shading", "/XObject", "/Font", "/Properties")
+# Used wherever the page uses the device space they stand for, though nothing names them.
+DEFAULT_SPACES = ("/DefaultGray", "/DefaultRGB", "/DefaultCMYK")
 
 ANNOT_PAINT = ("/C", "/IC", "/CA", "/ca", "/BM", "/DA", "/DS", "/RC")
 ANNOT_GEOMETRY = ("/Rect", "/QuadPoints", "/InkList", "/Vertices", "/L", "/BS", "/Border", "/RD", "/CL", "/LE",
@@ -352,7 +354,7 @@ class OutRes:
         for kind in RESOURCE_KINDS:
             group = Dictionary()
             for k, v in self.base.get(kind, {}).items():
-                if k in self.used[kind]:
+                if k in self.used[kind] or (kind == "/ColorSpace" and k in DEFAULT_SPACES):
                     group[k] = v
             for k, v in self.added[kind].items():
                 group[k] = v
