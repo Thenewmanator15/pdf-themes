@@ -35,6 +35,7 @@ from __future__ import annotations
 import re
 import zlib
 from collections import Counter, defaultdict
+from decimal import Decimal
 
 import numpy as np
 import pikepdf
@@ -201,6 +202,28 @@ class Colour:
         self.space = space
         self.operands = list(operands)
         self.op = op
+
+
+LEADING_NUMBER = re.compile(r"[+-]?(\d+\.?\d*|\.\d+)")
+
+
+def numbers_mended(ops):
+    """The instructions with each oddly written number given back to the operator after
+    it. A token such as `0.00-10` isn't a number in PDF: readers take its leading digits,
+    with a warning, and pikepdf takes it for an operator with no operands. In its place
+    that is harmless, but anything written between it and its operator cuts them apart."""
+    out, carried = [], []
+    for ins in ops:
+        name = str(ins.operator)
+        lead = LEADING_NUMBER.match(name)
+        if lead and not ins.operands and name[:1] in "0123456789+-.":
+            carried.append(Decimal(lead.group(0)))
+            continue
+        if carried:
+            ins = pikepdf.ContentStreamInstruction(carried + list(ins.operands), ins.operator)
+            carried = []
+        out.append(ins)
+    return out
 
 
 def colour_events(ops, res, inherit=False, at=None):
@@ -529,6 +552,7 @@ class Merger:
         glyph) rather than black."""
         R = out_res if out_res is not None else OutRes(res_l)
         at_l, at_d = {}, {}
+        ops_l, ops_d = numbers_mended(ops_l), numbers_mended(ops_d)
         ops_l, ops_d = colour_events(ops_l, res_l, inherit, at_l), colour_events(ops_d, res_d, inherit, at_d)
         out = []
         st_l, st_d = [Side(inherit)], [Side(inherit)]
