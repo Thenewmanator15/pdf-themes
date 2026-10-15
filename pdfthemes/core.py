@@ -35,13 +35,19 @@ SAVE = dict(compress_streams=True, object_stream_mode=pikepdf.ObjectStreamMode.g
 
 
 def save(pdf: pikepdf.Pdf, target):
-    """Save with SAVE. A stream with no data is first written as a whole, empty Flate
-    stream: compressing on save, qpdf writes it as /FlateDecode with no bytes at all, which
-    has no header and isn't a Flate stream, and MuPDF says so."""
+    """Save with SAVE, except that a file older than PDF 1.5 is saved without object
+    streams. A stream with no data is first written as a whole, empty Flate stream:
+    compressing on save, qpdf writes it as /FlateDecode with no bytes at all, which has
+    no header and isn't a Flate stream, and MuPDF says so."""
     for obj in pdf.objects:
         if isinstance(obj, pikepdf.Stream) and "/Filter" not in obj and not obj.read_raw_bytes():
             obj.write(zlib.compress(b""), filter=Name.FlateDecode)
-    pdf.save(target, **SAVE)
+    options = dict(SAVE)
+    if pdf.pdf_version < "1.5":
+        # Object streams need a cross-reference stream, which needs PDF 1.5, and PDF/A-1,
+        # built on PDF 1.4, forbids them: a file older than 1.5 keeps its version.
+        options["object_stream_mode"] = pikepdf.ObjectStreamMode.disable
+    pdf.save(target, **options)
 
 
 class MergeError(Exception):
