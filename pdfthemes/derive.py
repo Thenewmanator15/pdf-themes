@@ -68,6 +68,10 @@ class Spec:
                 return C.oklch_to_srgb(1 - (1 - L) * 1.6, Ch, h)
             return rgb
         if self.scheme == "Dark" and self.source == "derive":
+            if Ch >= TINTED and L >= 0.6:
+                # A pale tint (a box, a layer in a diagram) becomes a dark tint of its own,
+                # with chroma enough to stay apart from the paper and from the other tints.
+                return C.oklch_to_srgb(max(_invert(L), 0.27), min(max(Ch * 2.5, 0.04), 0.09), h)
             return C.oklch_to_srgb(_invert(L), Ch * 0.8, h)
         if self.scheme == "Dark" and self.contrast == "More":
             if L <= 0.35 and Ch <= 0.06:
@@ -96,6 +100,9 @@ class Spec:
         if self.contrast == "More":
             return (0.0, 0.0, 0.0)
         return dark_paper
+
+
+TINTED = 0.008  # OKLCH chroma from which a pale surface counts as tinted rather than white
 
 
 def _invert(L):
@@ -214,6 +221,14 @@ class Deriver:
         self.author_dark = {b.objgen: a for b, a in merger.replace}
         self.has_author_dark = bool(merger.replace) and merger.dark is not merger.pdf
 
+    @property
+    def under_text(self):
+        """The colours measured behind text in the default, the paper aside."""
+        if getattr(self, "_under_text", None) is None or self._under_text[0] is not self.measured:
+            found = {C.hex_rgb(r["background"]) for r in self.measured if r.get("ratio") is not None and r.get("background")}
+            self._under_text = (self.measured, [b for b in found if not _near(b, self.light_paper)])
+        return self._under_text[1]
+
     # Source colours ----------------------------------------------------------
     def entry_rgb(self, pal, i, source):
         if source in ("dark",) and pal.alt is not None:
@@ -254,6 +269,8 @@ class Deriver:
             for i in range(len(pal.entries)):
                 rgb = self.entry_rgb(pal, i, source)
                 k = self.kind(pal, i, rgb)
+                if k == "graphic" and pal.context == "paint" and pal.roles[i]["fill"] and                         any(_near(self.entry_rgb(pal, i, "light"), b) for b in self.under_text):
+                    k = "surface"  # text was measured on it in the default: a surface, however small
                 behind = k in ("background", "surface")
                 if derived_dark is not None:
                     rgb = derived_dark.background(rgb) if behind else derived_dark.foreground(rgb)
