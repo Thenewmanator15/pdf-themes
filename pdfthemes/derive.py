@@ -116,6 +116,29 @@ def standard_specs(author_dark: bool):
 
 # ── Enforcing contrast ───────────────────────────────────────────────────────
 
+def enforce_seen(rgb, backgrounds, target, alpha=1.0):
+    """As enforce, for text drawn at an opacity below 1: it is seen blended with what is
+    behind it, so the colour itself has to stand out further."""
+    if alpha >= 1:
+        return enforce(rgb, backgrounds, target)
+
+    def seen(c, b):
+        return tuple(alpha * x + (1 - alpha) * y for x, y in zip(c, b))
+    cand = rgb
+    for aim in [target + 0.5 * k for k in range(40)]:
+        cand = enforce(rgb, backgrounds, min(aim, 21.0))
+        if all(C.contrast(seen(cand, b), b) >= target for b in backgrounds):
+            return cand
+    return cand
+
+
+MATCH = 3 / 255  # a measured colour and a palette entry within three levels are the same colour
+
+
+def _near(a, b):
+    return max(abs(x - y) for x, y in zip(a, b)) <= MATCH
+
+
 def enforce(rgb, backgrounds, target):
     """Move a colour's lightness away from its backgrounds until it reaches
     the target contrast against each of them, keeping its hue."""
@@ -186,6 +209,7 @@ class Deriver:
         self.m = merger
         self.pdf = merger.pdf
         self.light_paper, self.dark_paper = tuple(light_paper), tuple(dark_paper)
+        self.measured = []  # the default's runs of text, as the check found them: colour, background, opacity
         self.rgb_space = _srgb_space(self.pdf)
         self.author_dark = {b.objgen: a for b, a in merger.replace}
         self.has_author_dark = bool(merger.replace) and merger.dark is not merger.pdf
@@ -249,6 +273,7 @@ class Deriver:
         # Contrast: text against the theme's backgrounds (the paper and large
         # fills; not the colours inside images), graphics more gently.
         paper = spec.paper(self.light_paper, self.dark_paper)
+        sits_on, opacity = self.measured_behind(out, kinds, paper)
         contexts = {p.name: p.context for p in self.m.palette_list}
         backgrounds = [paper] + [c for name, cs in out.items() if contexts[name] == "paint"
                                  for c, k in zip(cs, kinds[name]) if k == "background"]
@@ -261,6 +286,15 @@ class Deriver:
                 if pal.context != "paint" or k in ("background", "surface"):
                     continue
                 lum = C.luminance(c)
+                if k == "text" and sits_on.get((name, i)):
+                    # Held against what the text was measured on in the default, in this
+                    # theme's colours: the side most of its runs are on.
+                    on = sits_on[(name, i)]
+                    up = sum(n for b, n in on.items() if C.luminance(b) > lum)
+                    down = sum(n for b, n in on.items() if C.luminance(b) <= lum)
+                    side = [b for b in on if (C.luminance(b) > lum) == (up > down)]
+                    cs[i] = enforce_seen(c, side, spec.text_target, opacity.get((name, i), 1.0))
+                    continue
                 lighter = [b for b in backgrounds if C.luminance(b) > lum]
                 darker = [b for b in backgrounds if C.luminance(b) < lum]
                 # The side most surfaces are on, and on a tie the paper's side: one band in the
@@ -274,6 +308,38 @@ class Deriver:
                     continue  # graphics keep the author's colours unless more contrast is asked for
                 cs[i] = enforce(c, behind, target)
         return out, kinds
+
+    def measured_behind(self, out, kinds, paper):
+        """For each text entry, the surfaces its runs were measured on in the default,
+        in this theme's colours, with how many runs are on each; and the lowest opacity
+        it is drawn at. A run is matched to an entry by its colour, and what is behind it
+        to the paper or a background or surface entry, each within three levels. What
+        matches nothing (a photo, a gradient) is left out."""
+        light = {}
+        for pal in self.m.palette_list:
+            if pal.name in out:
+                for i in range(len(pal.entries)):
+                    light[(pal.name, i)] = self.entry_rgb(pal, i, "light")
+        texts = [key for key, rgb in light.items() if kinds[key[0]][key[1]] == "text"]
+        grounds = [key for key in light if kinds[key[0]][key[1]] in ("background", "surface")]
+        sits_on, opacity = {}, {}
+        for run in self.measured:
+            if run.get("ratio") is None or not run.get("background"):
+                continue
+            colour, behind = C.hex_rgb(run["colour"]), C.hex_rgb(run["background"])
+            if _near(behind, self.light_paper):
+                theirs = paper
+            else:
+                match = next((key for key in grounds if _near(light[key], behind)), None)
+                if match is None:
+                    continue
+                theirs = out[match[0]][match[1]]
+            for key in texts:
+                if _near(light[key], colour):
+                    on = sits_on.setdefault(key, {})
+                    on[tuple(theirs)] = on.get(tuple(theirs), 0) + 1
+                    opacity[key] = min(opacity.get(key, 1.0), run.get("alpha", 1.0))
+        return sits_on, opacity
 
     def palette_array(self, pal, colours):
         lookup = b"".join(bytes(round(min(max(v, 0.0), 1.0) * 255) for v in rgb) for rgb in colours)
@@ -794,7 +860,8 @@ def add_themes(merger, light_paper=(1.0, 1.0, 1.0), dark_paper=(0.0, 0.0, 0.0), 
     default = {"/Name": String("Light"), "/ColorScheme": Name("/Light"),
                "/Paper": Array([round(v, 4) for v in light_paper])}
     default_drawn = []
-    report = summary(d.verify(default, default, None, tuple(light_paper), drawn=default_drawn))
+    d.measured = d.verify(default, default, None, tuple(light_paper), drawn=default_drawn)
+    report = summary(d.measured)
     if passed(report):
         default["/Checked"] = checked_now()
     note("Light", "default", report, True)

@@ -154,7 +154,7 @@ def check(path_or_bytes, paper=(1.0, 1.0, 1.0), scale=3.0, enhanced=False, drawn
             behind = far[np.argsort(ratios)[int(0.1 * (len(ratios) - 1))]] if len(ratios) else far[0]
             large = run["size"] >= 18 or (run["size"] >= 14 and run["bold"])
             results.append({"page": pno + 1, "text": run["text"][:40], "size": run["size"], "large": large,
-                            "colour": "#%02X%02X%02X" % run["colour"],
+                            "alpha": run["alpha"], "colour": "#%02X%02X%02X" % run["colour"],
                             "background": "#%02X%02X%02X" % tuple(int(v) for v in np.median(far, axis=0)),
                             "behind": "#%02X%02X%02X" % tuple(int(v) for v in behind),
                             "ratio": round(worst, 2), "needs": minimum_large if large else minimum})
