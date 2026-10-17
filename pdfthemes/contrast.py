@@ -15,8 +15,10 @@ from __future__ import annotations
 
 import ctypes
 import hashlib
+import io
 
 import numpy as np
+import pikepdf
 import pypdfium2 as pdfium
 import pypdfium2.raw as pdfium_c
 
@@ -29,6 +31,81 @@ DRAWN = 40          # a run's colour must appear within this many levels, or it 
 NON_TEXT = 3.0      # WCAG 1.4.11, for a line or shape that carries meaning
 SAME = 6            # a shape within this many levels of what is round it can't be seen, so it isn't one
 MOST = 40           # shapes of one colour measured on a page; any more are taken to match them
+DRAWN_UNDER = "drawn under"  # the colour of text whose glyphs draw nothing
+NO_INK = b"PdfThemes-NoInk"  # set as the base font name of a Type 3 font that draws nothing, to know it in PDFium
+PAINTS = {"f", "F", "f*", "B", "B*", "b", "b*", "S", "s", "sh", "Do", "BI", "INLINE IMAGE", "Tj", "TJ", "'", '"'}
+
+
+def _draws_nothing(font):
+    """A Type 3 font none of whose glyphs paints anything: text in it is there for search
+    and copying, over a drawing of the same words (a figure whose labels are outlines)."""
+    procs = font.get("/CharProcs")
+    if not isinstance(procs, pikepdf.Dictionary) or not len(procs):
+        return False
+    for proc in procs.values():
+        try:
+            if any(str(op) in PAINTS for _, op in pikepdf.parse_content_stream(proc)):
+                return False
+        except (pikepdf.PdfError, TypeError, ValueError):
+            return False
+    return True
+
+
+def _fonts(pdf):
+    """Every font the document's resources name, written in place or as objects of their own."""
+    for obj in pdf.objects:
+        if not isinstance(obj, (pikepdf.Dictionary, pikepdf.Stream)):
+            continue
+        if obj.get("/Type") == pikepdf.Name.Font:
+            yield obj
+        res = obj.get("/Resources")
+        fonts = res.get("/Font") if isinstance(res, pikepdf.Dictionary) else None
+        if isinstance(fonts, pikepdf.Dictionary):
+            for font in fonts.values():
+                if isinstance(font, pikepdf.Dictionary) and not font.is_indirect:
+                    yield font
+
+
+def _marked(path_or_bytes):
+    """The document, with each Type 3 font that draws nothing given the base font name
+    NO_INK, which changes nothing that is drawn; and whether there were any."""
+    src = io.BytesIO(path_or_bytes) if isinstance(path_or_bytes, (bytes, bytearray)) else path_or_bytes
+    with pikepdf.open(src) as pdf:
+        found = False
+        for font in _fonts(pdf):
+            if font.get("/Subtype") == pikepdf.Name.Type3 and _draws_nothing(font):
+                font.BaseFont = pikepdf.Name("/" + NO_INK.decode())
+                found = True
+        if not found:
+            return path_or_bytes, False
+        buf = io.BytesIO()
+        pdf.save(buf)
+        return buf.getvalue(), True
+
+
+def _no_ink(obj, cache):
+    """Whether a text object is in a font marked as drawing nothing."""
+    key = ctypes.cast(obj, ctypes.c_void_p).value
+    if key not in cache:
+        font = pdfium_c.FPDFTextObj_GetFont(obj)
+        buf = ctypes.create_string_buffer(64)
+        n = pdfium_c.FPDFFont_GetBaseFontName(font, buf, 64) if font else 0
+        cache[key] = n > 0 and buf.value == NO_INK
+    return cache[key]
+
+
+def _ink(shapes, box, ground):
+    """The colour of the shapes drawn in a box (a label drawn as outlines) that stands
+    furthest from the colour round them, or None if there are none. A shape counts if it
+    crosses the box and is no taller than a line of the text: one word's outlines may run
+    past the part of the word that is one run, and a panel behind it is taller."""
+    left, bottom, right, top = box
+    height = top - bottom
+    inside = [colour for _, colour, alpha, (l, b, r, t) in shapes
+              if alpha > 0 and l < right and r > left and b < top and t > bottom and t - b <= 1.5 * height]
+    if not inside:
+        return None
+    return max(inside, key=lambda c: max(abs(x - y) for x, y in zip(c, ground)))
 
 
 def _luminances(rgb):
@@ -45,15 +122,17 @@ def _contrasts(fg, bg):
     return (np.maximum(a, b) + 0.05) / (np.minimum(a, b) + 0.05)
 
 
-def _runs(textpage):
+def _runs(textpage, marked=False):
     """Visible text as runs of characters sharing a colour, size and line.
-    Spaces join a run rather than end it, so a run is usually a phrase."""
+    Spaces join a run rather than end it, so a run is usually a phrase.
+    marked: the document has fonts marked as drawing nothing (_marked). Text in one has the
+    colour DRAWN_UNDER: what is seen there is whatever is drawn under it."""
     n = textpage.count_chars()
     raw = textpage.raw
     r, g, b, a = (ctypes.c_uint() for _ in range(4))
     left_, bottom_, right_, top_ = (ctypes.c_double() for _ in range(4))
     loose = pdfium_c.FS_RECTF()
-    runs, current, space = [], None, False
+    runs, current, space, inkless = [], None, False, {}
     for i in range(n):
         ch = textpage.get_text_range(i, 1)
         if not ch or ch in "\r\n":
@@ -71,7 +150,9 @@ def _runs(textpage):
         if not get_colour(raw, i, r, g, b, a):
             continue
         colour = (r.value, g.value, b.value)
-        if mode in BOTH:  # filled and outlined: one colour only if the two match
+        if marked and obj and _no_ink(obj, inkless):
+            colour, a.value = DRAWN_UNDER, 255
+        elif mode in BOTH:  # filled and outlined: one colour only if the two match
             r2, g2, b2, a2 = (ctypes.c_uint() for _ in range(4))
             if pdfium_c.FPDFText_GetStrokeColor(raw, i, r2, g2, b2, a2) and \
                     max(abs(x - y) for x, y in zip(colour, (r2.value, g2.value, b2.value))) > DRAWN:
@@ -114,8 +195,11 @@ def check(path_or_bytes, paper=(1.0, 1.0, 1.0), scale=3.0, enhanced=False, drawn
     enhanced: hold text to 7:1 and large text to 4.5:1 (WCAG 1.4.6, AAA)
     rather than 4.5:1 and 3:1 (1.4.3, AA).
     drawn: a list to which a fingerprint of each drawn page is added, so two
-    themes can be compared without keeping their pages."""
+    themes can be compared without keeping their pages.
+    Text in a Type 3 font whose glyphs draw nothing is measured by what is drawn in its
+    place: in a figure, the same words as outlines. Its colour is the one drawn there."""
     minimum, minimum_large = (7.0, 4.5) if enhanced else (4.5, 3.0)
+    path_or_bytes, marked = _marked(path_or_bytes)
     doc = pdfium.PdfDocument(path_or_bytes)
     fill = tuple(round(c * 255) for c in paper) + (255,)
     results = []
@@ -126,13 +210,28 @@ def check(path_or_bytes, paper=(1.0, 1.0, 1.0), scale=3.0, enhanced=False, drawn
         if drawn is not None:
             drawn.append(hashlib.blake2b(pixels.tobytes(), digest_size=16).hexdigest())
         img = pixels.astype(float)
-        for run in _runs(page.get_textpage()):
+        shapes = None
+        for run in _runs(page.get_textpage(), marked):
             left, bottom, right, top = run["box"]
             x0, x1 = int(left * scale), int(np.ceil(right * scale))
             y0, y1 = int((height - top) * scale), int(np.ceil((height - bottom) * scale))
             region = img[max(y0, 0):y1, max(x0, 0):x1].reshape(-1, 3)
             if len(region) == 0:
                 continue
+            drawn_under = run["colour"] == DRAWN_UNDER
+            if drawn_under:
+                ground = _commonest(region)
+                apart = np.abs(region - ground).max(axis=1)
+                if apart.max() <= SAME:
+                    continue  # nothing is drawn there: nothing is seen
+                if shapes is None:
+                    shapes = list(_paths(page))
+                ink = _ink(shapes, run["box"], ground)
+                if ink is None:
+                    # Not drawn as shapes (an image, say): what stands furthest from the
+                    # commonest colour in the box, the middle of a stroke.
+                    ink = tuple(int(round(v)) for v in np.median(region[apart >= 0.97 * apart.max()], axis=0))
+                run = dict(run, colour=ink)
             fg = np.array(run["colour"] if run["colour"] is not None else (0, 0, 0), dtype=float)
             dist = np.abs(region - fg).max(axis=1)
             # Text that isn't opaque is drawn as its colour blended with what is behind it,
@@ -158,6 +257,8 @@ def check(path_or_bytes, paper=(1.0, 1.0, 1.0), scale=3.0, enhanced=False, drawn
                             "background": "#%02X%02X%02X" % tuple(int(v) for v in np.median(far, axis=0)),
                             "behind": "#%02X%02X%02X" % tuple(int(v) for v in behind),
                             "ratio": round(worst, 2), "needs": minimum_large if large else minimum})
+            if drawn_under:
+                results[-1]["drawn under"] = True  # its colour is read from the pixels, so near the one drawn
     return results
 
 

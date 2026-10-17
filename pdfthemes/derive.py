@@ -358,6 +358,14 @@ class Deriver:
                     opacity[key] = min(opacity.get(key, 1.0), run.get("alpha", 1.0))
         return sits_on, opacity
 
+    def _drawing(self, name, i):
+        """Whether a palette entry is drawn with as a shape rather than as text."""
+        pal = next((p for p in self.m.palette_list if p.name == name), None)
+        if pal is None or pal.context != "paint":
+            return False
+        roles = pal.roles[i]
+        return not roles["text"] and bool(roles["fill"] or roles.get("stroke"))
+
     def palette_array(self, pal, colours):
         lookup = b"".join(bytes(round(min(max(v, 0.0), 1.0) * 255) for v in rgb) for rgb in colours)
         return self.pdf.make_indirect(Array([Name.Indexed, self.rgb_space, max(len(colours) - 1, 0), String(lookup)]))
@@ -657,14 +665,19 @@ class Deriver:
                     bg = C.hex_rgb(fail.get("behind") or fail["background"])  # the lightest or darkest part behind it
                     target = fail["needs"] + 0.3
                     text = C.hex_rgb(fail["colour"])
-                    for name, cs in colours.items():
-                        for i, c in enumerate(cs):
-                            if C.rgb_hex(c) == fail["colour"]:
-                                fixed = enforce(c, [bg], target)
-                                if C.rgb_hex(fixed) != fail["colour"]:
-                                    overrides[(name, i)] = fixed
-                                    changed = True
-                                text = fixed
+                    hits = [(name, i) for name, cs in colours.items() for i, c in enumerate(cs)
+                            if C.rgb_hex(c) == fail["colour"]]
+                    if fail.get("drawn under"):
+                        # What is seen is the shapes drawn under the text, so it is their colour
+                        # that moves, and not the text colours that happen to match it.
+                        hits = [(name, i) for name, i in hits if self._drawing(name, i)]
+                    for name, i in hits:
+                        c = colours[name][i]
+                        fixed = enforce(c, [bg], target)
+                        if C.rgb_hex(fixed) != C.rgb_hex(c):
+                            overrides[(name, i)] = fixed
+                            changed = True
+                        text = fixed
                     seen = (fail["page"], fail["text"])
                     again = seen in failed_before
                     failed_before.add(seen)
