@@ -586,6 +586,27 @@ class Deriver:
         data = b"".join(bytes(round(min(max(v, 0.0), 1.0) * 255) for v in rgb) for rgb in colours)
         return self.pdf.make_indirect(Array([Name.Indexed, self.rgb_space, hival, String(data)]))
 
+    def opacity_pair(self, entry, overrides, pairs):
+        """A graphics state drawing text at less than full opacity, lifted where this theme's
+        text fell short (overrides[("opacity", ca)]), on top of any other change to it."""
+        lift = overrides.get(("opacity", entry["ca"]))
+        if lift is None:
+            return None
+        before = pairs.get(entry["base"].objgen)
+        src = before[1] if before else entry["base"]
+        new = Dictionary({k: v for k, v in src.items()})
+        new["/ca"] = lift
+        return self.pdf.make_indirect(new)
+
+    def _faded(self, alpha, overrides):
+        """The opacity override for the graphics states that draw at `alpha` now, or None."""
+        for entry in self.m.registry:
+            if entry["kind"] == "opacity":
+                key = ("opacity", entry["ca"])
+                if abs(overrides.get(key, entry["ca"]) - alpha) <= 1 / 255 + 1e-6:
+                    return key
+        return None
+
     def blend_pair(self, spec, entry):
         """In a dark theme worked out from the light one, a blend mode that
         darkens (Multiply, for a highlighter) becomes the one that lightens."""
@@ -621,6 +642,8 @@ class Deriver:
                 new = self.scan_pair(spec, entry, paper)
             elif entry["kind"] == "blend":
                 new = self.blend_pair(spec, entry)
+            elif entry["kind"] == "opacity":
+                new = self.opacity_pair(entry, overrides, pairs)
             else:
                 new = None
             if new is not None:
@@ -681,6 +704,15 @@ class Deriver:
                     seen = (fail["page"], fail["text"])
                     again = seen in failed_before
                     failed_before.add(seen)
+                    key = self._faded(fail.get("alpha", 1.0), overrides) if fail.get("alpha", 1.0) < 1 else None
+                    if key is not None:
+                        # Text the author drew at less than full opacity: lift its graphics
+                        # state as far as the text needs, and no further.
+                        need = _opacity_for(text, bg, target)
+                        if need > overrides.get(key, key[1]) + 1e-9:
+                            overrides[key] = need
+                            changed = True
+                            continue
                     if C.contrast(text, bg) < target or again:
                         # The text is as light or as dark as it can go, or a
                         # fix didn't hold: move what is behind it instead,
@@ -707,6 +739,20 @@ class Deriver:
 
 
 NEAR = 0.1  # OKLab distance within which a colour counts as the one measured behind some text
+
+
+def _opacity_for(text, bg, target):
+    """The least opacity, in hundredths, at which `text` over `bg` reaches `target`."""
+    if C.contrast(text, bg) < target:
+        return 1.0
+    lo, hi = 0.0, 1.0
+    for _ in range(30):
+        mid = (lo + hi) / 2
+        if C.contrast(tuple(mid * t + (1 - mid) * b for t, b in zip(text, bg)), bg) >= target:
+            hi = mid
+        else:
+            lo = mid
+    return min(1.0, math.ceil(hi * 100) / 100)
 
 
 def _distance(a, b):

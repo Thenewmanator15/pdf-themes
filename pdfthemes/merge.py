@@ -885,7 +885,9 @@ class Merger:
             smask = self.merge_smask(sm_l, sm_d)
         paint_differs = any(canon(dl.get(k, GS_DEFAULT[k])) != canon(dd.get(k, GS_DEFAULT[k])) for k in GS_PAINT)
         darkens = self.organise and context == "paint" and str(dl.get("/BM", "")) in DARKENING_BLENDS
-        if not paint_differs and smask is sm_l and not darkens and masks is None:
+        ca = float(dl.get("/ca", 1.0))
+        fades = self.organise and context == "paint" and 0 < ca < 1  # a derived theme may lift it for text
+        if not paint_differs and smask is sm_l and not darkens and not fades and masks is None:
             if name_l is not None:
                 R.use("/ExtGState", name_l)
             return name_l
@@ -904,6 +906,8 @@ class Merger:
                 self.stats["opacities and blend modes"] += 1
             if darkens:  # a derived dark theme turns it into its lightening twin
                 self.registry.append({"kind": "blend", "base": base, "context": context})
+            if fades:
+                self.registry.append({"kind": "opacity", "base": base, "context": context, "ca": ca})
             self.cache[key] = base
         return R.add("/ExtGState", self.cache[key], "TG")
 
