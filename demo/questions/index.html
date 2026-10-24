@@ -65,6 +65,7 @@
     <a href="#q-figures">My own figures</a>
     <a href="#q-colour-blind">Colour blindness</a>
     <a href="#q-journals">Don't journals check?</a>
+    <a href="#q-web">Web versions of papers</a>
     <a href="#q-rules">Accessibility rules</a>
     <a href="#q-shown">Has it been shown to help?</a>
     <a href="#q-standard">Is it a standard? Can I use it now?</a>
@@ -329,8 +330,24 @@
     <a href="../evidence/index.html#measured">what I measured</a>.</p>
 </div></section>
 
-<section id="q-rules"><div class="wrap qa">
+<section id="q-web"><div class="wrap qa">
   <p class="eyebrow">12</p>
+  <h2>Does it help the web versions of papers?</h2>
+  <p class="short">It could, through the figures, but not yet: the web versions in use turn figures into pictures.</p>
+  <p>The web versions of papers are mostly built from the authors' source or from an XML copy made in production,
+    not from the PDF, and each figure travels as a separate file. arXiv's web versions are built from LaTeX, and in 38
+    recent papers I checked, 223 of the 245 figure images were pictures (PNG or JPEG); in dark mode arXiv dims each
+    one and puts it on a white background. PubMed Central doesn't accept SVG figures, and PLOS takes TIFF or EPS only.</p>
+  <p>A figure made once, with colours for each theme, could go into a themed PDF and onto a web page as SVG, where a
+    browser shows the version that matches the reader's light, dark or more contrast setting. Browsers have no setting
+    for a tint, so the tints wouldn't carry across. That needs journals, arXiv and archives to keep SVG figures, and
+    nobody has tested it with readers.</p>
+  <p class="more">More: <a href="../why/index.html#publishing">where it fits</a>, and
+    <a href="../evidence/index.html#web">how papers reach the web</a>.</p>
+</div></section>
+
+<section id="q-rules"><div class="wrap qa">
+  <p class="eyebrow">13</p>
   <h2>Does a themed PDF meet accessibility rules?</h2>
   <p class="short">Themes don't make a PDF accessible. They leave its tags and reading order alone, and each theme's text contrast is measured before it goes in.</p>
   <p>Whether a PDF is accessible under PDF/UA, the accessibility standard for PDF, depends on things such as tags,
@@ -352,7 +369,7 @@
 </div></section>
 
 <section id="q-shown"><div class="wrap qa">
-  <p class="eyebrow">13</p>
+  <p class="eyebrow">14</p>
   <h2>Has anyone shown that themes help?</h2>
   <p class="short">Not for themed PDFs. The studies show that people prefer different colours, and that some read
     better in them, not that themes are the best way to give them.</p>
@@ -366,7 +383,7 @@
 </div></section>
 
 <section id="q-standard"><div class="wrap qa">
-  <p class="eyebrow">14</p>
+  <p class="eyebrow">15</p>
   <h2>Is this a standard? Can I use it now?</h2>
   <p class="short">Not yet. It is a working prototype for a proposal to the PDF Association. You can try it in the
     <a href="../index.html">viewer</a> on this site, the only app that can switch themes so far.</p>

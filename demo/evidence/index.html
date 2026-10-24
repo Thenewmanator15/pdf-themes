@@ -76,6 +76,7 @@
     <a href="#lines">Lines and grids</a>
     <a href="#text">Text, labels, age and ability</a>
     <a href="#published">Figures as published</a>
+    <a href="#web">How papers reach the web</a>
     <a href="#standards">Standards</a>
     <a href="#pipeline">What a theme can change</a>
     <a href="#measured">What I measured</a>
@@ -769,6 +770,32 @@
     and it can't follow a theme. Settling a figure's colours, second cues and text size in a shared pipeline, and
     checking them when the document is built, as pdf-themes checks text contrast, would make them the default rather
     than each author's job. That last step is my inference from these studies; none of them tested such a pipeline.</p>
+
+  <h3 id="web">How papers reach the web</h3>
+  <p>The web versions of papers are mostly built from the source or from an XML copy, not from the PDF, and the
+    figures travel as separate files.</p>
+  <div class="scroll" role="region" tabindex="0" aria-labelledby="t-8"><table><caption id="t-8" class="visually-hidden">How papers reach the web</caption>
+    <thead><tr><th scope="col">Source</th><th scope="col">What it says</th><th scope="col">Bearing on themes</th></tr></thead>
+    <tbody>
+      <tr id="row-frankston2024"><th scope="row">Frankston et al. 2024 <a class="ref" href="#frankston2024">[99]</a></th><td>arXiv has offered HTML versions
+        of papers since October 2023, converted from the authors' LaTeX source, because PDFs are hard to use with
+        assistive technology. arXiv's own account, as a preprint</td><td>The web version is built from the source,
+          so a figure reaches it as the file the author included, converted for the web</td></tr>
+      <tr id="row-jats13"><th scope="row">JATS 1.3, the graphic element <a class="ref" href="#jats13">[100]</a></th><td>In the XML that journals and
+        PubMed Central use for articles, a figure's graphic is a "pointer to an external file containing a still
+        image", "usually some form of binary object"</td><td>Whether a figure can be themed on a journal's web page
+          depends on that file's format</td></tr>
+      <tr id="row-pmcimages"><th scope="row">PubMed Central's image specifications <a class="ref" href="#pmcimages">[101]</a></th><td>"Uncompressed
+        high-resolution TIFF or EPS files are preferred for all images. SVG formatted images are not accepted."</td>
+        <td>A figure that carries its themes as SVG can't be deposited as SVG there today</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">PLOS takes figures as TIFF or EPS only <a class="ref" href="#plosfigures">[97]</a>, and tools that
+    turn PDFs into web pages, such as SciA11y, work from the PDF instead <a class="ref" href="#wang2021">[95]</a>.
+    A figure made with colours for each theme could go into a themed PDF and onto a web page as SVG, where a browser
+    shows the version that matches the reader's light, dark or more contrast setting, as my thesis figures do. That
+    needs the routes above to keep SVG figures; none does today. It is my inference that this would help readers, and
+    nobody has tested it.</p>
 </div></section>
 
 <section id="standards"><div class="wrap">
@@ -787,19 +814,19 @@
         for blocks of text; the reader's software can provide the means</td><td class="part">themes offer checked
           choices; a reader's own colours still come first</td></tr>
       <tr id="row-wcag1411"><th scope="row">WCAG 2.2, 1.4.11 Non-text Contrast (AA)</th><td>Graphics needed to understand the content at least 3:1;
-        the rationale is borrowed from large text, and no study is cited <a class="ref" href="#wcag1411">[99]</a></td>
+        the rationale is borrowed from large text, and no study is cited <a class="ref" href="#wcag1411">[102]</a></td>
         <td class="part">the minimum the demo's chart lines meet; the tool lists shapes below it</td></tr>
-      <tr id="row-mq5"><th scope="row">CSS Media Queries Level 5, a W3C working draft <a class="ref" href="#mq5">[100]</a></th><td>A page can
+      <tr id="row-mq5"><th scope="row">CSS Media Queries Level 5, a W3C working draft <a class="ref" href="#mq5">[103]</a></th><td>A page can
         follow the reader's light or dark setting (<code>prefers-color-scheme</code>), more contrast
         (<code>prefers-contrast</code>) and forced colours</td><td class="no">no setting for a tint</td></tr>
-      <tr id="row-iso32000"><th scope="row">PDF (ISO 32000-2) <a class="ref" href="#iso32000">[101]</a></th><td>A page's colours are written once in its
+      <tr id="row-iso32000"><th scope="row">PDF (ISO 32000-2) <a class="ref" href="#iso32000">[104]</a></th><td>A page's colours are written once in its
         content; optional content can show or hide alternative layers</td>
         <td class="no">no themes; what this project proposes</td></tr>
       <tr id="row-matterhorn"><th scope="row">PDF/UA (ISO 14289)</th><td>Tagging and structure for accessible PDF. Its tests for PDF/UA-1, the Matterhorn Protocol, have one
         check on colour and contrast: that meaning shown by colour or contrast is also in the tags. They set no contrast
-        ratio <a class="ref" href="#matterhorn">[102]</a></td>
+        ratio <a class="ref" href="#matterhorn">[105]</a></td>
         <td class="yes">themes keep the same tags in every theme</td></tr>
-      <tr id="row-henry2012"><th scope="row">Henry 2012 <a class="ref" href="#henry2012">[103]</a></th><td>Text customisation in PDF readers, from a
+      <tr id="row-henry2012"><th scope="row">Henry 2012 <a class="ref" href="#henry2012">[106]</a></th><td>Text customisation in PDF readers, from a
         literature review and an exploratory study with people who have low vision or dyslexia (numbers not
         given)</td>
         <td class="no">Adobe Reader then let people change text and background colours, but not font, size or
@@ -808,7 +835,7 @@
   </table></div>
   <p class="note" id="dark-mode-request">No PDF standard has themes yet, and the gap is known. On the PDF Association's
     public tracker for PDF specifications, a request for dark mode in PDF has been open since 30 November 2023
-    <a class="ref" href="#pdfissues369">[104]</a>. Its replies say the idea has "implications for accessibility of
+    <a class="ref" href="#pdfissues369">[107]</a>. Its replies say the idea has "implications for accessibility of
     content across the spectrum of visual disabilities", that current dark modes are "often based on simple color
     inversion schemes", and that dark mode is "a special case of the ability to provide alternative styling for a
     PDF". One reply, from November 2023, says that "a somewhat similar idea" was shown by BenQ at the Association's
@@ -948,6 +975,13 @@
         pages were identical before and after, pixel for pixel. So the thesis PDF doesn't carry themes yet. Its 13
         photographs and schematic images can't carry the rules</td><td>23 October 2026. Record: my thesis
         repository, not public yet</td></tr>
+      <tr><th scope="row">Figures in arXiv's web versions</th><td>Of 40 recent arXiv papers in four
+        categories (human-computer interaction, instrumentation and detectors, quantitative methods in biology, and
+        astronomy instrumentation), 38 had an HTML version. Their figure images were 216 PNG, 7 JPEG and 22 SVG
+        drawings, the SVG in 5 papers. In dark mode, arXiv's stylesheet dims every figure image (brightness 0.8,
+        contrast 1.2) and puts it on a white background</td><td>The newest papers in those categories on 24 October
+        2026; image types counted in each paper's HTML, and the stylesheet read the same day. Record: my working
+        notes</td></tr>
       <tr><th scope="row">The tested tints</th><td>Black reaches 19.6:1 on cream (#FAFAC8), 14.3:1 on peach (#EDD1B0), 19.4:1 on
         yellow (#F8FD89) and 17.0:1 on turquoise (#A5F7E1). On peach and turquoise, three of my thesis figures' colours
         (grey, orange and green, at 2.3 to 2.9:1) fall under 3:1 until the theme moves them towards the ink</td>
@@ -1037,14 +1071,14 @@
   <h3>Found and not tabled</h3>
   <p>The second search also found these. They bear on the claims above but aren't in the tables.</p>
   <ul>
-    <li>Eperjesi, Fowler and Evans 2004 <a class="ref" href="#eperjesi2004">[105]</a> (Open: abstract only). In 12 people
+    <li>Eperjesi, Fowler and Evans 2004 <a class="ref" href="#eperjesi2004">[108]</a> (Open: abstract only). In 12 people
       with macular degeneration, ten coloured overlays made no significant difference to reading speed against a clear
       one.</li>
-    <li>D'Ath 2008 <a class="ref" href="#dath2008">[106]</a> (With limits: a doctoral thesis). Of 40 office workers, 39
+    <li>D'Ath 2008 <a class="ref" href="#dath2008">[109]</a> (With limits: a doctoral thesis). Of 40 office workers, 39
       preferred a tinted screen to white, but their reading and task scores didn't change significantly, and in a pilot
       with three groups of 10 people with low vision, the colour each chose didn't speed their reading significantly. The tints were
       also dimmer than white.</li>
-    <li>Jiménez et al. 2020 <a class="ref" href="#jimenez2020">[107]</a> (With limits: 20 people). In young adults with
+    <li>Jiménez et al. 2020 <a class="ref" href="#jimenez2020">[110]</a> (With limits: 20 people). In young adults with
       typical sight, the colours of text and background made no significant difference to reading speed, though dark on
       light was faster overall; white text on yellow, with almost no contrast, was rated least legible.</li>
     <li>Westheimer et al. 2003 <a class="ref" href="#westheimer2003">[75]</a> (Open: abstract only). In 106 patients aged
@@ -1053,31 +1087,31 @@
     <li>Lillo, Álvaro and Moreira 2014 <a class="ref" href="#lillo2014">[52]</a> (Open: abstract only). Of three tools
       that simulate colour vision deficiency, checked against 10 people with full red-green colour blindness, only Vischeck appeared accurate;
       Coblis didn't. Angerbauer and others used Coblis for other forms of the deficiency. The tools may have changed since.</li>
-    <li>Chen et al. 2026 <a class="ref" href="#chen2026">[108]</a> (Open: abstract only). College students, 33 with colour
+    <li>Chen et al. 2026 <a class="ref" href="#chen2026">[111]</a> (Open: abstract only). College students, 33 with colour
       vision deficiency and 44 without, did identification and comparison tasks on maps recoloured by the authors'
       method, which picks accessible colours from a painting or photograph, and the authors report that such maps are
       easily readable for both groups. The abstract gives no figures for accuracy or speed, and no comparison with other
       colours.</li>
-    <li>Wei et al. 2020 <a class="ref" href="#wei2020">[109]</a> (With limits: 20 people; the authors' version). When 20
+    <li>Wei et al. 2020 <a class="ref" href="#wei2020">[112]</a> (With limits: 20 people; the authors' version). When 20
       students judged scatterplots seen for a quarter of a second, enlarging a plot with its points made it look less
       numerous and more correlated, and shrinking it did the reverse. Changing the size of the points only partly
       corrected this, and differently for each judgement; value reading wasn't tested.</li>
-    <li>Okan, Galesic and Garcia-Retamero 2016 <a class="ref" href="#okan2016">[110]</a> (With limits: read in the authors'
+    <li>Okan, Galesic and Garcia-Retamero 2016 <a class="ref" href="#okan2016">[113]</a> (With limits: read in the authors'
       manuscript). In two eye-tracking experiments, with 48 and then 51 adults aged 18 to 38, some health graphs were
       made so that the title, an axis label or the scale went against what the graph's shape suggested, such as an
       upside-down scale. People who scored lower on a test of graph reading more often went by the shape and answered
       wrongly, and in the second experiment most graphs with an unusual scale were answered correctly less than half the
       time, even by those who scored higher.</li>
-    <li>Galesic, Garcia-Retamero and Gigerenzer 2009 <a class="ref" href="#galesic2009">[111]</a> (Established). In 59 adults
+    <li>Galesic, Garcia-Retamero and Gigerenzer 2009 <a class="ref" href="#galesic2009">[114]</a> (Established). In 59 adults
       aged 62 to 77 and 112 students in Berlin, adding an icon array (1,000 circles, those affected in black) to the
       numbers raised the share who got the size of a risk reduction right, most for those whose numeracy was low for their
       group, with no significant difference between the age groups. Low numeracy meant the lower half of each group, not
       a disability.</li>
-    <li>Tao, Yuan and Qu 2019 <a class="ref" href="#tao2019">[112]</a> (Open: abstract only). In 36 older and 36 young adults
+    <li>Tao, Yuan and Qu 2019 <a class="ref" href="#tao2019">[115]</a> (Open: abstract only). In 36 older and 36 young adults
       reading made-up personal health records, tables and line graphs with added visual cues took less time and gave
       fewer errors than plain versions, and a line graph with a coloured background was the format both groups preferred.
       Performance differed by age, but the abstract doesn't say which way, or what the other cues were.</li>
-    <li>Wood et al. 2026 <a class="ref" href="#wood2026">[113]</a> (With limits: 8 people, interviews; the authors'
+    <li>Wood et al. 2026 <a class="ref" href="#wood2026">[116]</a> (With limits: 8 people, interviews; the authors'
       manuscript). In interviews and a week's diary, 4 adults with aphasia after a stroke and 4 with developmental language
       disorder described the charts and maps they met in daily life; many named colour coding as something that made a
       display usable, and one said colours came to them more quickly than names. Chart reading wasn't measured, and the
@@ -1186,6 +1220,9 @@
     <li id="kumar2024">Kumar, A. and Wang, L. L. (2024). Uncovering the new accessibility crisis in scholarly PDFs: publishing model and platform changes contribute to declining scholarly document accessibility in the last decade. <i>Proceedings of ASSETS '24</i>, 1–16. <a href="https://doi.org/10.1145/3663548.3675634">doi:10.1145/3663548.3675634</a></li>
     <li id="plosfigures">PLOS. <i>Figures</i>, PLOS ONE submission guidelines, read 24 October 2026. <a href="https://journals.plos.org/plosone/s/figures">journals.plos.org/plosone/s/figures</a></li>
     <li id="elsevierartwork">Elsevier. <i>Artwork and media instructions</i>, read 24 October 2026. <a href="https://www.elsevier.com/about/policies-and-standards/author/artwork-and-media-instructions">elsevier.com</a></li>
+    <li id="frankston2024">Frankston, C., Godfrey, J., Brinn, S., Hofer, A. and Nazzaro, M. (2024). HTML papers on arXiv: why it is important, and how we made it happen. Preprint. <a href="https://arxiv.org/abs/2402.08954">arXiv:2402.08954</a></li>
+    <li id="jats13">National Library of Medicine. <i>Journal Publishing Tag Library, NISO JATS version 1.3</i>, element &lt;graphic&gt;, read 24 October 2026. <a href="https://jats.nlm.nih.gov/publishing/tag-library/1.3/element/graphic.html">jats.nlm.nih.gov</a></li>
+    <li id="pmcimages">PubMed Central. <i>Image quality specifications</i>, read 24 October 2026. <a href="https://pmc.ncbi.nlm.nih.gov/pub/filespec-images/">pmc.ncbi.nlm.nih.gov</a></li>
     <li id="wcag1411">W3C (2026). <i>Understanding success criterion 1.4.11: non-text contrast</i>. Updated 6 September 2026; read 24 October 2026. <a href="https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast">w3.org</a></li>
     <li id="mq5">W3C (2026). <i>Media Queries Level 5</i>. W3C Working Draft, 19 February 2026, a work in progress. <a href="https://www.w3.org/TR/mediaqueries-5/">w3.org/TR/mediaqueries-5</a></li>
     <li id="iso32000">ISO (2020). <i>ISO 32000-2:2020, Document management, Portable document format, Part 2: PDF 2.0</i>. <a href="https://www.iso.org/standard/75839.html">iso.org</a></li>

@@ -77,6 +77,7 @@
     <a href="#today">The problem</a>
     <a href="#how">The idea</a>
     <a href="#figures">Charts and figures</a>
+    <a href="#publishing">Where it fits</a>
     <a href="#needs">How you can help</a>
   </nav>
 </div>
@@ -488,6 +489,45 @@
     style lines at all (see <a href="../evidence/index.html#measured">what I measured</a>).</p>
 </div></section>
 
+<section id="publishing"><div class="wrap">
+  <p class="eyebrow">Where it fits</p>
+  <h2>One figure, themed in the PDF and on the web</h2>
+  <p>A paper reaches readers in more than one form. Most people meet it as a PDF, but arXiv has offered web (HTML)
+    versions since October 2023, built from the authors' LaTeX source, not from the PDF
+    (<a href="../evidence/index.html#row-frankston2024">Frankston et al. 2024</a>). Many journals build their web
+    pages from an XML copy of the article made in production, in which each figure is a pointer to a separate image
+    file (<a href="../evidence/index.html#row-jats13">JATS</a>). Some accessibility tools turn PDFs into web pages
+    instead (<a href="../evidence/index.html#row-wang2021">Wang et al. 2021</a>). In each route the figure travels
+    as a file, and today that file is usually a picture.</p>
+  <div class="scroll" role="region" tabindex="0" aria-labelledby="fit-caption"><table>
+    <caption id="fit-caption" class="visually-hidden">How each route carries a figure today, and what a theme would need</caption>
+    <thead><tr><th scope="col">Route</th><th scope="col">The figure today</th><th scope="col">What a theme would need</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">The PDF</th><td>As the author made it: drawn lines and text if saved as vector graphics, a
+        picture if saved as PNG or TIFF</td><td>The document built once per theme and merged by pdf-themes, which works
+        for Typst documents now; then a PDF app that lets the reader pick a theme, which today is only the viewer on
+        this site</td></tr>
+      <tr><th scope="row">arXiv's web version</th><td>In 38 recent papers I checked, 216 figure images were PNG, 7 JPEG
+        and 22 SVG drawings. In dark mode arXiv dims every figure image and puts it on a white background</td>
+        <td>A figure kept as SVG with its theme rules, and a way for LaTeX to carry each theme's colours</td></tr>
+      <tr><th scope="row">A journal's web page</th><td>A separate image file. PLOS takes TIFF or EPS only, and PubMed
+        Central, the archive, prefers TIFF or EPS and doesn't accept SVG</td><td>Journals and archives that accept SVG
+        figures and keep their theme rules</td></tr>
+      <tr><th scope="row">A web page made from the PDF</th><td>Whatever the converter takes from the PDF</td><td>A
+        converter that reads a themed PDF's themes and carries them across</td></tr>
+    </tbody>
+  </table></div>
+  <p>The figure is the common thread. Made once, with each colour given a role and a value for each theme, the same
+    figure can go into a themed PDF through pdf-themes, and onto a web page as SVG, where a browser shows the version
+    that matches the reader's light, dark or more contrast setting. My thesis figures are made this way now
+    (see <a href="../evidence/index.html#measured">what I measured</a>). Browsers have no setting for a tint, so on the
+    web only light, dark and more contrast would carry across.</p>
+  <p>What exists today is the PDF route for Typst documents and figures that carry their own themes. What doesn't is a
+    publishing or preprint pipeline that keeps them: that needs journals, arXiv and archives to accept and keep SVG
+    figures, a change on their side rather than each author's. That this would work for readers is my inference;
+    nobody has tested it.</p>
+</div></section>
+
 <section id="needs"><div class="wrap">
   <p class="eyebrow">How you can help</p>
   <h2>People to try it, a study, software and a standard</h2>
@@ -507,6 +547,9 @@
     <li>If you make tools that write PDFs or figures: the tool needs to write each theme's colours. Typst documents
       can have them now, through pdf-themes. LaTeX, word processors and plotting libraries would need to do the
       same.</li>
+    <li>If you run a journal, a preprint server or an archive: keep figures as SVG where authors supply them, with
+      their theme rules, so the web version can follow the reader's setting, and keep a themed PDF's themes. Today
+      PubMed Central doesn't accept SVG, and arXiv's web versions show figures as PNG.</li>
     <li>If you work on standards: the proposal is written for the PDF Association's working group, and it is the
       first document in the viewer. The draft specification is
       <a href="https://github.com/Thenewmanator15/pdf-themes/blob/main/SPEC.md">SPEC.md on GitHub</a>. The themes sit
