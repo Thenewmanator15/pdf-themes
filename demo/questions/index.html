@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Questions · pdf-themes</title>
-<meta name="description" content="Short answers to questions about colour themes in PDF: dark mode, dyslexia, file size, PDF apps that don't know about themes, figures, colour blindness, accessibility rules, and what has and hasn't been shown.">
+<meta name="description" content="Short answers to questions about colour themes in PDF: dark mode, dyslexia, file size, PDF apps that don't know about themes, figures, colour blindness, journals' checks, accessibility rules, and what has and hasn't been shown.">
 <link rel="canonical" href="https://thenewmanator15.github.io/pdf-themes/questions/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="pdf-themes">
 <meta property="og:title" content="Questions and answers about colour themes in PDF">
-<meta property="og:description" content="Short answers to questions about colour themes in PDF: dark mode, dyslexia, file size, PDF apps that don't know about themes, figures, colour blindness, accessibility rules, and what has and hasn't been shown.">
+<meta property="og:description" content="Short answers to questions about colour themes in PDF: dark mode, dyslexia, file size, PDF apps that don't know about themes, figures, colour blindness, journals' checks, accessibility rules, and what has and hasn't been shown.">
 <meta property="og:url" content="https://thenewmanator15.github.io/pdf-themes/questions/">
 <meta property="og:image" content="https://thenewmanator15.github.io/pdf-themes/site/share.jpg">
 <meta property="og:image:alt" content="The theme lab, a test page of plots, in its eight themes: Light, Dark, Light and Dark with more contrast, Cream, Peach, Yellow and Turquoise.">
@@ -64,6 +64,7 @@
     <a href="#q-lines">Thicker lines</a>
     <a href="#q-figures">My own figures</a>
     <a href="#q-colour-blind">Colour blindness</a>
+    <a href="#q-journals">Don't journals check?</a>
     <a href="#q-rules">Accessibility rules</a>
     <a href="#q-shown">Has it been shown to help?</a>
     <a href="#q-standard">Is it a standard? Can I use it now?</a>
@@ -303,8 +304,33 @@
     <a href="../evidence/index.html#row-jiang2026">Jiang, Arunkumar and Bryan 2026</a>.</p>
 </div></section>
 
-<section id="q-rules"><div class="wrap qa">
+<section id="q-journals"><div class="wrap qa">
   <p class="eyebrow">11</p>
+  <h2>Don't journals already check figures?</h2>
+  <p class="short">Not in a way that reaches every figure. Some journals leave a figure's quality to its author, and
+    audits of published figures find them uneven.</p>
+  <p>PLOS, for example, says the "final quality of figures is the responsibility of the author", takes only TIFF or
+    EPS files, and says nothing about colour vision deficiency. Elsevier recommends figures that people with impaired
+    colour vision can read, and a study of psychology journals found their author guidelines rarely mentioned colour
+    vision deficiency. In 580 papers from the top journals in three fields, few met every good-practice criterion for
+    their images (2% to 16%), and 21% to 45% had some images that readers with a common colour vision deficiency
+    couldn't make out, judged with a simulation. Of 4,964 images from one journal checked by hand, 12.8% would be hard
+    for such readers, and that share fell between 2012 and 2021. Of 20,000 paper PDFs, 3.2% met six basic
+    accessibility checks, and only 5 described their figures meaningfully for screen readers. In my own run over
+    public PDFs, 39 of 82 arXiv papers had some text below the WCAG contrast minimum in their authors' own colours, as
+    the tool measures it.</p>
+  <p>A figure supplied as a TIFF is a picture: its text can't be searched or read aloud, and it can't follow a theme.
+    The more a shared pipeline settles and checks when the document is built, such as colours, a second cue and text
+    size, the less depends on each author. That is my inference; nobody has tested such a pipeline.</p>
+  <p class="more">More: <a href="../evidence/index.html#published">figures as journals publish them</a>, with
+    <a href="../evidence/index.html#row-jambor2021">Jambor et al. 2021</a>,
+    <a href="../evidence/index.html#row-stevens2024">Stevens et al. 2024</a> and
+    <a href="../evidence/index.html#row-kumar2024">Kumar and Wang 2024</a>; and
+    <a href="../evidence/index.html#measured">what I measured</a>.</p>
+</div></section>
+
+<section id="q-rules"><div class="wrap qa">
+  <p class="eyebrow">12</p>
   <h2>Does a themed PDF meet accessibility rules?</h2>
   <p class="short">Themes don't make a PDF accessible. They leave its tags and reading order alone, and each theme's text contrast is measured before it goes in.</p>
   <p>Whether a PDF is accessible under PDF/UA, the accessibility standard for PDF, depends on things such as tags,
@@ -326,7 +352,7 @@
 </div></section>
 
 <section id="q-shown"><div class="wrap qa">
-  <p class="eyebrow">12</p>
+  <p class="eyebrow">13</p>
   <h2>Has anyone shown that themes help?</h2>
   <p class="short">Not for themed PDFs. The studies show that people prefer different colours, and that some read
     better in them, not that themes are the best way to give them.</p>
@@ -340,7 +366,7 @@
 </div></section>
 
 <section id="q-standard"><div class="wrap qa">
-  <p class="eyebrow">13</p>
+  <p class="eyebrow">14</p>
   <h2>Is this a standard? Can I use it now?</h2>
   <p class="short">Not yet. It is a working prototype for a proposal to the PDF Association. You can try it in the
     <a href="../index.html">viewer</a> on this site, the only app that can switch themes so far.</p>

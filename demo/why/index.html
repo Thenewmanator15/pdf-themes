@@ -417,6 +417,18 @@
   <h2>A theme changes only colours, so the figure has to be made right</h2>
   <p>Some of what makes a chart readable has to be settled when it is made, because a theme can't change it
     afterwards.</p>
+  <p>Today that is up to each author. Journals mostly publish figures as their authors supply them: PLOS, for
+    example, says the "final quality of figures is the responsibility of the author" and takes only TIFF or EPS files
+    (<a href="../evidence/index.html#journals-ask">what journals ask</a>). So quality and accessibility vary. In 580
+    papers from the top journals in three fields, few met every good-practice criterion for their images (2% to 16%),
+    and 21% to 45% had some images that readers with a common colour vision deficiency couldn't make out, judged
+    with a simulation (<a href="../evidence/index.html#row-jambor2021">Jambor et al. 2021</a>). Of 20,000 paper PDFs,
+    3.2% met six basic accessibility checks, and only 5 had meaningful descriptions of their figures
+    (<a href="../evidence/index.html#row-kumar2024">Kumar and Wang 2024</a>). In my own run over public PDFs, 39 of 82
+    arXiv papers had some text below the WCAG contrast minimum in their authors' own colours, as the tool measures it
+    (see <a href="../evidence/index.html#measured">what I measured</a>). Settling these things in a shared pipeline,
+    and checking them when the document is built, would make them the default rather than each author's job. That is
+    my inference; nobody has tested it.</p>
   <ul>
     <li>Every line or group needs a second cue besides its colour: a marker, a dash pattern or a label on the line.
       When a crowded display was shown for about a tenth of a second, people picked out a group far more accurately
