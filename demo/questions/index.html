@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Questions · pdf-themes</title>
+<meta name="description" content="Short answers to questions about colour themes in PDF: dark mode, dyslexia, file size, PDF apps that don't know about themes, figures, colour blindness, accessibility rules, and what has and hasn't been shown.">
+<link rel="canonical" href="https://thenewmanator15.github.io/pdf-themes/questions/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="pdf-themes">
+<meta property="og:title" content="Questions and answers about colour themes in PDF">
+<meta property="og:description" content="Short answers to questions about colour themes in PDF: dark mode, dyslexia, file size, PDF apps that don't know about themes, figures, colour blindness, accessibility rules, and what has and hasn't been shown.">
+<meta property="og:url" content="https://thenewmanator15.github.io/pdf-themes/questions/">
+<meta property="og:image" content="https://thenewmanator15.github.io/pdf-themes/site/share.jpg">
+<meta property="og:image:alt" content="The theme lab, a test page of plots, in its eight themes: Light, Dark, Light and Dark with more contrast, Cream, Peach, Yellow and Turquoise.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image:alt" content="The theme lab, a test page of plots, in its eight themes: Light, Dark, Light and Dark with more contrast, Cream, Peach, Yellow and Turquoise.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,600&display=swap">
+<link rel="stylesheet" href="../site/themes.css">
+<link rel="stylesheet" href="../site/site.css">
+<script src="../site/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../index.html">pdf-themes</a>
+  <nav class="site" aria-label="Site">
+    <a href="../index.html">Viewer</a>
+    <a href="../why/index.html">Why themes</a>
+    <a href="../evidence/index.html">Evidence</a>
+    <a href="../questions/index.html" aria-current="page">Questions</a>
+    <a href="https://github.com/Thenewmanator15/pdf-themes">GitHub</a>
+  </nav>
+  <label class="colours">Page colours
+    <select id="page-colours">
+      <option value="auto">Follow my device</option>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+      <option value="light-contrast">Light, more contrast</option>
+      <option value="dark-contrast">Dark, more contrast</option>
+      <option value="cream">Cream</option>
+      <option value="peach">Peach</option>
+      <option value="yellow">Yellow</option>
+      <option value="turquoise">Turquoise</option>
+    </select>
+  </label>
+</div></header>
+
+<main>
+<div class="wrap intro">
+  <p class="eyebrow">Questions · 24 October 2026</p>
+  <h1>Questions and answers</h1>
+  <p class="lede">Each answer starts with a short reply and points to the evidence behind it. Where nobody knows yet,
+    it says so.</p>
+  <nav class="toc" aria-label="On this page">
+    <a href="#q-dark-mode">My PDF app has a dark mode</a>
+    <a href="#q-dark-better">Isn't dark better?</a>
+    <a href="#q-dyslexia">Dyslexia and tints</a>
+    <a href="#q-size">File size</a>
+    <a href="#q-break">Will it break anything?</a>
+    <a href="#q-work">Who does the work?</a>
+    <a href="#q-own-colours">Any colours I like</a>
+    <a href="#q-lines">Thicker lines</a>
+    <a href="#q-figures">My own figures</a>
+    <a href="#q-colour-blind">Colour blindness</a>
+    <a href="#q-rules">Accessibility rules</a>
+    <a href="#q-shown">Has it been shown to help?</a>
+    <a href="#q-standard">Is it a standard? Can I use it now?</a>
+  </nav>
+</div>
+
+<section id="q-dark-mode"><div class="wrap qa">
+  <p class="eyebrow">01</p>
+  <h2>My PDF app already has a dark mode. Why isn't that enough?</h2>
+  <p class="short">Because it has to guess, and guessing can go wrong on anything whose colours carry meaning.</p>
+  <p>A PDF says which colour to paint, but not what a colour means. A PDF app can tell text from a picture, but not
+    whether a blue line is a data series, a highlight or a brand colour, nor whether a picture is a photo or a diagram.
+    So a PDF app that offers a dark mode treats colours by rule: some invert every colour, some invert only lightness,
+    and some swap in their own colours. Black text on white survives that. Colours that carry meaning don't. A plain
+    inversion turns a blue line orange and an orange one blue, so a caption that says "the blue line" points at the
+    wrong line. It turns a colour scale into a different one, a photo into a negative, and anything drawn on a dark
+    background light. A chart's key is inverted with its lines, so it still matches them. Inverting only lightness
+    keeps hues, but still flips a colour scale's light and dark ends.</p>
+  <p>Some people with low vision rely on settings like these, and in two studies they caused trouble with charts. In
+    interviews with 11 legally blind adults who still have some sight, inverting didn't always give the result people
+    wanted, or the same result for everyone: one participant's bar chart didn't invert as he expected and came across
+    in very light grey, and one chart still fell short of the Web Content Accessibility Guidelines (WCAG) once a
+    participant's filter had inverted it. In another study, with 22 people with low vision, 5 used colour filters and
+    3 used colour themes during its tasks. The chart aids being tested mostly worked with people's own tools, and where
+    they didn't, filters and themes were the most common reason. That study didn't test themes, dark mode or PDF. In a
+    small study of 12 people with typical sight, inverted charts were read with no measurable loss of accuracy or speed,
+    but their colours were rated far less like the originals than those of a designed dark version. So the main loss is
+    what the colours mean. With a theme that the author made and checked, nothing has to be guessed.</p>
+  <p class="more">More: <a href="../evidence/index.html#recolouring">what recolouring does</a>, with
+    <a href="../evidence/index.html#row-wang2024">Wang, Zhao and Kim 2024</a>,
+    <a href="../evidence/index.html#row-sechayk2026">Sechayk et al. 2026</a> and
+    <a href="../evidence/index.html#row-karunathilaka2025">Karunathilaka et al. 2025</a>; and
+    <a href="../why/index.html#demo-section">the demo</a>, whose inverted and recoloured views are imitations made by
+    this site, not screenshots of a PDF app.</p>
+</div></section>
+
+<section id="q-dark-better"><div class="wrap qa">
+  <p class="eyebrow">02</p>
+  <h2>Isn't dark mode better for everyone?</h2>
+  <p class="short">No. On average, people with typical sight proofread better with dark text on light, most of all when
+    the text is small.</p>
+  <p>They also saw fine detail better. An earlier study from the same lab found that the advantage comes from the
+    brighter screen, not from which way round the colours are, though it used low-contrast text in a dark room. In a
+    near-dark room, light text on dark took longer to read at a glance; in bright light it didn't.</p>
+  <p>Light text on dark does help some people with low vision read faster, more often those whose eyes scatter light,
+    as with cataract, but one study of children, known only from its abstract, found no clinical test that predicts who. In a survey of 133 adults with low vision, 46% said
+    they preferred white text on black and 39% black on white. And when 104 people did chart tasks in light and in
+    dark, there was no measurable difference on average. Their preferences split by age: of the 52 under 60, 24
+    preferred dark and 14 light, and of the 52 aged 60 or over, 23 preferred light and 6 dark; the rest had no
+    preference or weren't sure. So light stays the default, and dark is a choice for the people it helps or who prefer
+    it.</p>
+  <p class="more">More: <a href="../evidence/index.html#polarity">light and dark</a>, with
+    <a href="../evidence/index.html#row-piepenbrock2013">Piepenbrock et al. 2013</a> and
+    <a href="../evidence/index.html#row-piepenbrock2014">2014</a>,
+    <a href="../evidence/index.html#row-dobres2017">Dobres et al. 2017</a>,
+    <a href="../evidence/index.html#row-wu2020">Wu et al. 2020</a> and
+    <a href="../evidence/index.html#row-while2024">While and Sarvghad 2024</a>.</p>
+</div></section>
+
+<section id="q-dyslexia"><div class="wrap qa">
+  <p class="eyebrow">03</p>
+  <h2>Do coloured pages help with dyslexia?</h2>
+  <p class="short">Some people say a tinted page is more comfortable, though whether that is more than a placebo effect
+    is disputed. Colour doesn't treat dyslexia.</p>
+  <p>In one large study of screen backgrounds, 341 adults, 89 of them with dyslexia or at risk of it, read faster on
+    peach, orange and yellow than on blue, blue grey and green. It didn't test a white page, so it can't say whether a
+    tint beats white, and the authors say this doesn't necessarily mean warm colours are recommended. An eye-tracking study of 92
+    people, half with dyslexia, found no effect of colour. The British Dyslexia Association's style guide suggests dark
+    text on a light, not white, background, such as cream or a soft pastel.</p>
+  <p>Two systematic reviews of coloured overlays
+    disagree. One found that their use for reading difficulties "cannot be endorsed", and put the benefits people report
+    down to placebo, practice or the effect of being studied. The other, by authors who work with one tinting system,
+    found weak evidence that filters chosen for each person can ease symptoms or speed up reading in people with visual
+    stress, and called for larger trials. Visual stress is discomfort when reading, such as eye strain or headaches;
+    that review suggests about one in five people with dyslexia may have it. So the tints are offered for comfort and
+    choice, not as a treatment.</p>
+  <p>The four tints here are a starting point. I found no standard colours for reading tints. The ones on this site
+    are the project's own, paler than the colours tested with readers, and this site's turquoise is a pale blue, near
+    the cool colours that read slowest in the large study. (The turquoise the tool works out for a finished PDF is a
+    true pale turquoise.) The tested colours are on the evidence page, and which tints to offer is still open. Nobody
+    with dyslexia or visual stress has tried these tints yet.</p>
+  <p class="more">More: <a href="../evidence/index.html#tints">tints and dyslexia</a>, with
+    <a href="../evidence/index.html#row-rello2017">Rello and Bigham 2017</a>,
+    <a href="../evidence/index.html#row-rello2017uais">Rello and Baeza-Yates 2017</a>,
+    <a href="../evidence/index.html#row-griffiths2016">Griffiths et al. 2016</a>,
+    <a href="../evidence/index.html#row-evans2016">Evans and Allen 2016</a> and
+    <a href="../evidence/index.html#row-bda2023">the British Dyslexia Association's guide</a>.</p>
+</div></section>
+
+<section id="q-size"><div class="wrap qa">
+  <p class="eyebrow">04</p>
+  <h2>Does it make files bigger?</h2>
+  <p class="short">For themes built from the source, a little: mostly only the colours are stored again. Themes worked
+    out for a finished PDF can cost more.</p>
+  <p>A page of plots grew 4.3% with all eight themes, from 38,318 to 39,966 bytes. The proposal, about 0.75 MB, grew
+    about 0.1% with its seven extra themes, since most of its size is pictures that every theme shares. Putting a light
+    and a dark version in one file as two layers, which an author can do today, made the same page of plots 41% bigger,
+    and a simpler test page 2.7% bigger. Pictures that change between themes cost more: on a test document built to be
+    hard, where two pictures change, its light and dark themes added 38%, against 43% for the same two as layers.</p>
+  <p>When the tool works themes out for a finished PDF, the cost varies more. In a test of the development version of
+    17 October 2026 on 298 public PDFs, each compared with its original saved the same way, the median file grew
+    0.1% and three in four grew by less than 1%, but 32 grew by more than a quarter. Printed web pages grew by a
+    median of 46%, and one 21-page printed web page with no pictures tripled, from 189 KB to 565 KB. The tool also
+    saves files more compactly, so against the files as published most got slightly smaller, and that web page,
+    545 KB as published, grew about 4%. Giving each picture its own recoloured copy for every theme was tried and
+    dropped, because files grew up to ten times: a scanned book went from 25 MB to 179 MB. So the tool doesn't give
+    pictures a copy for each theme.</p>
+  <p class="more">More: <a href="../evidence/index.html#measured">what I measured</a>.</p>
+</div></section>
+
+<section id="q-break"><div class="wrap qa">
+  <p class="eyebrow">05</p>
+  <h2>Will it break anything in PDF apps that don't know about themes?</h2>
+  <p class="short">It shouldn't. They show the default colours, and in the tests so far nearly every file looked as
+    before.</p>
+  <p>The themes sit where those apps don't look. In a test of the development version of 17 October 2026, which isn't
+    on GitHub yet, the tool added themes to 298 public PDFs of up to 40 pages. Drawn before and after in PDFium, the
+    engine in Chrome, at 72 dpi, 266 looked identical and 31 differed by at most one step out of 255 in a colour value.
+    The other one differed through PDFium's own handling of a Display P3 colour. The tool refused one more file, a
+    report whose pages use a font missing from the file. As first found, on 11 October with an earlier version, 7 files
+    changed and 14 took too long to theme; after fixes to the tool, none took too long and the Display P3 file was the
+    only change left. In a sweep on 14 October, also with an earlier version, MuPDF drew 17 files differently
+    where pictures are stored as palettes, by up to 125 steps in places, because it shrinks such pictures differently
+    from the same pictures in full colour (a MuPDF quirk); it drew 26 more within five steps. Why 31 files differ by
+    one step isn't yet known, and Acrobat, Apple Preview and pdf.js, the viewer in Firefox, haven't been checked across
+    the set.</p>
+  <p>Picking a theme changes no bytes in the file, so the text and the tags that screen readers use stay as they are.
+    The 31 files in the set that pass the veraPDF validator's checks for the PDF/A archive standard or the PDF/UA
+    accessibility standard still passed once themed, checked as stored. veraPDF doesn't reach the other themes, so
+    those weren't checked one by one. As first found, with a version of 14 October, 7 of these files failed; two faults were then
+    fixed. Signatures need care. A signature made after the themes went in covers every theme, but adding themes
+    rewrites a file, so it has to happen before signing. A theme could also hide text by painting it in the paper
+    colour, so the proposal asks signature checkers to draw every theme and say which is shown.</p>
+  <p class="more">More: <a href="../evidence/index.html#measured">what I measured</a>, and
+    <a href="#q-rules">whether a themed PDF meets accessibility rules</a>.</p>
+</div></section>
+
+<section id="q-work"><div class="wrap qa">
+  <p class="eyebrow">06</p>
+  <h2>Who has to do the work?</h2>
+  <p class="short">Mostly the author, once: picking each theme's colours. pdf-themes merges the versions into one
+    file.</p>
+  <p>For a Typst document, one pdf-themes command builds it in each theme and merges the builds. Versions made with
+    other tools can be merged as well. The versions have to draw the same text and shapes and differ only in colour, so
+    a template may need small changes first: if one theme draws a border or a gradient, every theme has to, even where
+    it can't be seen, and a page that prints its own theme's name won't merge. Tools that already name their colours,
+    such as style sheets and the theme colours in office software, could in principle write themes directly. LaTeX,
+    word processors and plotting libraries don't do so yet.</p>
+  <p>For a PDF with no source, the tool can work themes out from the file's own colours, mostly by turning light
+    surfaces dark and dark text light while keeping hues, much as some PDF apps do. Like them, it can't tell what a
+    colour means. In a test of the development version of 17 October 2026 on 298 public PDFs, 180 kept all eight
+    themes, 13 of them only because they had no text to check. By kind: printed web pages 27 of 27, Typst documents 11
+    of 15, LaTeX documents 61 of 82, reports 62 of 99, test files 8 of 15, slides 6 of 30 and scans 5 of 30. As first
+    found, on 13 October with an earlier version, 163 kept all eight. Worked-out themes can also fail on a long file:
+    on a 31-page test file, all six themes the tool worked out failed their check, though on its first page alone all
+    six passed. So themes made by the author come first.</p>
+  <p class="more">More: <a href="https://github.com/Thenewmanator15/pdf-themes#readme">the tool</a>, and
+    <a href="../evidence/index.html#measured">the public PDFs</a>.</p>
+</div></section>
+
+<section id="q-own-colours"><div class="wrap qa">
+  <p class="eyebrow">07</p>
+  <h2>Why not let me pick any colours I like?</h2>
+  <p class="short">You should be able to, and themes don't take that away.</p>
+  <p>WCAG's highest level asks that people can choose their own colours for text and its background, and says a
+    browser or other app can provide the means. Under the proposal, a person's own settings, such as a Windows contrast
+    theme or Acrobat's Replace Document Colors, still come first. But only the author knows what the colours mean.
+    Inverting changes a chart's key along with its lines, so the key still matches, but a caption that says "the blue
+    line" then points at the wrong one. A theme the author made can keep each colour meaning what the key and caption
+    say, and the tool checks its text contrast before it goes in. Your own settings stay.</p>
+  <p class="more">More: <a href="../evidence/index.html#standards">the standards</a>.</p>
+</div></section>
+
+<section id="q-lines"><div class="wrap qa">
+  <p class="eyebrow">08</p>
+  <h2>Can a theme make thin lines thicker for people with low vision?</h2>
+  <p class="short">Not yet. In a file set up for it, three PDF engines would already draw it, but the proposal keeps
+    themes to colour for now.</p>
+  <p>Thicker lines make colour differences easier to see, at least for people with typical vision. In one study, all
+    11 people with low vision commented on chart grid lines and tick marks, mainly on how thin, pale and sparse they
+    were; two asked for bolder lines and one for larger tick marks. In a test file whose line width came from a setting
+    a theme can swap, PDFium, MuPDF and Poppler drew the line at 3 pt instead of 0.5 pt when the theme was shown, and
+    did the same for a dash pattern. But most tools set line widths directly in the page content, where a theme can't
+    reach them, and I found no study that measures whether heavier lines help people with low vision read charts. So
+    the proposal keeps themes to colour and lists line width as an open question. On a web page it is easy: the demo
+    draws heavier lines and grid in the more contrast themes.</p>
+  <p class="more">More: <a href="../evidence/index.html#lines">lines, dashes and grids</a>, and
+    <a href="../evidence/index.html#measured">the test in three PDF engines</a>.</p>
+</div></section>
+
+<section id="q-figures"><div class="wrap qa">
+  <p class="eyebrow">09</p>
+  <h2>What should I do with my own figures?</h2>
+  <p class="short">Save them as vector graphics with colours for each theme, and don't rely on colour alone.</p>
+  <p>A figure drawn as lines and text (SVG or PDF) can follow the theme, as long as your tools draw it in each
+    theme's colours when they build that theme. A picture of a chart, such as a PNG, follows the
+    theme only if you supply a version for each theme; otherwise it stays a white box on a dark page. When the tool
+    works themes out for a finished PDF, it can recolour a simple picture on white with few colours, but it leaves
+    photos and detailed pictures as they are. A grey scan of a page is the exception: its dark themes turn the whole
+    page light on dark, a photo on it included.</p>
+  <p>Give every line or group a marker, a dash pattern or a label as well as a colour. When a crowded display was shown
+    for about a tenth of a second, people picked out a group far more accurately when it differed in both colour and
+    shape than in either alone. WCAG also asks that colour isn't the only way information is given, and a second cue
+    survives a PDF app's recolouring.</p>
+  <p>For a colour scale, use one that changes steadily in lightness, such as viridis or cividis, rather than a rainbow,
+    which cost medical students accuracy in one study. Viridis and cividis were designed with simulations of colour
+    vision deficiency, though I found no test of them with colour-blind readers. A colour scale shows data, so it keeps
+    its colours in every theme, with a frame where its darkest colours would meet a dark page. In one study of maps, a
+    dark-mode version whose darkest colours nearly matched the background left people unsure in a third of their answers about which way the
+    scale ran. Make the text big enough once the figure is printed at its final size: clear print guidance asks for at
+    least 12 pt, and ideally 14 pt, though I found no study of label size in charts. In one study of map labels on a screen, which I know only from its abstract and the authors' summary, young students' eye movements suggested they searched most efficiently at the middle of three sizes. In a study of older adults using interactive charts online, some found some of the text too small. Keep labels as real text, not
+    converted to shapes, so they can be searched and their contrast can be checked.</p>
+  <p class="more">More: <a href="../evidence/index.html#figures">figures</a>, with
+    <a href="../evidence/index.html#row-nothelfer2017">Nothelfer et al. 2017</a>,
+    <a href="../evidence/index.html#row-borkin2011">Borkin et al. 2011</a> and
+    <a href="../evidence/index.html#row-schiewe2024">Schiewe 2024</a>; and
+    <a href="../evidence/index.html#text">text and labels</a>.</p>
+</div></section>
+
+<section id="q-colour-blind"><div class="wrap qa">
+  <p class="eyebrow">10</p>
+  <h2>Is there a theme for colour blindness?</h2>
+  <p class="short">No. Colour blindness has to be handled when the figure is made.</p>
+  <p>About 8% of men and 0.5% of women have some colour vision deficiency, or colour blindness, by the usual estimate.
+    Themes don't fix it. Someone with it may read in any theme, so a figure's colours have to be chosen for them in
+    every theme, with a marker, dash or label on every line as well. In one study, which I know only from its abstract,
+    map readers with red-green deficiency were as accurate as others when the colours were chosen with them in mind,
+    though still slower, and they overwhelmingly preferred those maps. When 1,500 figures from visualisation papers were
+    each shown through four simulations of colour vision deficiency, most raters judged about 60% of the simulated
+    images accessible, a third borderline or undecided and 7% not. But in another study, 9 of 12 colour-blind people
+    interviewed disputed the simulations. Changing colours for a theme can also bring two lines closer together, and
+    pdf-themes doesn't yet check for colour vision deficiency.</p>
+  <p class="more">More: <a href="../evidence/index.html#figures">colour vision deficiency</a>, with
+    <a href="../evidence/index.html#row-crameri2020">Crameri et al. 2020</a>,
+    <a href="../evidence/index.html#row-olson1997">Olson and Brewer 1997</a>,
+    <a href="../evidence/index.html#row-angerbauer2022">Angerbauer et al. 2022</a> and
+    <a href="../evidence/index.html#row-jiang2026">Jiang, Arunkumar and Bryan 2026</a>.</p>
+</div></section>
+
+<section id="q-rules"><div class="wrap qa">
+  <p class="eyebrow">11</p>
+  <h2>Does a themed PDF meet accessibility rules?</h2>
+  <p class="short">Themes don't make a PDF accessible. They leave its tags and reading order alone, and each theme's text contrast is measured before it goes in.</p>
+  <p>Whether a PDF is accessible under PDF/UA, the accessibility standard for PDF, depends on things such as tags,
+    reading order and alternative text for pictures, and themes leave those alone. The proposal on this site, with all
+    eight themes in it, passes veraPDF's automated checks for PDF/UA-1, and for the PDF/A-2a archive standard, in every
+    theme. PDF/UA also needs checks by a person, which a validator can't make.</p>
+  <p>PDF/UA's own tests set no contrast ratio, so the tool uses WCAG's. Before a theme goes in, the tool measures each piece of text against the
+    background in its box. WCAG asks for at least 4.5:1 for ordinary text and 3:1 for large text, and 7:1 and 4.5:1 at
+    its highest level, which the more contrast themes are checked against. A theme the author made that falls short is
+    still written, without the mark in the file that says it passed, and the author gets a list of the text that fell short. A theme the tool
+    works out is left out if its text still falls short after the tool's own fixes. Lines and shapes below 3:1 are
+    listed for the author, but don't decide the mark. The check has known limits, not yet fixed: it takes text size
+    from the font size as written, so text in a figure drawn at half size can be held to the large-text minimum (3:1
+    instead of 4.5:1), and where text crosses two backgrounds it is measured against the one it contrasts with best.
+    WCAG's contrast rules don't ask for themes; its highest level asks that people can choose their own colours for
+    text and its background, which a PDF app can provide.</p>
+  <p class="more">More: <a href="../evidence/index.html#standards">the standards</a>, and
+    <a href="../evidence/index.html#measured">what I measured</a>.</p>
+</div></section>
+
+<section id="q-shown"><div class="wrap qa">
+  <p class="eyebrow">12</p>
+  <h2>Has anyone shown that themes help?</h2>
+  <p class="short">Not for themed PDFs. The studies show that people prefer different colours, and that some read
+    better in them, not that themes are the best way to give them.</p>
+  <p>The studies on the evidence page tested colours on screens, on paper and through lenses, and many of them are
+    small. They show that preferences differ, that light text on dark helps some people with low vision read faster,
+    and that inverting, which some people rely on, can be unreliable on charts. Nobody with low vision, dyslexia or
+    visual stress has tried these themes yet, and my own measurements are of files and software, not of people. The
+    most direct test would have people with low vision read charts in the author's themes and with inverting, and
+    compare accuracy and time as well as which they preferred. It would need a university to lead it.</p>
+  <p class="more">More: <a href="../evidence/index.html#open">open questions</a>.</p>
+</div></section>
+
+<section id="q-standard"><div class="wrap qa">
+  <p class="eyebrow">13</p>
+  <h2>Is this a standard? Can I use it now?</h2>
+  <p class="short">Not yet. It is a working prototype for a proposal to the PDF Association. You can try it in the
+    <a href="../index.html">viewer</a> on this site, the only app that can switch themes so far.</p>
+  <p>The viewer opens only the documents on this site, not your own PDFs. Every other PDF app shows a themed file in its default colours. The code and the draft specification are
+    <a href="https://github.com/Thenewmanator15/pdf-themes">on GitHub</a>, but the tool isn't yet a released package
+    you can install, and its latest fixes are in a development version that isn't on GitHub yet. The themes sit under
+    a temporary name in the file until the PDF Association agrees one. The proposal, written for its working group, is
+    the first document in the viewer. A request for dark mode in PDF has been open on the Association's public
+    tracker since November 2023, and I posted pdf-themes there in October 2026
+    (<a href="../evidence/index.html#dark-mode-request">the request</a>). Nobody with low vision, dyslexia or visual
+    stress has tried the themes yet.</p>
+</div></section>
+
+<section id="ask"><div class="wrap qa">
+  <p class="eyebrow">?</p>
+  <h2>A question that isn't here?</h2>
+  <p>Ask it on the <a href="https://github.com/Thenewmanator15/pdf-themes/issues">issue tracker</a>, and if you try
+    the themes in the viewer, say there what works and what doesn't. The tracker is public: reading it needs no
+    account, and posting needs a free GitHub account. Please don't share anything about your health there.</p>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <p>pdf-themes · Mathew Newman (<a href="https://orcid.org/0000-0003-1784-3250">ORCID 0000-0003-1784-3250</a>). Part of the <a href="https://github.com/Thenewmanator15/pdf-themes">pdf-themes repository</a>, under the Apache 2.0 licence.</p>
+</div></footer>
+</body>
+</html>

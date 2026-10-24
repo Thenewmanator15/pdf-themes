@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why themes · pdf-themes</title>
+<meta name="description" content="People need and prefer different colours. Why a PDF should carry its author's own dark, more contrast and tinted themes, and why figures need more than colour.">
+<link rel="canonical" href="https://thenewmanator15.github.io/pdf-themes/why/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="pdf-themes">
+<meta property="og:title" content="One PDF, in colours each reader can choose">
+<meta property="og:description" content="People need and prefer different colours. Why a PDF should carry its author's own dark, more contrast and tinted themes, and why figures need more than colour.">
+<meta property="og:url" content="https://thenewmanator15.github.io/pdf-themes/why/">
+<meta property="og:image" content="https://thenewmanator15.github.io/pdf-themes/site/share.jpg">
+<meta property="og:image:alt" content="The theme lab, a test page of plots, in its eight themes: Light, Dark, Light and Dark with more contrast, Cream, Peach, Yellow and Turquoise.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image:alt" content="The theme lab, a test page of plots, in its eight themes: Light, Dark, Light and Dark with more contrast, Cream, Peach, Yellow and Turquoise.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,600&display=swap">
+<link rel="stylesheet" href="../site/themes.css">
+<link rel="stylesheet" href="../site/site.css">
+<script src="../site/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../index.html">pdf-themes</a>
+  <nav class="site" aria-label="Site">
+    <a href="../index.html">Viewer</a>
+    <a href="../why/index.html" aria-current="page">Why themes</a>
+    <a href="../evidence/index.html">Evidence</a>
+    <a href="../questions/index.html">Questions</a>
+    <a href="https://github.com/Thenewmanator15/pdf-themes">GitHub</a>
+  </nav>
+  <label class="colours">Page colours
+    <select id="page-colours">
+      <option value="auto">Follow my device</option>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+      <option value="light-contrast">Light, more contrast</option>
+      <option value="dark-contrast">Dark, more contrast</option>
+      <option value="cream">Cream</option>
+      <option value="peach">Peach</option>
+      <option value="yellow">Yellow</option>
+      <option value="turquoise">Turquoise</option>
+    </select>
+  </label>
+</div></header>
+
+<main>
+<div class="wrap intro">
+  <p class="eyebrow">Why themes</p>
+  <h1>One PDF, in colours each reader can choose</h1>
+  <p class="lede">People need and prefer different colours. Among people with low vision, many prefer light text on a
+    dark page, and some read faster that way. On average, people with typical sight proofread better with dark text on
+    light. Some people with dyslexia or visual stress prefer a tinted page, and dyslexia guidance suggests
+    cream or a soft pastel rather than white.</p>
+  <p class="lede">Web pages and apps can follow a reader's light, dark or more contrast setting. A PDF has one set of
+    colours, and it says which colour to paint but not what the colour means. So a PDF app that offers a dark mode
+    has to guess. Depending on the app, it inverts every colour, inverts only lightness, or swaps in colours of its
+    own. A plain inversion turns a chart's blue line orange, so a caption that names "the blue line" points at the
+    wrong one, and it turns a photo into a negative.</p>
+  <p class="lede">A theme is a complete set of colours for a document, such as Dark or Cream. pdf-themes puts the
+    author's own themes inside the PDF and checks the contrast of each one's text, so a PDF app wouldn't have to
+    guess. It is a working prototype for a proposal to the PDF Association, not a standard, and not yet a
+    released package you can install. Today only the viewer on this site can switch themes; any other PDF app shows a themed
+    file in its default colours. Nobody with low vision, dyslexia or visual stress has tried the themes yet.</p>
+  <div class="cta">
+    <a class="btn" href="#demo-section">Try it below</a>
+    <a class="btn ghost" href="../index.html">Open the viewer</a>
+    <a class="btn ghost" href="../evidence/index.html">Read the evidence</a>
+    <a class="btn ghost" href="../questions/index.html">Questions and answers</a>
+  </div>
+  <nav class="toc" aria-label="On this page">
+    <a href="#demo-section">Try it</a>
+    <a href="#people">Who it's for</a>
+    <a href="#today">The problem</a>
+    <a href="#how">The idea</a>
+    <a href="#figures">Charts and figures</a>
+    <a href="#needs">How you can help</a>
+  </nav>
+</div>
+
+<section id="demo-section"><div class="wrap">
+  <h2>Try it on a chart and a picture</h2>
+  <p>Change "Page colours" at the top of this page, and the chart below follows in the author's colours for each
+    theme. The buttons "Inverted by a PDF app" and "Recoloured by a PDF app" imitate what some PDF apps do
+    instead: a PDF today has only one set of colours, so the app changes them itself.</p>
+  <figure class="demo" id="demo" data-view="themed" data-cues="on">
+    <div class="demo-controls">
+      <div class="segmented" role="group" aria-label="How the figure is shown">
+        <button type="button" data-view="themed" aria-pressed="true">The author's version</button>
+        <button type="button" data-view="inverted" aria-pressed="false">Inverted by a PDF app</button>
+        <button type="button" data-view="recoloured" aria-pressed="false">Recoloured by a PDF app</button>
+      </div>
+      <label class="check"><input type="checkbox" id="cues" checked> Show markers, dashes and labels</label>
+    </div>
+    <div class="stage">
+      <div class="stage-chart">
+        <!-- chart -->
+<svg class="chart" viewBox="0 0 600 370" role="img" aria-labelledby="chart-title" aria-describedby="chart-desc">
+<title id="chart-title">Temperature through one day at three sites (made-up data)</title>
+<desc id="chart-desc">Site A is lowest at 03:00, at 5.5 °C, and highest at 15:00, at 19.5 °C. Site B is lowest at 04:30, at 4.8 °C, and highest at 16:30, at 15.2 °C. Site C is lowest at 02:45, at 12.0 °C, and highest at 14:45, at 18.0 °C. With the markers, dashes and labels shown, Site A's line is solid with circles, Site B's is dashed with squares and Site C's is dotted with triangles, and each line is labelled at its right-hand end.</desc>
+<g class="grid">
+<line x1="64" x2="500" y1="296.0" y2="296.0"/>
+<line x1="64" x2="500" y1="242.0" y2="242.0"/>
+<line x1="64" x2="500" y1="188.0" y2="188.0"/>
+<line x1="64" x2="500" y1="134.0" y2="134.0"/>
+<line x1="64" x2="500" y1="80.0" y2="80.0"/>
+<line x1="64" x2="500" y1="26.0" y2="26.0"/>
+<line x1="64.0" x2="64.0" y1="26" y2="296"/>
+<line x1="173.0" x2="173.0" y1="26" y2="296"/>
+<line x1="282.0" x2="282.0" y1="26" y2="296"/>
+<line x1="391.0" x2="391.0" y1="26" y2="296"/>
+<line x1="500.0" x2="500.0" y1="26" y2="296"/>
+</g>
+<path class="axis" d="M64 26V296H500"/>
+<g class="ticks">
+<text x="56" y="300.5" text-anchor="end">0</text>
+<text x="56" y="246.5" text-anchor="end">5</text>
+<text x="56" y="192.5" text-anchor="end">10</text>
+<text x="56" y="138.5" text-anchor="end">15</text>
+<text x="56" y="84.5" text-anchor="end">20</text>
+<text x="56" y="30.5" text-anchor="end">25</text>
+<text x="64.0" y="322" text-anchor="middle">00:00</text>
+<text x="173.0" y="322" text-anchor="middle">06:00</text>
+<text x="282.0" y="322" text-anchor="middle">12:00</text>
+<text x="391.0" y="322" text-anchor="middle">18:00</text>
+<text x="500.0" y="322" text-anchor="middle">24:00</text>
+<text x="282" y="360" text-anchor="middle">Time of day</text>
+<text transform="translate(18 161) rotate(-90)" text-anchor="middle">Temperature (°C)</text>
+</g>
+<g class="series s1">
+<path class="line" d="M64.0 214.5 L68.5 217.8 L73.1 221.0 L77.6 223.9 L82.2 226.5 L86.7 228.8 L91.2 230.8 L95.8 232.6 L100.3 234.0 L104.9 235.1 L109.4 236.0 L114.0 236.4 L118.5 236.6 L123.0 236.4 L127.6 236.0 L132.1 235.1 L136.7 234.0 L141.2 232.6 L145.8 230.8 L150.3 228.8 L154.8 226.5 L159.4 223.9 L163.9 221.0 L168.5 217.8 L173.0 214.5 L177.5 210.8 L182.1 207.0 L186.6 203.0 L191.2 198.8 L195.7 194.4 L200.2 189.9 L204.8 185.3 L209.3 180.6 L213.9 175.7 L218.4 170.9 L223.0 165.9 L227.5 161.0 L232.0 156.1 L236.6 151.1 L241.1 146.3 L245.7 141.4 L250.2 136.7 L254.8 132.1 L259.3 127.6 L263.8 123.2 L268.4 119.0 L272.9 115.0 L277.5 111.2 L282.0 107.5 L286.5 104.2 L291.1 101.0 L295.6 98.1 L300.2 95.5 L304.7 93.2 L309.2 91.2 L313.8 89.4 L318.3 88.0 L322.9 86.9 L327.4 86.0 L332.0 85.6 L336.5 85.4 L341.0 85.6 L345.6 86.0 L350.1 86.9 L354.7 88.0 L359.2 89.4 L363.8 91.2 L368.3 93.2 L372.8 95.5 L377.4 98.1 L381.9 101.0 L386.5 104.2 L391.0 107.5 L395.5 111.2 L400.1 115.0 L404.6 119.0 L409.2 123.2 L413.7 127.6 L418.2 132.1 L422.8 136.7 L427.3 141.4 L431.9 146.3 L436.4 151.1 L441.0 156.1 L445.5 161.0 L450.0 165.9 L454.6 170.9 L459.1 175.7 L463.7 180.6 L468.2 185.3 L472.8 189.9 L477.3 194.4 L481.8 198.8 L486.4 203.0 L490.9 207.0 L495.5 210.8 L500.0 214.5"/>
+<g class="marks">
+<circle cx="64.0" cy="214.5" r="5"/>
+<circle cx="118.5" cy="236.6" r="5"/>
+<circle cx="173.0" cy="214.5" r="5"/>
+<circle cx="227.5" cy="161.0" r="5"/>
+<circle cx="282.0" cy="107.5" r="5"/>
+<circle cx="336.5" cy="85.4" r="5"/>
+<circle cx="391.0" cy="107.5" r="5"/>
+<circle cx="445.5" cy="161.0" r="5"/>
+<circle cx="500.0" cy="214.5" r="5"/>
+</g></g>
+<g class="series s2">
+<path class="line" d="M64.0 205.0 L68.5 207.0 L73.1 209.1 L77.6 211.4 L82.2 213.9 L86.7 216.6 L91.2 219.5 L95.8 222.4 L100.3 225.4 L104.9 228.4 L109.4 231.4 L114.0 234.2 L118.5 236.8 L123.0 239.1 L127.6 241.1 L132.1 242.7 L136.7 243.9 L141.2 244.5 L145.8 244.7 L150.3 244.3 L154.8 243.4 L159.4 241.9 L163.9 240.0 L168.5 237.6 L173.0 234.8 L177.5 231.6 L182.1 228.1 L186.6 224.4 L191.2 220.5 L195.7 216.6 L200.2 212.7 L204.8 208.8 L209.3 205.0 L213.9 201.5 L218.4 198.1 L223.0 195.0 L227.5 192.1 L232.0 189.6 L236.6 187.2 L241.1 185.2 L245.7 183.3 L250.2 181.7 L254.8 180.1 L259.3 178.7 L263.8 177.3 L268.4 175.8 L272.9 174.3 L277.5 172.7 L282.0 171.0 L286.5 169.0 L291.1 166.9 L295.6 164.6 L300.2 162.1 L304.7 159.4 L309.2 156.5 L313.8 153.6 L318.3 150.6 L322.9 147.6 L327.4 144.6 L332.0 141.8 L336.5 139.2 L341.0 136.9 L345.6 134.9 L350.1 133.3 L354.7 132.1 L359.2 131.5 L363.8 131.3 L368.3 131.7 L372.8 132.6 L377.4 134.1 L381.9 136.0 L386.5 138.4 L391.0 141.2 L395.5 144.4 L400.1 147.9 L404.6 151.6 L409.2 155.5 L413.7 159.4 L418.2 163.3 L422.8 167.2 L427.3 171.0 L431.9 174.5 L436.4 177.9 L441.0 181.0 L445.5 183.9 L450.0 186.4 L454.6 188.8 L459.1 190.8 L463.7 192.7 L468.2 194.3 L472.8 195.9 L477.3 197.3 L481.8 198.7 L486.4 200.2 L490.9 201.7 L495.5 203.3 L500.0 205.0"/>
+<g class="marks">
+<rect x="59.5" y="200.5" width="9" height="9"/>
+<rect x="114.0" y="232.3" width="9" height="9"/>
+<rect x="168.5" y="230.3" width="9" height="9"/>
+<rect x="223.0" y="187.6" width="9" height="9"/>
+<rect x="277.5" y="166.5" width="9" height="9"/>
+<rect x="332.0" y="134.7" width="9" height="9"/>
+<rect x="386.5" y="136.7" width="9" height="9"/>
+<rect x="441.0" y="179.4" width="9" height="9"/>
+<rect x="495.5" y="200.5" width="9" height="9"/>
+</g></g>
+<g class="series s3">
+<path class="line" d="M64.0 152.1 L68.5 153.8 L73.1 155.6 L77.6 157.3 L82.2 159.1 L86.7 160.7 L91.2 162.3 L95.8 163.7 L100.3 164.8 L104.9 165.7 L109.4 166.3 L114.0 166.6 L118.5 166.5 L123.0 166.0 L127.6 165.2 L132.1 164.1 L136.7 162.6 L141.2 160.8 L145.8 158.8 L150.3 156.5 L154.8 154.1 L159.4 151.5 L163.9 148.9 L168.5 146.3 L173.0 143.7 L177.5 141.2 L182.1 138.8 L186.6 136.6 L191.2 134.6 L195.7 132.8 L200.2 131.2 L204.8 129.9 L209.3 128.8 L213.9 127.8 L218.4 127.1 L223.0 126.5 L227.5 126.0 L232.0 125.6 L236.6 125.2 L241.1 124.8 L245.7 124.3 L250.2 123.8 L254.8 123.1 L259.3 122.3 L263.8 121.3 L268.4 120.2 L272.9 118.9 L277.5 117.4 L282.0 115.9 L286.5 114.2 L291.1 112.4 L295.6 110.7 L300.2 108.9 L304.7 107.3 L309.2 105.7 L313.8 104.3 L318.3 103.2 L322.9 102.3 L327.4 101.7 L332.0 101.4 L336.5 101.5 L341.0 102.0 L345.6 102.8 L350.1 103.9 L354.7 105.4 L359.2 107.2 L363.8 109.2 L368.3 111.5 L372.8 113.9 L377.4 116.5 L381.9 119.1 L386.5 121.7 L391.0 124.3 L395.5 126.8 L400.1 129.2 L404.6 131.4 L409.2 133.4 L413.7 135.2 L418.2 136.8 L422.8 138.1 L427.3 139.2 L431.9 140.2 L436.4 140.9 L441.0 141.5 L445.5 142.0 L450.0 142.4 L454.6 142.8 L459.1 143.2 L463.7 143.7 L468.2 144.2 L472.8 144.9 L477.3 145.7 L481.8 146.7 L486.4 147.8 L490.9 149.1 L495.5 150.6 L500.0 152.1"/>
+<g class="marks">
+<path d="M64.0 146.1L69.5 156.1L58.5 156.1Z"/>
+<path d="M118.5 160.5L124.0 170.5L113.0 170.5Z"/>
+<path d="M173.0 137.7L178.5 147.7L167.5 147.7Z"/>
+<path d="M227.5 120.0L233.0 130.0L222.0 130.0Z"/>
+<path d="M282.0 109.9L287.5 119.9L276.5 119.9Z"/>
+<path d="M336.5 95.5L342.0 105.5L331.0 105.5Z"/>
+<path d="M391.0 118.3L396.5 128.3L385.5 128.3Z"/>
+<path d="M445.5 136.0L451.0 146.0L440.0 146.0Z"/>
+<path d="M500.0 146.1L505.5 156.1L494.5 156.1Z"/>
+</g></g>
+<text class="end-label s3" x="510" y="157.1">Site C</text>
+<text class="end-label s2" x="510" y="199.7">Site B</text>
+<text class="end-label s1" x="510" y="229.7">Site A</text>
+<g class="key">
+<line class="s1" x1="78" x2="100" y1="40" y2="40"/>
+<text x="106" y="44.5">Site A</text>
+<line class="s2" x1="174" x2="196" y1="40" y2="40"/>
+<text x="202" y="44.5">Site B</text>
+<line class="s3" x1="270" x2="292" y1="40" y2="40"/>
+<text x="298" y="44.5">Site C</text>
+</g>
+</svg>
+<!-- /chart -->
+      </div>
+      <div class="stage-picture"><img src="../site/picture.jpg" width="720" height="450"
+        alt="A landscape drawn by a script: a blue sky with a pale sun, grey-blue hills and a green meadow."></div>
+    </div>
+    <p class="demo-note" id="demo-note" aria-live="polite">The author's version for these page colours. Its text and lines are checked for contrast against this page, the lines also under three simulations of colour blindness. The grid is kept faint on purpose, except in the more contrast themes, and the picture is left as it was.</p>
+    <figcaption>The chart's data and the picture are made up. "Inverted" and "Recoloured" are imitations made in this
+      page, not screenshots of a PDF app. "Inverted" turns every colour of the light chart and picture into its
+      opposite, as some PDF apps' dark modes and a screen's colour inversion do, and "Recoloured" draws every line and
+      marker in the text colour, as a high-contrast setting can. Untick "Show markers, dashes and labels" to see what
+      colour alone carries. In the more contrast themes the lines and grid are drawn heavier. A web page can do that,
+      but the PDF proposal doesn't allow it yet.</figcaption>
+  </figure>
+</div></section>
+
+<section id="people"><div class="wrap">
+  <p class="eyebrow">Who it's for</p>
+  <h2>No single set of colours suits everyone</h2>
+  <div class="points">
+    <div class="point"><h3>People with low vision</h3>
+      <p>Many prefer light text on dark. In an online survey of 133 adults with low vision, 46% preferred white text
+        on black, 39% black on white and 14% had no preference
+        (<a href="../evidence/index.html#row-wu2020">Wu et al. 2020</a>). That is what they said, not how they read.
+        The volunteers were younger than most people with low vision, and few had macular degeneration, its commonest
+        cause; five of the six who did preferred black on white.</p>
+      <p>Light text on dark helps some people with low vision read, more often those whose eyes scatter light, as
+        with a cataract. A white page gives such an eye more light to scatter
+        (<a href="../evidence/index.html#row-rubin1989">Rubin and Legge 1989</a>;
+        <a href="../evidence/index.html#row-legge2016">Legge 2016</a>). One study of children and teenagers found no
+        clinical test that predicted who (<a href="../evidence/index.html#row-loh2025">Loh et al. 2025</a>, from its
+        abstract), and one test with
+        cataract found only a slight gain, from 99.1 to 102.7 words a minute
+        (<a href="../evidence/index.html#row-elliott2001">Elliott et al. 2001</a>).</p></div>
+    <div class="point"><h3>Younger and older readers of charts</h3>
+      <p>When 104 people answered questions about charts in light and in dark, which of the two they used made no
+        measurable difference on average. Their preferences split by age. Of the 52 under 60, 24 preferred dark and
+        14 light; of the 52 aged 60 or over, 23 preferred light and 6 dark. The rest had no preference or weren't
+        sure (<a href="../evidence/index.html#row-while2024">While and Sarvghad 2024</a>).</p></div>
+    <div class="point"><h3>People with dyslexia or visual stress</h3>
+      <p>Visual stress is discomfort when reading, such as eye strain or headaches. One review puts it at about one
+        in five people with dyslexia (<a href="../evidence/index.html#row-evans2016">Evans and Allen 2016</a>). In one
+        large study of screen backgrounds, 341 adults (89 with dyslexia or at risk of it) read faster on peach, orange
+        and yellow than on blue, blue grey and green, with or without dyslexia
+        (<a href="../evidence/index.html#row-rello2017">Rello and Bigham 2017</a>). No white page was tested, so it
+        can't say a tint beats white, and the authors say this doesn't necessarily mean warm colours are recommended. An
+        eye-tracking study of 92 people found no effect of colour
+        (<a href="../evidence/index.html#row-rello2017uais">Rello and Baeza-Yates 2017</a>). The British Dyslexia
+        Association's style guide suggests dark text on a light, not white, background, such as cream or a soft
+        pastel (<a href="../evidence/index.html#row-bda2023">BDA 2023</a>).</p>
+      <p>Colour doesn't treat dyslexia, and two systematic reviews of coloured overlays, one by authors who work with one tinting system, disagree on whether they help
+        (<a href="../evidence/index.html#row-griffiths2016">Griffiths et al. 2016</a>;
+        <a href="../evidence/index.html#row-evans2016">Evans and Allen 2016</a>). So tints are offered for comfort and
+        choice. The tints on this site are the project's own, paler than the colours tested, and its "turquoise" is a
+        pale blue, near the cool colours that read slowest in the 341-person study. Which tints to offer is still
+        open.</p></div>
+    <div class="point"><h3>People with typical sight</h3>
+      <p>On average, people with typical sight proofread better and see fine detail better with dark text on light,
+        most of all when the text is small
+        (<a href="../evidence/index.html#row-piepenbrock2013">Piepenbrock et al. 2013</a>,
+        <a href="../evidence/index.html#row-piepenbrock2014">2014</a>). An earlier study from the same lab found that
+        the advantage comes from the brighter screen, not from the text being dark, though it used low-contrast text in
+        a dark room (<a href="../evidence/index.html#row-buchner2009">Buchner, Mayr and Brandt 2009</a>). In a
+        near-dark room, light text on dark took longer to read at a glance; in bright light it didn't
+        (<a href="../evidence/index.html#row-dobres2017">Dobres et al. 2017</a>). So light stays the default, and dark
+        is a choice.</p></div>
+    <div class="point"><h3>People with colour vision deficiency (colour blindness)</h3>
+      <p>By the usual estimate, about 8% of men and 0.5% of women have it, though the share varies with ancestry
+        (<a href="../evidence/index.html#row-crameri2020">Crameri et al. 2020</a>). Map readers with red-green
+        deficiency were as accurate as others when the colours were chosen with them in mind, though still slower,
+        and they overwhelmingly preferred those maps
+        (<a href="../evidence/index.html#row-olson1997">Olson and Brewer 1997</a>, known only from its abstract).
+        Themes don't fix this, and there is no theme for colour blindness. A figure's colours have to be chosen for
+        it, in every theme, as the section on <a href="#figures">charts and figures</a> below explains.</p></div>
+    <div class="point"><h3>The colours people choose</h3>
+      <p>In a survey of 204 UK adults with ADHD, autism, or dyslexia, dyscalculia or dyspraxia, background colour was
+        the only setting on which the groups' favourites were reported to differ, though the test behind that looks doubtful, and no colour was chosen by a majority
+        (<a href="../evidence/index.html#row-otermans2026">Otermans et al. 2026</a>). These were stated preferences;
+        reading wasn't measured.</p>
+      <p>In another study, 107 people with a visual impairment read through magnifiers lit by warm, neutral or cool
+        light. No light was best for the group, and each was preferred by about as many people. On average they read
+        better under the light they preferred than under the one they liked least. This study is known only from its
+        abstract, which doesn't say whether people chose before or after reading, and it changed the colour of a lamp,
+        not of a page (<a href="../evidence/index.html#row-wolffsohn2012">Wolffsohn et al. 2012</a>).</p></div>
+  </div>
+  <p class="note">Some of these studies are small, and none of them used themed PDFs. Taken together, they show that
+    preferences differ, and that some people read better in other colours, as some people with low vision do
+    with light text on dark. Whether each person has one colour that suits them best is less clear. The
+    <a href="../evidence/index.html">evidence page</a> has every study, with its numbers and how strong it is.</p>
+</div></section>
+
+<section id="today"><div class="wrap">
+  <p class="eyebrow">The problem</p>
+  <h2>A PDF app can't tell what a colour is for</h2>
+  <p>A PDF app can tell text from a picture, but not
+    whether a blue line is a data series, a highlight or a brand colour, nor whether a picture is a photo or a
+    diagram. So PDF apps that offer a dark mode treat colours by rule: some invert every colour, some invert only
+    lightness, and some swap in colours of their own. A rule like that is fine for black text on white. On anything
+    designed in colour, it can change what the colours mean.</p>
+  <p class="note">PDF apps that recolour pages like this include Evince's night mode, Skim's lightness inversion,
+    pdf.js (the PDF viewer in Firefox) in forced colours mode (a high-contrast setting) and Acrobat's Replace Document Colors. The list comes
+    from a search I made on 9 October 2026, and I haven't yet shown it in screenshots.</p>
+  <figure>
+    <ul class="tiles three">
+      <li><img src="../site/theme-light.webp" width="560" height="655" loading="lazy"
+        alt="The theme lab page in its light theme: line plots, blue bars, error bars and a heat map on white."><span>The author's light theme</span></li>
+      <li><img src="../site/theme-inverted.webp" width="560" height="655" loading="lazy"
+        alt="The same page inverted, on black."><span>Inverted by a PDF app (simulated)</span></li>
+      <li><img src="../site/theme-dark.webp" width="560" height="655" loading="lazy"
+        alt="The same page in the author's dark theme, on dark grey."><span>The author's dark theme, from the same file</span></li>
+    </ul>
+    <figcaption>The theme lab, a test page of plots, from the file in the viewer. The middle picture is an imitation,
+      not a screenshot of a PDF app: this site's script inverted every colour of the light page, as a plain inversion
+      does. That turns the blue bars orange and the heat map's colour scale into a different one. In the author's
+      dark theme the bars stay blue and the heat map keeps its scale.</figcaption>
+  </figure>
+  <ul>
+    <li>Colours that carry meaning change. A plain inversion turns blue to orange and orange to blue, so text that
+      names a colour, such as a caption that says "the blue line", points at the wrong line. A key is inverted with
+      its lines, so it still matches them. Inverting only lightness keeps hues, but still swaps the light and dark
+      ends of a colour scale.</li>
+    <li>Photos become negatives, as the demo's picture does when you press "Inverted by a PDF app", and anything the
+      author drew on a dark background turns light.</li>
+    <li>Some people with low vision already use colour inversion, and it doesn't always work on charts. In interviews
+      with 11 legally blind adults who read charts with their remaining sight, the results of inversion differed from
+      one person's set-up to the next. One participant's bar chart didn't invert as he expected and came across in
+      very light grey, and one chart, once a participant's filter had inverted it, still didn't meet the Web Content
+      Accessibility Guidelines (WCAG)
+      (<a href="../evidence/index.html#row-wang2024">Wang, Zhao and Kim 2024</a>). In another study, of 22 adults
+      with low vision, the chart aids being tested mostly worked with people's own tools. Where they didn't, colour
+      filters and themes were the most common reason: a high-contrast theme overrode the aids' colours, and under an
+      inversion filter an effect meant to darken the surroundings brightened them
+      (<a href="../evidence/index.html#row-sechayk2026">Sechayk et al. 2026</a>).</li>
+    <li>To be fair to inverting, in one small study 12 people with typical sight showed no measurable difference in
+      accuracy or speed between inverted charts and the originals. But they rated the inverted colours far less like
+      the originals than a designed dark version (1.4 against 4.4 out of 7), and inverted charts met WCAG's contrast
+      minimum for graphics more often than the originals (78% against 67%)
+      (<a href="../evidence/index.html#row-karunathilaka2025">Karunathilaka et al. 2025</a>). So the main loss is
+      what the colours mean.</li>
+    <li>An author who wants a proper dark version today can make two files, and readers then have to find the right
+      one. Or the author can put two layers in one file, but only some PDF apps can switch layers, and the text and
+      drawings are stored twice. In <a href="../evidence/index.html#measured">my tests</a>, two layers made a page of plots 41% bigger,
+      though a simpler test page only 2.7%.</li>
+  </ul>
+  <p>The request isn't new. On the PDF Association's public tracker for PDF specifications, a request for dark mode
+    in PDF has been open since November 2023. Replies there say it bears on accessibility across a range of visual
+    disabilities, and that dark modes today are often simple colour inversion. I posted pdf-themes there in October
+    2026 (<a href="../evidence/index.html#dark-mode-request">the request and its replies</a>).</p>
+</div></section>
+
+<section id="how"><div class="wrap">
+  <p class="eyebrow">The idea</p>
+  <h2>Put the author's themes in the file, and let the reader pick</h2>
+  <div class="points">
+    <div class="point"><h3>Made by the author</h3>
+      <p>The author picks each theme's colours once, by role: text, lines, chart series and highlights. From that one
+        source, the author's tools build the document once per theme, and pdf-themes merges the builds into one PDF.
+        In Typst, a typesetting system like LaTeX, that is a single command.</p></div>
+    <div class="point"><h3>Stored once</h3>
+      <p>The text and drawings are stored once. Each colour on the page gets a number, as in painting by numbers, and
+        a theme is a short list saying which colour each number gets. With all eight themes, a page of plots grew
+        4.3%, from 38,318 to 39,966 bytes. The proposal, about 0.75 MB, grew about 0.1% with seven extra themes,
+        since most of its size is pictures that every theme shares. Pictures that change between themes cost more: on
+        a test document built to be hard, its light and dark themes added 38%, against 43% for the same two as layers
+        (see <a href="../evidence/index.html#measured">what I measured</a>).</p></div>
+    <div class="point"><h3>Checked</h3>
+      <p>Before a theme goes in, the tool measures each piece of its text against the background behind it. Contrast
+        is given as a ratio, from 1:1 for white on white to 21:1 for black on white. WCAG asks for at least 4.5:1 for
+        ordinary text and 3:1 for large text. At its highest level it asks for 7:1 and 4.5:1, which the more contrast
+        themes use. A theme the author made that falls short is still written, without the mark in the file that says it passed, and the author gets
+        a list of the text that fell short. A theme the tool works out is left out if any text still falls short
+        after its fixes. One with no text to measure, such as a scan, is kept without the mark.</p>
+      <p>The check has two known faults, found on 24 October 2026 and not yet fixed. It takes text size from the font
+        size as written, so small text in a figure drawn at half size can be held to the large-text minimum of 3:1
+        instead of 4.5:1. And where text crosses two backgrounds, it is measured against the one it stands out from
+        best. Lines and shapes below 3:1 are listed for the author but don't decide the mark.</p></div>
+    <div class="point"><h3>Apps that don't know about themes show the default colours</h3>
+      <p>A PDF app that doesn't know about themes shows the default colours, as before. In a test of 298 public PDFs
+        given themes by the development version of 17 October 2026, 297 drew as before in PDFium, the engine in
+        Chrome, at 72 dpi: 266 identically and 31 within one colour level out of 255. Why those 31 differ isn't yet
+        known. One file differed, through how PDFium draws one uncommon kind of colour (Display P3), and the tool refused one more,
+        whose pages use a font missing from the file. In an earlier sweep, MuPDF, another engine, drew pictures in 17
+        files differently, through a quirk in how it shrinks pictures stored as a palette of colours.
+        Acrobat, Apple Preview and pdf.js weren't checked across the set, and no file had more than 40 pages
+        (see <a href="../evidence/index.html#measured">what I measured</a>).</p>
+      <p>Picking a theme changes no bytes in the file, so the tags that screen readers use stay as they are, and a
+        digital signature made after the themes went in covers every theme. Adding themes rewrites a file, so it has
+        to happen before the file is signed. A theme could hide text by painting it in the paper colour, so the
+        proposal asks signature checkers to draw every theme and say which is shown.</p></div>
+    <div class="point"><h3>Photos left alone</h3>
+      <p>Photos stay as the author made them. Giving each picture its own recoloured copy for every theme was tried
+        on 18 October and dropped: files grew up to ten times, a scanned book from 25 MB to 179 MB, and scanned pages
+        were themed too. One book's off-white paper turned dark green. When the tool works themes out for a finished
+        file, simple drawings on white with few colours, and grey scans of pages, still take each theme's colours. On
+        a grey scan the dark themes turn the whole page light on dark, a photo on it included. A theme whose text
+        can't be read over a picture is left out. A picture of a chart, such as a PNG, follows the theme only if the
+        author supplies a version for each theme; otherwise it stays a white box on a dark page.</p></div>
+    <div class="point"><h3>Many PDFs already fall short</h3>
+      <p>In 114 of the 298 public PDFs, some text was below the WCAG contrast minimum in the author's own colours,
+        as the tool measures it. Another 41 had no text to measure. A theme the tool works out is held to the minimum anyway, so faint text is
+        lifted rather than copied. In one paper, grey legend labels at 2.9:1 reached 7:1 in "Light, more contrast"
+        (see <a href="../evidence/index.html#measured">what I measured</a>).</p></div>
+    <div class="point"><h3>A fallback for old files</h3>
+      <p>A PDF whose source files are lost can still be given themes. The tool works them out from the file's own
+        colours, mostly by turning light surfaces dark and dark text light while keeping hues, much as some PDF apps
+        do. Like them, it can't tell what a colour means. With the development version of 17 October 2026, which
+        isn't on GitHub yet, 180 of 298 public PDFs kept all eight themes, 13 of them only because they had no text to
+        check. Of the other 118, 57 kept seven, 34 kept only their own colours and 27 kept between two and six. By kind of file, all eight were kept in
+        27 of 27 printed web pages, 11 of 15 files made with Typst, 61 of 82 made with LaTeX, 62 of 99 reports, 8 of
+        15 test files, 6 of 30 slide decks and 5 of 30 scans. Compared with each original saved the same way, files grew by a median of 0.1%, but 32 grew by more
+        than a quarter. That bears out putting themes made by the author first
+        (see <a href="../evidence/index.html#measured">what I measured</a>).</p></div>
+  </div>
+  <figure>
+    <ul class="tiles">
+      <li><img src="../site/theme-light.webp" width="560" height="655" loading="lazy" alt="The theme lab on a white page"><span>Light</span></li>
+      <li><img src="../site/theme-dark.webp" width="560" height="655" loading="lazy" alt="The theme lab on a dark grey page, in light text"><span>Dark</span></li>
+      <li><img src="../site/theme-light-contrast.webp" width="560" height="655" loading="lazy" alt="The theme lab on a white page, in black text and darker series colours"><span>Light, more contrast</span></li>
+      <li><img src="../site/theme-dark-contrast.webp" width="560" height="655" loading="lazy" alt="The theme lab on a black page, in white text"><span>Dark, more contrast</span></li>
+      <li><img src="../site/theme-cream.webp" width="560" height="655" loading="lazy" alt="The theme lab on a cream page"><span>Cream</span></li>
+      <li><img src="../site/theme-peach.webp" width="560" height="655" loading="lazy" alt="The theme lab on a peach page"><span>Peach</span></li>
+      <li><img src="../site/theme-yellow.webp" width="560" height="655" loading="lazy" alt="The theme lab on a pale yellow page"><span>Yellow</span></li>
+      <li><img src="../site/theme-turquoise.webp" width="560" height="655" loading="lazy" alt="The theme lab on a pale blue page"><span>Turquoise</span></li>
+    </ul>
+    <figcaption>The theme lab in the eight proposed themes, as a PDF app that supports themes would show them. All
+      eight are in one file, which you can <a href="../index.html">open in the viewer</a>. The heat map is data, so
+      it keeps its colours in every theme. In the theme lab and on this site, "Turquoise" is a pale blue (#E3EEFA);
+      the tool's worked-out turquoise is a true pale turquoise. The colours tested with readers are in the
+      <a href="../evidence/index.html#tints">tints section of the evidence page</a>.</figcaption>
+  </figure>
+</div></section>
+
+<section id="figures"><div class="wrap">
+  <p class="eyebrow">Charts and figures</p>
+  <h2>A theme changes only colours, so the figure has to be made right</h2>
+  <p>Some of what makes a chart readable has to be settled when it is made, because a theme can't change it
+    afterwards.</p>
+  <ul>
+    <li>Every line or group needs a second cue besides its colour: a marker, a dash pattern or a label on the line.
+      When a crowded display was shown for about a tenth of a second, people picked out a group far more accurately
+      when it differed in both colour and shape than in either alone. They were right 13 to 21 percentage points
+      more often (<a href="../evidence/index.html#row-nothelfer2017">Nothelfer et al. 2017</a>). WCAG asks that
+      colour isn't the only way information is given
+      (<a href="../evidence/index.html#row-wcag22">WCAG 1.4.1</a>). As the demo shows, a second cue also survives a
+      PDF app's recolouring.</li>
+    <li>The colours have to stay distinct for people with colour vision deficiency, in every theme. When 1,500
+      figures from papers about visualisation were each shown through four simulations of colour vision deficiency,
+      most raters judged about 60% of the 6,000 simulated images accessible, a third borderline or undecided and 7%
+      not (<a href="../evidence/index.html#row-angerbauer2022">Angerbauer et al. 2022</a>). People with colour vision
+      deficiency also rated colour as less helpful than others did, on real charts picked as likely to confuse red
+      and green, and 9 of 12 colour-blind people interviewed disputed the simulations
+      (<a href="../evidence/index.html#row-jiang2026">Jiang, Arunkumar and Bryan 2026</a>). There is no theme for
+      colour blindness: a figure's colours have to be chosen for it, in every theme.</li>
+    <li>Colour scales should change steadily in lightness, as viridis and cividis do, rather than run through a
+      rainbow. Medical students found 91% of the problem regions in 2D images of heart arteries with a two-colour
+      scale suited to the task, and 62% with a rainbow scale; in 3D views it was 71% and 39%
+      (<a href="../evidence/index.html#row-borkin2011">Borkin et al. 2011</a>). Cividis was designed with a
+      simulation of colour vision deficiency (<a href="../evidence/index.html#row-nunez2018">Nuñez et al. 2018</a>),
+      and viridis was tested with people of typical colour vision
+      (<a href="../evidence/index.html#row-liuheer2018">Liu and Heer 2018</a>). I found no study that tested either
+      with colour-blind readers.</li>
+    <li>A colour scale shows data, so it keeps its colours in every theme, with a frame where its darkest colours
+      meet a dark page. On maps with no key, 214 people took darker as more in 95 to 97% of answers on a light page,
+      and in 87 to 94% with the same colours on a dark page. A tool's dark-mode version kept the order but left its
+      darkest colours nearly matching the background, and then only about half of the answers took darker as more,
+      with a third unsure (<a href="../evidence/index.html#row-schiewe2024">Schiewe 2024</a>). Another study found
+      that people read colour scales faster when darker meant more, on white and on black, though on a dark
+      background, scales that look like one colour fading into the background were read faster when lighter meant
+      more (<a href="../evidence/index.html#row-schloss2019">Schloss et al. 2019</a>).</li>
+    <li>Text has to be big enough once printed. UK clear print guidance, from the UK Association for Accessible
+      Formats and the RNIB, asks for at least 12 pt, ideally 14 pt, with labels ideally the same size as the body
+      text, and large print starts at 16 pt
+      (<a href="../evidence/index.html#row-printsize">UKAAF 2012 and 2024; RNIB 2023</a>). Figure labels can end up
+      smaller than that, because figures are shrunk to fit the page. I found no study of label size in charts. In one study of map labels on a screen, young students' eye movements suggested they searched most efficiently at the middle of three sizes (<a href="../evidence/index.html#row-brychtova2016">Brychtová and Çöltekin 2016</a>, from its abstract and the authors' summary). In a study of older adults using interactive charts online, some found some of the text too small (<a href="../evidence/index.html#row-fan2023">Fan et al. 2023</a>).</li>
+  </ul>
+  <p>A theme could change line widths too. All 11 people with low vision in one study commented on the grid lines
+    and tick marks in charts, mainly about how thin and pale they were and how few
+    (<a href="../evidence/index.html#row-wang2024-lines">Wang, Zhao and Kim 2024</a>). Thicker lines make colour
+    differences easier to see, at least for typical vision
+    (<a href="../evidence/index.html#row-szafir2018">Szafir 2018</a>). A PDF can keep a line's width and dash
+    pattern in a set of drawing settings that the page refers to, and a theme can swap that set. In
+    <a href="../evidence/index.html#measured">a test</a>, when a theme swapped it, three engines, PDFium (Chrome's
+    engine), MuPDF and Poppler, drew a line 3 pt wide instead of 0.5 pt, and did the same for a dash pattern. But
+    most tools that make PDFs write line widths into the page content itself, where a theme can't reach them, and I
+    found no study of whether heavier lines help people with low vision read charts. So the proposal keeps themes to colour and lists line width as an open
+    question. On a web page it is easy: the demo above draws heavier lines and grid in the more contrast themes.</p>
+  <p>Figures can carry their themes from the start. A figure saved as SVG, a drawing format that web browsers show,
+    can hold its dark and more contrast colours as a few lines of style, and a web browser shows the ones that match
+    its light, dark and contrast settings. Browsers have no setting for a tint, so the tints aren't carried. My PhD
+    thesis's vector figures are made this way now: 103 of them when I counted on 23 October 2026. The printed thesis is unchanged, because Typst, which builds
+    it, ignores those lines when it makes a PDF, so the thesis PDF doesn't carry themes yet. One catch: a figure
+    that follows the viewer's setting can turn dark inside a page that stays light, as it does in Typst's own SVG
+    export and in the Tinymist editor's preview. The thesis's 13 photographs and schematic images can't carry the
+    style lines at all (see <a href="../evidence/index.html#measured">what I measured</a>).</p>
+</div></section>
+
+<section id="needs"><div class="wrap">
+  <p class="eyebrow">How you can help</p>
+  <h2>People to try it, a study, software and a standard</h2>
+  <ul>
+    <li>If you read PDFs: please <a href="../index.html">open the viewer</a>, pick the theme you would use and say what
+      works and what doesn't. The viewer opens only the documents on this site, not your own PDFs. Nobody with low
+      vision, dyslexia or visual stress has tried these themes yet. The
+      <a href="https://github.com/Thenewmanator15/pdf-themes/issues">issue tracker</a> is public and needs a free
+      GitHub account, so please don't share anything about your health there. Saying which theme you picked, and what
+      was easy or hard to read in it, helps without that.</li>
+    <li>If you run accessibility at a university or a publisher: I found no study of whether people with low vision
+      read charts better in the author's themes than with inversion. That study, comparing accuracy and time as well
+      as preference, needs a university to lead it.</li>
+    <li>If you make a PDF app: the swap is small. In the viewer on this site the swap itself is about ten lines of
+      JavaScript, which you can read under "The code that swaps the theme". The viewer then saves the swapped copy
+      and draws it with pdf.js. A PDF app would do the swap inside its own engine.</li>
+    <li>If you make tools that write PDFs or figures: the tool needs to write each theme's colours. Typst documents
+      can have them now, through pdf-themes. LaTeX, word processors and plotting libraries would need to do the
+      same.</li>
+    <li>If you work on standards: the proposal is written for the PDF Association's working group, and it is the
+      first document in the viewer. The draft specification is
+      <a href="https://github.com/Thenewmanator15/pdf-themes/blob/main/SPEC.md">SPEC.md on GitHub</a>. The themes sit
+      under a temporary name in the file until the Association agrees one.</li>
+  </ul>
+  <div class="cta">
+    <a class="btn" href="../index.html">Open the viewer</a>
+    <a class="btn ghost" href="../evidence/index.html">Read the evidence</a>
+    <a class="btn ghost" href="../questions/index.html">Questions and answers</a>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <p>pdf-themes · Mathew Newman (<a href="https://orcid.org/0000-0003-1784-3250">ORCID 0000-0003-1784-3250</a>). Part of the <a href="https://github.com/Thenewmanator15/pdf-themes">pdf-themes repository</a>, under the Apache 2.0 licence.</p>
+  <p>The chart's data and the picture are made up, by <code>tools/site_assets.py</code>.</p>
+</div></footer>
+</body>
+</html>

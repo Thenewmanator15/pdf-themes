@@ -33,7 +33,7 @@ jobs:
           mkdir _site
           cp -r demo/. _site/
           {
-            printf '%s\n' '<!doctype html>' '<html lang="en">' '<meta charset="utf-8">' \
+            printf '%s\n' '<!doctype html>' '<html lang="en-GB">' '<meta charset="utf-8">' \
               '<meta name="viewport" content="width=device-width, initial-scale=1">' \
               '<style>body { margin: 0; }</style>'
             cat demo/index.html

@@ -1,4 +1,12 @@
-<title>Themed PDF Viewer</title>
+<title>Themed PDF viewer</title>
+<script>
+// Follow the page colours picked on the site's other pages. The viewer itself has light
+// and dark, and under Auto it shows the document's theme that matches.
+try {
+  const picked = localStorage.getItem("pdf-themes-page-colours");
+  if (picked && picked !== "auto") document.documentElement.setAttribute("data-theme", picked.startsWith("dark") ? "dark" : "light");
+} catch (e) { /* storage blocked: follow the device */ }
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap">
@@ -269,12 +277,19 @@ details pre {
 }
 .note { color: var(--muted); font-size: 14px; }
 .error { color: var(--ink); font-weight: 600; }
+.site-nav { display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: .875rem; margin-bottom: 12px; }
+.site-nav a { color: var(--muted); text-decoration: none; }
+.site-nav a:hover { color: var(--ink); text-decoration: underline; }
+.site-nav a[aria-current="page"] { color: var(--ink); font-weight: 600; }
+.lede a { color: var(--accent); }
 </style>
 
 <div class="wrap">
   <header>
-    <h1>Themed PDF Viewer</h1>
-    <p class="lede">Each document here is a single PDF with its content stored once and its colour themes inside it. This page loads the themes it finds in the file and does what a theme-aware reader would. It swaps the objects a theme lists, paints the theme's paper colour and draws the page. The first document is the proposal itself, a tagged PDF/A-2a and PDF/UA-1 file. In the proposal, the theme lab, the objects test and the figure, every theme is one the author built from the source, plots and all. In the three older test documents only light and dark were built, and the other six were worked out by the tool. Any PDF reader today shows the light colours.</p>
+    <nav class="site-nav" aria-label="Site"><a href="index.html" aria-current="page">Viewer</a><a href="why/index.html">Why themes</a><a href="evidence/index.html">Evidence</a><a href="questions/index.html">Questions</a><a href="https://github.com/Thenewmanator15/pdf-themes">GitHub</a></nav>
+    <h1>Themed PDF viewer</h1>
+    <p class="lede">If themed PDFs are new to you, <a href="why/index.html">Why themes belong inside the PDF</a> explains the idea in plain words, and <a href="evidence/index.html">the evidence</a> gives the studies behind it. The rest of this page is a working viewer for themed PDFs.</p>
+    <p class="lede">Each document here is a single PDF with its content stored once and its colour themes inside it. This page loads the themes it finds in the file and does what a theme-aware reader would. It swaps the objects a theme lists, paints the theme's paper colour and draws the page. The first document is the proposal itself, a tagged file that passes veraPDF's automated checks for PDF/A-2a and PDF/UA-1. In the proposal, the theme lab, the objects test and the figure, every theme is one the author built from the source, plots and all. In the test document and the test page only light and dark were built, and the other six were worked out by the tool; the scanned page was built once, and its other seven themes were worked out from the scan. Any PDF reader today shows the light colours.</p>
   </header>
 
   <div class="controls">

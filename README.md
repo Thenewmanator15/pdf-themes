@@ -20,7 +20,10 @@ are drawn, never what they say.
 
 It's a proof of concept for a proposal to the PDF Association. The draft
 specification is in [SPEC.md](SPEC.md). You can switch themes in the
-[live demo](https://thenewmanator15.github.io/pdf-themes/).
+[live demo](https://thenewmanator15.github.io/pdf-themes/). The site also
+explains [why themes belong in the file](https://thenewmanator15.github.io/pdf-themes/why/),
+in plain words, and gathers [the evidence](https://thenewmanator15.github.io/pdf-themes/evidence/)
+behind it, each finding marked by how strong it is.
 
 ## Results
 
@@ -148,6 +151,15 @@ the folder and open it:
 ```
 cd demo && python -m http.server 8000
 ```
+
+The pages around the viewer (`demo/why`, `demo/evidence`, `demo/questions`)
+can be read in all eight standard themes. Their colours, the demo chart and
+the pictures of the theme lab come from `tools/site_assets.py`. In every
+theme it checks each text colour against its background, for typical vision,
+and each chart line against the paper and against the other lines, for typical
+vision and for simulated colour blindness. It stops if one falls short. It also numbers
+the evidence page's references. Run it again after changing a colour, a
+theme lab build or a reference.
 
 ## The standard themes
 
