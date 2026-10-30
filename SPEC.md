@@ -140,8 +140,10 @@ meets that today, at the cost of the design. The standard themes give the
 person a set to select from, each with its text contrast checked by the
 writer.
 
-This is the set an author is asked to build. A file need not carry all of
-them, and may carry others.
+This is the set an author is asked to build. A themed file should carry a
+theme with `ColorScheme` `Dark` and one with `ColorScheme` `Dark` and
+`Contrast` `More`, because a reader who needs light text on dark otherwise has
+to invert the page. It need not carry the rest, and may carry others.
 
 This draft doesn't specify how a writer works out a derived theme, only its
 labels and the check it shall pass. The proof of concept's method is in

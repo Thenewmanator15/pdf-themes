@@ -895,6 +895,7 @@ def add_authored_themes(merger, themes):
         if report["runs"] > 0 and not report["failures"]:
             info["/Checked"] = checked_now(theme.enhanced)
         reports.append(_report(theme.name, kind, report, True))
+        reports[-1]["scheme"], reports[-1]["contrast"] = theme.scheme, theme.contrast
         # Lines and shapes are reported and never marked: only the author
         # knows which of them carry meaning.
         found = shapes_summary(shapes)

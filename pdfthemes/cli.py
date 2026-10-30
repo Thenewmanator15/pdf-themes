@@ -63,6 +63,29 @@ def print_reports(reports):
                 print(f"      page {f['page']}: {f['text']!r} {f['colour']} on {f['background']} "
                       f"is {f['ratio']}:1, needs {f['needs']}:1")
         print_shapes(r.get("shapes", {}).get("low", []), "      ")
+    missing = missing_dark(reports)
+    if missing:
+        print(f"  note: no {' or '.join(missing)} theme, so a reader who needs light text on dark "
+              "will have to invert the page (SPEC.md, section 7)")
+
+
+def missing_dark(reports):
+    """The dark themes SPEC.md section 7 says a themed file should carry and
+    this one doesn't: a theme counts by its labels, so an author's "Night"
+    counts as Dark."""
+    have = set()
+    for r in reports:
+        if not r["kept"]:
+            continue
+        if "scheme" in r:  # an authored theme carries its labels
+            scheme, contrast = r["scheme"], r.get("contrast")
+        elif r["name"] in STANDARD:
+            scheme, contrast = STANDARD[r["name"]].scheme, STANDARD[r["name"]].contrast
+        else:
+            continue
+        if scheme == "Dark":
+            have.add("Dark, more contrast" if contrast == "More" else "Dark")
+    return [name for name in ("Dark", "Dark, more contrast") if name not in have]
 
 
 def print_shapes(low, indent="  "):
