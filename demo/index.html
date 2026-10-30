@@ -288,6 +288,7 @@ details pre {
   <header>
     <nav class="site-nav" aria-label="Site"><a href="index.html" aria-current="page">Viewer</a><a href="why/index.html">Why themes</a><a href="evidence/index.html">Evidence</a><a href="questions/index.html">Questions</a><a href="https://github.com/Thenewmanator15/pdf-themes">GitHub</a></nav>
     <h1>Themed PDF viewer</h1>
+    <p class="lede">This is a proof of concept for a proposal to the PDF Association, and <a href="https://github.com/Thenewmanator15/pdf-themes/blob/main/SPEC.md">the draft specification</a> is on GitHub. No PDF reader supports themes yet, so this page does the reader's part itself, with pdf-lib to swap a theme's objects and pdf.js to draw the page. To see a theme in any other reader, download the file and save that theme as a plain PDF with <code>pdf-themes apply</code>.</p>
     <p class="lede">If themed PDFs are new to you, <a href="why/index.html">Why themes belong inside the PDF</a> explains the idea in plain words, and <a href="evidence/index.html">the evidence</a> gives the studies behind it. The rest of this page is a working viewer for themed PDFs.</p>
     <p class="lede">Each document here is a single PDF with its content stored once and its colour themes inside it. This page loads the themes it finds in the file and does what a theme-aware reader would. It swaps the objects a theme lists, paints the theme's paper colour and draws the page. The first document is the proposal itself, a tagged file that passes veraPDF's automated checks for PDF/A-2a and PDF/UA-1. In the proposal, the theme lab, the objects test and the figure, every theme is one the author built from the source, plots and all. In the test document and the test page only light and dark were built, and the other six were worked out by the tool; the scanned page was built once, and its other seven themes were worked out from the scan. Any PDF reader today shows the light colours.</p>
   </header>
@@ -321,10 +322,12 @@ details pre {
       <section>
         <h2>The file</h2>
         <dl class="facts" id="facts"></dl>
+        <p class="note download"><a id="download" href="#" download>Download this PDF</a></p>
       </section>
       <section>
         <h2 id="theme-title">This theme</h2>
         <dl class="facts" id="theme-facts"></dl>
+        <p class="note">A theme is marked as checked when the tool's automated check of its text contrast passed. The check measures text against what is drawn behind it, but can't measure some text, such as text filled with a gradient, and it is not a full WCAG review.</p>
         <details id="swaps-box">
           <summary id="swaps-summary">Every object swapped</summary>
           <ol class="swaps" id="swaps"></ol>
@@ -617,8 +620,9 @@ function fillFilePanel(doc) {
     ["Size", `${doc.size.toLocaleString("en-GB")} bytes, one file`],
     ["Themes", `${doc.themes.length}: ${doc.themes.map((t) => t.name).join(", ")}`],
     ["Page content", "The same bytes in every theme"],
-    ["Checked", `${doc.themes.filter((t) => t.checked).length} of ${doc.themes.length} themes`],
+    ["Marked as checked", `${doc.themes.filter((t) => t.checked).length} of ${doc.themes.length} themes`],
   ]);
+  $("download").href = doc.entry.file;
 }
 
 function fillThemePanel(doc, theme) {
@@ -633,7 +637,7 @@ function fillThemePanel(doc, theme) {
   setFacts("theme-facts", [
     ["Labels", labels],
     ["Paper", hex(theme.paper.map((v) => v * 255))],
-    ["Checked", theme.checked ?? "Not checked"],
+    ["Marked as checked", theme.checked ?? "No"],
     ["Swapped", swapped],
   ]);
   $("swaps-box").hidden = theme.isDefault;
@@ -781,23 +785,24 @@ $("code").textContent = applyTheme.toString();
 const remembered = savedChoice();
 if (remembered) state.mode = remembered;
 
-// Offer only the documents that are here.
-const available = [];
+// Offer only the documents that are here. They are fetched one at a time, in
+// order, and the first is shown as soon as it arrives rather than after the rest.
+let shown = false;
 for (const entry of DOCS) {
   const response = await fetch(entry.file).catch(() => null);
   if (!response?.ok) continue;
   entry.bytes = new Uint8Array(await response.arrayBuffer());
-  available.push(entry);
-}
-$("doc-picker").replaceChildren(...available.map((entry) => {
   const b = document.createElement("button");
   b.type = "button";
   b.dataset.doc = entry.id;
   b.textContent = entry.label;
-  b.setAttribute("aria-pressed", "false");
+  b.setAttribute("aria-pressed", String(state.doc?.entry === entry));
   b.addEventListener("click", () => show(entry));
-  return b;
-}));
-if (available.length) show(available[0]);
-else fail(new Error("no themed PDF was found next to this page"));
+  $("doc-picker").append(b);
+  if (!shown) {
+    shown = true;
+    show(entry);
+  }
+}
+if (!shown) fail(new Error("no themed PDF was found next to this page"));
 </script>
