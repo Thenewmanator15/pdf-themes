@@ -80,16 +80,6 @@ h1 {
   max-width: 72ch;
   color: var(--muted);
 }
-.controls {
-  display: grid;
-  gap: 10px;
-}
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 12px;
-}
 .row-label {
   font-size: 12px;
   font-weight: 600;
@@ -282,23 +272,97 @@ details pre {
 .site-nav a:hover { color: var(--ink); text-decoration: underline; }
 .site-nav a[aria-current="page"] { color: var(--ink); font-weight: 600; }
 .lede a { color: var(--accent); }
+
+/* The intro beyond its first sentence folds away, so the page starts high. */
+.about { margin-top: 6px; }
+.panel .download { margin: 10px 0 0; }
+.about > summary { color: var(--accent); cursor: pointer; font-size: 14px; width: fit-content; }
+.about[open] > summary { margin-bottom: 4px; }
+
+/* One toolbar for everything you change while reading. It stays at the top
+   of the window, so the next page or another theme is always one click away. */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  margin-inline: -16px;
+  padding: 10px 16px;
+  background: var(--desk);
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "doc pager" "theme theme" "status status";
+  gap: 8px 16px;
+  align-items: center;
+}
+.tool { display: flex; align-items: center; gap: 8px 12px; min-width: 0; }
+.tool-doc { grid-area: doc; }
+.tool-theme { grid-area: theme; }
+.toolbar .pager { grid-area: pager; }
+.toolbar .status { grid-area: status; font-size: 13px; }
+.toolbar .row-label { min-width: 82px; }
+#doc-picker {
+  font: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 4px 8px;
+  min-width: 0;
+  max-width: 100%;
+}
+#doc-picker:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.sheet canvas { scroll-margin-top: calc(var(--bar-h, 120px) + 12px); }
+
+/* Beside the page, the panel keeps in view and scrolls on its own. */
+@media (min-width: 901px) {
+  .panel {
+    position: sticky;
+    top: calc(var(--bar-h, 120px) + 12px);
+    max-height: calc(100vh - var(--bar-h, 120px) - 24px);
+    overflow-y: auto;
+  }
+}
+
+/* On a phone: the labels go above their controls, the themes scroll
+   sideways in one line, and the toolbar keeps to three short rows. */
+@media (max-width: 640px) {
+  .toolbar { grid-template-areas: "doc doc" "theme theme" "status pager"; padding-block: 8px; gap: 6px 10px; }
+  .toolbar .row-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .tool-doc, #doc-picker { width: 100%; }
+  .tool-theme .chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+  .tool-theme .chips::-webkit-scrollbar { display: none; }
+  .tool-theme .chips button { flex: none; }
+  .toolbar .status { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pager { gap: 8px; }
+}
 </style>
 
 <div class="wrap">
   <header>
     <nav class="site-nav" aria-label="Site"><a href="index.html" aria-current="page">Viewer</a><a href="why/index.html">Why themes</a><a href="evidence/index.html">Evidence</a><a href="questions/index.html">Questions</a><a href="https://github.com/Thenewmanator15/pdf-themes">GitHub</a></nav>
     <h1>Themed PDF viewer</h1>
+    <p class="lede">Each document here is one PDF with its colour themes inside it. Pick a document and a theme, and this page does what a theme-aware reader would.</p>
+    <details class="about">
+    <summary>About this viewer</summary>
     <p class="lede">This is a proof of concept for a proposal to the PDF Association, and <a href="https://github.com/Thenewmanator15/pdf-themes/blob/main/SPEC.md">the draft specification</a> is on GitHub. No PDF reader supports themes yet, so this page does the reader's part itself, with pdf-lib to swap a theme's objects and pdf.js to draw the page. To see a theme in any other reader, download the file and save that theme as a plain PDF with <code>pdf-themes apply</code>.</p>
     <p class="lede">If themed PDFs are new to you, <a href="why/index.html">Why themes belong inside the PDF</a> explains the idea in plain words, and <a href="evidence/index.html">the evidence</a> gives the studies behind it. The rest of this page is a working viewer for themed PDFs.</p>
     <p class="lede">Each document here is a single PDF with its content stored once and its colour themes inside it. This page loads the themes it finds in the file and does what a theme-aware reader would. It swaps the objects a theme lists, paints the theme's paper colour and draws the page. The first document is the proposal itself, a tagged file that passes veraPDF's automated checks for PDF/A-2a and PDF/UA-1. In the proposal, the theme lab, the objects test and the figure, every theme is one the author built from the source, plots and all. In the test document and the test page only light and dark were built, and the other six were worked out by the tool; the scanned page was built once, and its other seven themes were worked out from the scan. Any PDF reader today shows the light colours.</p>
+    </details>
   </header>
 
-  <div class="controls">
-    <div class="row">
-      <span class="row-label" id="doc-label">Document</span>
-      <div class="chips" id="doc-picker" role="group" aria-labelledby="doc-label"></div>
+  <div class="toolbar" id="toolbar">
+    <div class="tool tool-doc">
+      <label class="row-label" for="doc-picker">Document</label>
+      <select id="doc-picker"></select>
     </div>
-    <div class="row">
+    <div class="pager" id="pager" hidden>
+      <button type="button" id="prev" aria-keyshortcuts="ArrowLeft" title="Previous page (←)">Previous</button>
+      <span id="page-label">Page 1 of 1</span>
+      <button type="button" id="next" aria-keyshortcuts="ArrowRight" title="Next page (→)">Next</button>
+    </div>
+    <div class="tool tool-theme">
       <span class="row-label" id="theme-label">Theme</span>
       <div class="chips" id="theme-picker" role="group" aria-labelledby="theme-label"></div>
     </div>
@@ -307,11 +371,6 @@ details pre {
 
   <main class="layout">
     <section class="stage" aria-label="Page">
-      <div class="pager" id="pager" hidden>
-        <button type="button" id="prev">Previous</button>
-        <span id="page-label">Page 1 of 1</span>
-        <button type="button" id="next">Next</button>
-      </div>
       <div class="sheet" id="sheet">
         <div class="placeholder" id="placeholder">Loading the document…</div>
         <canvas id="page" role="img" aria-label="" hidden></canvas>
@@ -602,6 +661,14 @@ function markPicker(theme) {
   for (const b of $("theme-picker").querySelectorAll("button")) {
     const on = state.mode === "auto" ? Boolean(b.dataset.auto) : b.dataset.theme === theme.name;
     b.setAttribute("aria-pressed", String(on));
+    // On a phone the themes scroll sideways: keep the chosen one in sight.
+    const row = $("theme-picker");
+    if (on && row.scrollWidth > row.clientWidth) {
+      const left = b.offsetLeft - row.offsetLeft;
+      if (left < row.scrollLeft || left + b.offsetWidth > row.scrollLeft + row.clientWidth) {
+        row.scrollLeft = left - (row.clientWidth - b.offsetWidth) / 2;
+      }
+    }
   }
 }
 
@@ -757,7 +824,7 @@ function fail(error) {
 }
 
 async function show(entry) {
-  for (const b of $("doc-picker").querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset.doc === entry.id));
+  $("doc-picker").value = entry.id;
   try {
     if (!loaded.has(entry.id)) {
       $("status").textContent = `Loading ${entry.file}…`;
@@ -774,8 +841,30 @@ async function show(entry) {
 }
 
 // Controls.
-$("prev").addEventListener("click", () => { state.page -= 1; draw().catch(fail); });
-$("next").addEventListener("click", () => { state.page += 1; draw().catch(fail); });
+// Turning the page brings the top of the new one into view, below the toolbar.
+async function turn(by) {
+  const pages = state.doc ? (await viewOf(state.doc, chosenTheme(state.doc))).numPages : 1;
+  const next = Math.min(Math.max(1, state.page + by), pages);
+  if (next === state.page) return;
+  state.page = next;
+  await draw();
+  const canvas = $("page");
+  const barBottom = $("toolbar").getBoundingClientRect().bottom;
+  if (canvas.getBoundingClientRect().top < barBottom) canvas.scrollIntoView({ block: "start" });
+}
+$("prev").addEventListener("click", () => turn(-1).catch(fail));
+$("next").addEventListener("click", () => turn(1).catch(fail));
+document.addEventListener("keydown", (e) => {
+  if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || $("pager").hidden) return;
+  if (e.target instanceof Element && e.target.closest("input, select, textarea, [contenteditable]")) return;
+  if (e.key === "ArrowLeft") { e.preventDefault(); turn(-1).catch(fail); }
+  if (e.key === "ArrowRight") { e.preventDefault(); turn(1).catch(fail); }
+});
+$("doc-picker").addEventListener("change", (e) => show(DOCS.find((d) => d.id === e.target.value)));
+// The toolbar's height, for the panel and the page to sit below it.
+new ResizeObserver(([entry]) => {
+  document.documentElement.style.setProperty("--bar-h", `${Math.round(entry.borderBoxSize[0].blockSize)}px`);
+}).observe($("toolbar"));
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => draw().catch(fail));
 matchMedia("(prefers-contrast: more)").addEventListener("change", () => draw().catch(fail));
 new MutationObserver(() => draw().catch(fail)).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
@@ -792,13 +881,7 @@ for (const entry of DOCS) {
   const response = await fetch(entry.file).catch(() => null);
   if (!response?.ok) continue;
   entry.bytes = new Uint8Array(await response.arrayBuffer());
-  const b = document.createElement("button");
-  b.type = "button";
-  b.dataset.doc = entry.id;
-  b.textContent = entry.label;
-  b.setAttribute("aria-pressed", String(state.doc?.entry === entry));
-  b.addEventListener("click", () => show(entry));
-  $("doc-picker").append(b);
+  $("doc-picker").append(new Option(entry.label, entry.id));
   if (!shown) {
     shown = true;
     show(entry);
