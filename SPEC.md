@@ -185,8 +185,10 @@ A writer shall not write `Checked` for a theme that failed the check, or for
 one in which there was no text to check. A writer should report any text it
 could not measure, with the page and the text (open question 14).
 
-PDF/UA-1, PDF/UA-2 and WTPDF cover structure and tagging and leave colour
-contrast to WCAG. The rules public bodies work to, such as EN 301 549 in
+PDF/UA covers structure and tagging. Its tests for PDF/UA-1, the Matterhorn
+Protocol 1.1, have one check on colour (04-001: meaning shown by colour or
+contrast must also be in the tags) and set no contrast ratio, so a writer
+checks against WCAG's. The rules public bodies work to, such as EN 301 549 in
 Europe and Section 508 in the United States, apply WCAG's level AA criteria to
 documents, and 1.4.3 is one of them. `Checked` is where a themed file says
 which criterion each theme was checked against.

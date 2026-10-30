@@ -329,9 +329,11 @@ alt text, which is why the tagged standards were tested on the proposal.
 `tests/test_conformance.py` runs the proposal through veraPDF when it's
 installed.
 
-PDF/UA covers structure and tagging and leaves colour contrast to WCAG, so
-the two sit side by side: the tags are the same in every theme, and each
-theme records the WCAG success criterion it was checked against.
+PDF/UA covers structure and tagging. Its tests for PDF/UA-1, the Matterhorn
+Protocol 1.1, have one check on colour (04-001: meaning shown by colour or
+contrast must also be in the tags) and set no contrast ratio, so the tool
+uses WCAG's. The two sit side by side: the tags are the same in every theme,
+and each theme records the WCAG success criterion it was checked against.
 
 ## Licence
 
