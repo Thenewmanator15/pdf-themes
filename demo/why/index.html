@@ -356,7 +356,9 @@
       <p>The check has two known faults, found on 24 October 2026 and not yet fixed. It takes text size from the font
         size as written, so small text in a figure drawn at half size can be held to the large-text minimum of 3:1
         instead of 4.5:1. And where text crosses two backgrounds, it is measured against the one it stands out from
-        best. Lines and shapes below 3:1 are listed for the author but don't decide the mark.</p></div>
+        best. Text it can't measure, such as text filled with a gradient, is counted in the report but doesn't stop
+        the mark. Lines and shapes below 3:1 are listed for the author but don't decide the mark. The mark means the
+        automated check passed, not that a person has reviewed the theme against WCAG.</p></div>
     <div class="point"><h3>Apps that don't know about themes show the default colours</h3>
       <p>A PDF app that doesn't know about themes shows the default colours, as before. In a test of 298 public PDFs
         given themes by the development version of 17 October 2026, 297 drew as before in PDFium, the engine in

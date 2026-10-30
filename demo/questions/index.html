@@ -361,7 +361,8 @@
     works out is left out if its text still falls short after the tool's own fixes. Lines and shapes below 3:1 are
     listed for the author, but don't decide the mark. The check has known limits, not yet fixed: it takes text size
     from the font size as written, so text in a figure drawn at half size can be held to the large-text minimum (3:1
-    instead of 4.5:1), and where text crosses two backgrounds it is measured against the one it contrasts with best.
+    instead of 4.5:1), where text crosses two backgrounds it is measured against the one it contrasts with best, and
+    text it can't measure, such as text filled with a gradient, is counted but doesn't stop the mark.
     WCAG's contrast rules don't ask for themes; its highest level asks that people can choose their own colours for
     text and its background, which a PDF app can provide.</p>
   <p class="more">More: <a href="../evidence/index.html#standards">the standards</a>, and

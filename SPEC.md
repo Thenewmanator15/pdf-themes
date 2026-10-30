@@ -87,7 +87,9 @@ document to the next. `Name` is for people and may be translated.
    A base object shall not be a page, a content stream, a form XObject, a
    font, an optional content group, an action or anything in the structure
    tree other than an attribute's colour value. A theme can therefore repaint
-   a document but cannot change its text, its shapes or what it does.
+   a document but cannot change its content streams, its text, its structure
+   or what it does. It can still change what is seen, for example with a
+   replacement image or a text colour that matches the paper (section 10).
 3. A base object shall appear at most once in a theme's `Replace` array.
 4. While a theme is shown, every reference to a base object in the document
    shall be resolved to its replacement, wherever it is referenced from.
@@ -135,7 +137,8 @@ document to the next. `Name` is for people and may be translated.
 WCAG 2.2 success criterion 1.4.8 Visual Presentation asks that the person can
 select foreground and background colours. A reader that recolours the page
 meets that today, at the cost of the design. The standard themes give the
-person a set to select from in which each one has been checked.
+person a set to select from, each with its text contrast checked by the
+writer.
 
 This is the set an author is asked to build. A file need not carry all of
 them, and may carry others.
@@ -153,8 +156,8 @@ text, and leaves the fixing to the author. It writes the theme either way,
 without `Checked` if it failed.
 The check should be made on the drawn page, so it sees gradients, images and
 transparency as a reader shows them. Themes with `Contrast` `More` should be
-held to 1.4.6 Contrast (Enhanced) (7:1, level AAA), others to 1.4.3 Contrast
-(Minimum) (4.5:1, level AA).
+held to 1.4.6 Contrast (Enhanced) (7:1, or 4.5:1 for large text, level AAA),
+others to 1.4.3 Contrast (Minimum) (4.5:1, or 3:1 for large text, level AA).
 Screens, brightness and room light all change how contrast looks, so a writer
 fixing a colour should aim a little above the minimum.
 
@@ -164,7 +167,10 @@ Non-text Contrast (3:1), and a chart that tells its series apart by colour
 alone comes under 1.4.1 Use of Color. A writer may check those as well (open
 question 13).
 
-`Checked` records the success criterion the theme conforms to:
+`Checked` records the success criterion the writer's check was made against,
+and that the check passed. It is not a claim that the theme conforms to that
+criterion: an automated check can't judge everything WCAG asks, and a writer
+may not be able to measure some text, such as text filled with a gradient.
 
 | Key | Type | Value |
 | --- | --- | --- |
@@ -174,13 +180,14 @@ question 13).
 | Date | date | When the check was made. |
 
 A writer shall not write `Checked` for a theme that failed the check, or for
-one in which there was no text to check.
+one in which there was no text to check. A writer should report any text it
+could not measure, with the page and the text (open question 14).
 
 PDF/UA-1, PDF/UA-2 and WTPDF cover structure and tagging and leave colour
 contrast to WCAG. The rules public bodies work to, such as EN 301 549 in
 Europe and Section 508 in the United States, apply WCAG's level AA criteria to
 documents, and 1.4.3 is one of them. `Checked` is where a themed file says
-which criterion each theme meets.
+which criterion each theme was checked against.
 
 ## 9. Readers
 
@@ -209,7 +216,9 @@ document, for example by painting text in the paper colour. Because a theme
 cannot change content streams, the check is narrow:
 
 - a reader validating a signature should say which theme is shown;
-- a validator should draw every theme and check text contrast in each;
+- a validator should draw every theme and check text contrast in each, and
+  list every replacement image, since a contrast check can't see what an
+  image shows;
 - a signing profile may restrict alternate themes to palettes, gradients,
   colour values and opacity, with no replacement images.
 
@@ -261,6 +270,9 @@ cannot change content streams, the check is narrow:
 13. Should the check cover 1.4.11 Non-text Contrast, so chart lines and other
     graphics are held to 3:1 in every theme? Should a theme be able to say it
     was made for colour vision deficiency?
+14. Text a writer can't measure, such as text filled with a gradient: should
+    it stop `Checked` from being written, or be recorded in it, for example
+    as a count?
 
 ## 13. Example
 

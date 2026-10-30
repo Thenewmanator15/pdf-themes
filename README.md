@@ -1,8 +1,8 @@
 # pdf-themes
 
 Colour themes for PDF: one file, its content stored once, with the light,
-dark, higher contrast and tinted themes its author built, each checked before
-it goes in.
+dark, higher contrast and tinted themes its author built, each with its text
+contrast checked before it goes in.
 
 PDF readers that offer a dark mode make it up themselves. They invert the page
 or swap its colours, which spoils colour designs and charts, because the file
@@ -167,16 +167,17 @@ theme lab build or a reference.
 | --- | --- | --- |
 | Light | ColorScheme Light | The author's design. |
 | Dark | ColorScheme Dark | Light sensitivity, glare, reading at night, some low vision. |
-| Light, more contrast | Light, Contrast More | Low vision. Enhanced contrast: text is held to 7:1 (WCAG 1.4.6 Contrast (Enhanced), level AAA). |
-| Dark, more contrast | Dark, Contrast More | Low vision with light sensitivity. Also 7:1. |
+| Light, more contrast | Light, Contrast More | Low vision. Enhanced contrast: text is held to 7:1, or 4.5:1 for large text (WCAG 1.4.6 Contrast (Enhanced), level AAA). |
+| Dark, more contrast | Dark, Contrast More | Low vision with light sensitivity. Also 7:1, or 4.5:1 for large text. |
 | Cream, Peach, Yellow, Turquoise | Light, Tint | Many readers with dyslexia or visual stress find a tinted background easier, which is what a coloured overlay is for. People differ in which tint helps, so there's a range. |
 
-The other themes are held to 4.5:1 (WCAG 1.4.3 Contrast (Minimum), level AA).
+The other themes are held to 4.5:1, or 3:1 for large text (WCAG 1.4.3
+Contrast (Minimum), level AA).
 The labels follow the CSS preferences `prefers-color-scheme` and
 `prefers-contrast`, and forced colours, such as a Windows contrast theme,
-still win when they're turned on. Offering a set of checked themes is a way
-to meet WCAG 1.4.8 Visual Presentation, which asks that the person can select
-foreground and background colours.
+still win when they're turned on. Once readers support themes, a set of
+checked themes could help toward WCAG 1.4.8 Visual Presentation (level AAA),
+which asks that the person can select foreground and background colours.
 
 This is the set an author is asked to build. The labels let a reader
 remember a person's choice from one document to the next, and match it to the
@@ -277,8 +278,9 @@ With no source to build from, `pdf-themes add` works the themes out.
   drawing on white (a chart, a diagram) or a grey scan of a page, never a
   photo.
 - An annotation whose opacity differs between builds is swapped whole, because
-  pikepdf can't make a number an indirect object. The specification allows
-  either.
+  pikepdf can't make a number an indirect object. The specification doesn't
+  yet allow a number as a base object either, so swapping the annotation is
+  the only way it allows.
 - On a scanned page, Dark turns the whole scan light on dark, so a photo on
   it becomes a negative. Only grey scans are themed. A colour scan keeps its
   colours, and themes that would change nothing are left out.
@@ -292,6 +294,11 @@ With no source to build from, `pdf-themes add` works the themes out.
   can't tell which of them carry meaning, so the list is for the author to
   look over. Shapes that are see-through or filled with a gradient aren't
   measured.
+- The mark says the automated check passed, not that the theme conforms to
+  WCAG, which takes a person as well. Text the check can't measure, such as
+  text filled with a gradient, is counted in the report but doesn't stop the
+  mark. And a run of text is held to the contrast that 90% of the pixels
+  behind it reach, so a few darker pixels don't fail it.
 - Uses the private key `/XXThemes`. Files shared beyond testing should use a
   registered developer prefix until a standard key exists.
 
