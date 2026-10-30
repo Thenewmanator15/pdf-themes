@@ -181,8 +181,8 @@
   <h2>Will it break anything in PDF apps that don't know about themes?</h2>
   <p class="short">It shouldn't. They show the default colours, and in the tests so far nearly every file looked as
     before.</p>
-  <p>The themes sit where those apps don't look. In a test of the development version of 17 October 2026, which isn't
-    on GitHub yet, the tool added themes to 298 public PDFs of up to 40 pages. Drawn before and after in PDFium, the
+  <p>The themes sit where those apps don't look. In a test of the version of 17 October 2026, now
+    on GitHub, the tool added themes to 298 public PDFs of up to 40 pages. Drawn before and after in PDFium, the
     engine in Chrome, at 72 dpi, 266 looked identical and 31 differed by at most one step out of 255 in a colour value.
     The other one differed through PDFium's own handling of a Display P3 colour. The tool refused one more file, a
     report whose pages use a font missing from the file. As first found, on 11 October with an earlier version, 7 files
@@ -390,7 +390,7 @@
     <a href="../index.html">viewer</a> on this site, the only app that can switch themes so far.</p>
   <p>The viewer opens only the documents on this site, not your own PDFs. Every other PDF app shows a themed file in its default colours. The code and the draft specification are
     <a href="https://github.com/Thenewmanator15/pdf-themes">on GitHub</a>, but the tool isn't yet a released package
-    you can install, and its latest fixes are in a development version that isn't on GitHub yet. The themes sit under
+    you can install. The themes sit under
     a temporary name in the file until the PDF Association agrees one. The proposal, written for its working group, is
     the first document in the viewer. A request for dark mode in PDF has been open on the Association's public
     tracker since November 2023, and I posted pdf-themes there in October 2026
