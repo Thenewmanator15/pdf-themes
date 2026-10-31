@@ -15,7 +15,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false             # a deployment under way is allowed to finish
 
 jobs:
   deploy:
