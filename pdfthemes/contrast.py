@@ -132,6 +132,7 @@ def _runs(textpage, marked=False):
     r, g, b, a = (ctypes.c_uint() for _ in range(4))
     left_, bottom_, right_, top_ = (ctypes.c_double() for _ in range(4))
     loose = pdfium_c.FS_RECTF()
+    matrix = pdfium_c.FS_MATRIX()
     runs, current, space, inkless = [], None, False, {}
     for i in range(n):
         ch = textpage.get_text_range(i, 1)
@@ -161,7 +162,12 @@ def _runs(textpage, marked=False):
         if alpha == 0:  # drawn at opacity 0: nothing of it is seen
             current = None
             continue
-        size = round(pdfium_c.FPDFText_GetFontSize(raw, i), 1)
+        # The size it is drawn at: the font size times how far the text and current
+        # matrices stretch it upright. PDFium's font size is the Tf operand alone.
+        size = pdfium_c.FPDFText_GetFontSize(raw, i)
+        if pdfium_c.FPDFText_GetMatrix(raw, i, matrix):
+            size *= (matrix.c ** 2 + matrix.d ** 2) ** 0.5
+        size = round(size, 1)
         weight = pdfium_c.FPDFText_GetFontWeight(raw, i)
         if pdfium_c.FPDFText_GetLooseCharBox(raw, i, loose):
             box = [loose.left, loose.bottom, loose.right, loose.top]
