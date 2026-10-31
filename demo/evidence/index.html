@@ -987,10 +987,9 @@
         yellow (#F8FD89) and 17.0:1 on turquoise (#A5F7E1). On peach and turquoise, three of my thesis figures' colours
         (grey, orange and green, at 2.3 to 2.9:1) fall under 3:1 until the theme moves them towards the ink</td>
         <td>24 October 2026. Record: my working notes</td></tr>
-      <tr><th scope="row">The contrast check's known limits</th><td>Found on 24 October 2026 and not yet fixed. The check takes text
-        size from the font size as written, so text in a figure drawn at half size can be held to the large-text minimum
-        (3:1 instead of 4.5:1). Where text crosses two backgrounds, it is measured against the one it contrasts with
-        best. Lines and shapes under 3:1 are listed for the author, not used to decide the mark</td><td>Shown the same
+      <tr><th scope="row">The contrast check's known limits</th><td>Found on 24 October 2026. Where text crosses two backgrounds, it is measured against the one it contrasts with
+        best; not yet fixed. A second, that text in a figure drawn at half size could be held to the large-text minimum
+        (3:1 instead of 4.5:1), was fixed on 31 October: text is now classed by the size it is drawn at. Lines and shapes under 3:1 are listed for the author, not used to decide the mark</td><td>Shown the same
         day with small test files, on the version on GitHub and on the development version. Record: my working
         notes</td></tr>
       <tr><th scope="row">These pages</th><td>Every text colour on these pages reaches 4.5:1 against its paper and panels (7:1 in the
@@ -1035,9 +1034,8 @@
       run over public PDFs.</li>
     <li>Do the results hold in Acrobat, Apple Preview and pdf.js, and for files over 40 pages? The comparisons so far
       were made in PDFium, MuPDF and Poppler, on files of up to 40 pages.</li>
-    <li>What do the contrast check's two known limits change? Text in a figure drawn smaller than it was set can be held
-      to the large-text minimum, and text across two backgrounds is measured against the one it contrasts with best.
-      Both need a fix, tests and a fresh run over the set, which would change the counts under
+    <li>What does the contrast check's known limit change? Text across two backgrounds is measured against the one it
+      contrasts with best. It needs a fix, tests and a fresh run over the set, which would change the counts under
       <a href="#measured">What I measured</a>.</li>
     <li>Will PDF readers adopt it? A standard name from the PDF Association, and themes shown by one widely used PDF
       reader, such as pdf.js.</li>
