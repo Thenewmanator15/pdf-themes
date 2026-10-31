@@ -33,14 +33,18 @@ jobs:
           persist-credentials: false
       - name: Build the site
         # demo/index.html has no doctype or head of its own, so the start of
-        # the document is written here.
+        # the document is written here, with the Content Security Policy before
+        # anything it governs. The other pages carry the same policy in their
+        # own heads, so a change to it goes there too.
+        env:
+          CSP: "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'"
         run: |
           mkdir _site
           cp -r demo/. _site/
           {
             printf '%s\n' '<!doctype html>' '<html lang="en-GB">' '<meta charset="utf-8">' \
-              '<meta name="viewport" content="width=device-width, initial-scale=1">' \
-              '<style>body { margin: 0; }</style>'
+              "<meta http-equiv=\"Content-Security-Policy\" content=\"$CSP\">" \
+              '<meta name="viewport" content="width=device-width, initial-scale=1">'
             cat demo/index.html
           } > _site/index.html
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0

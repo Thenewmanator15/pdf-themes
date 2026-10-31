@@ -147,6 +147,17 @@ ol.refs a { overflow-wrap: anywhere; }
 .swatch { border-radius: 6px; border: 1px solid var(--rule); min-height: 74px; padding: 8px 10px; display: grid; align-content: end;
           color: #000; font-size: .875rem; line-height: 1.35; }
 .swatch code { font-size: .8125rem; }
+/* Each swatch's colour is set here, not in the page, so the Content Security Policy needs no inline styles */
+.swatch-site-cream { background: #FDF6E3; }
+.swatch-site-peach { background: #FDE7DC; }
+.swatch-site-yellow { background: #FFF7C2; }
+.swatch-site-turquoise { background: #E3EEFA; }
+.swatches-tested { margin-top: 10px; }
+.swatch-tested-cream { background: #FAFAC8; }
+.swatch-tested-peach { background: #EDD1B0; }
+.swatch-tested-yellow { background: #F8FD89; }
+.swatch-tested-turquoise { background: #A5F7E1; }
+.swatch-tested-orange { background: #EDDD6E; }
 
 footer { border-top: 1px solid var(--rule); padding-block: 26px 44px; font-size: .875rem; color: var(--muted); }
 footer .wrap { display: grid; gap: 8px; }

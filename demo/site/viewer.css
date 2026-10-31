@@ -1,0 +1,332 @@
+/* The viewer, demo/index.html. Kept out of the page so the site's Content Security
+   Policy needs no inline styles. */
+
+/* The page has no head of its own; the workflow that writes one used to set this there. */
+body { margin: 0; }
+
+/* Layout: a reader window. The page sits on the desk on the left; the panel on
+   the right says what the reader swapped to show the theme. One column on phones. */
+:root {
+  --desk: #E7E8EC;
+  --panel: #FFFFFF;
+  --ink: #15171C;
+  --muted: #595E6A;
+  --line: #D3D6DD;
+  --accent: #1E58B4;
+  --accent-soft: rgba(30, 88, 180, 0.10);
+  --page-shadow: 0 1px 2px rgba(20, 24, 33, 0.14), 0 10px 28px rgba(20, 24, 33, 0.12);
+  --font-display: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --font-ui: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-code: "Source Code Pro", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --desk: #0E0F12;
+    --panel: #17191E;
+    --ink: #E7E8EC;
+    --muted: #A0A5B1;
+    --line: #2D3038;
+    --accent: #8FB2FF;
+    --accent-soft: rgba(143, 178, 255, 0.15);
+    --page-shadow: 0 1px 2px rgba(0, 0, 0, 0.55), 0 10px 30px rgba(0, 0, 0, 0.5);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --desk: #0E0F12;
+  --panel: #17191E;
+  --ink: #E7E8EC;
+  --muted: #A0A5B1;
+  --line: #2D3038;
+  --accent: #8FB2FF;
+  --accent-soft: rgba(143, 178, 255, 0.15);
+  --page-shadow: 0 1px 2px rgba(0, 0, 0, 0.55), 0 10px 30px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+
+[hidden] { display: none !important; }
+body {
+  background: var(--desk);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.wrap {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding-inline: 16px;
+  padding-block: 24px 48px;
+  display: grid;
+  gap: 16px;
+}
+h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(26px, 3.4vw, 34px);
+  line-height: 1.15;
+  margin: 0;
+  text-wrap: balance;
+}
+.lede {
+  margin: 8px 0 0;
+  max-width: 72ch;
+  color: var(--muted);
+}
+.row-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  min-width: 82px;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 0;
+}
+.chips button {
+  font: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 12px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.chips button[aria-pressed="true"] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+.chips .dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+}
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.status {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  min-width: 0;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+}
+.stage {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.pager button {
+  font: inherit;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 3px 10px;
+  cursor: pointer;
+}
+.pager button:disabled { opacity: 0.45; cursor: default; }
+.sheet {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+.sheet canvas {
+  display: block;
+  max-width: 100%;
+  box-shadow: var(--page-shadow);
+  border-radius: 2px;
+}
+.placeholder {
+  width: min(100%, 595px);
+  aspect-ratio: 595 / 842;
+  max-width: 100%;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  border: 1px dashed var(--line);
+  border-radius: 2px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 18px;
+  display: grid;
+  gap: 22px;
+  min-width: 0;
+}
+.panel h2 {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.panel p { margin: 0 0 8px; }
+.facts {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 4px 14px;
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+.facts dt { color: var(--muted); }
+.facts dd { margin: 0; min-width: 0; }
+code, pre, .ref { font-family: var(--font-code); font-size: 13px; }
+.swaps {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+.swaps li {
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+}
+.swaps .ref { white-space: nowrap; }
+.swaps .what { color: var(--muted); font-size: 14px; }
+.table-box { overflow-x: auto; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+  font-size: 14px;
+}
+caption {
+  text-align: left;
+  color: var(--muted);
+  font-size: 13px;
+  padding-bottom: 6px;
+}
+th, td {
+  text-align: left;
+  padding: 3px 6px;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+th { font-weight: 600; font-size: 13px; color: var(--muted); }
+.swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1px solid var(--line);
+  vertical-align: -2px;
+  margin-right: 6px;
+}
+details summary { cursor: pointer; color: var(--accent); }
+details + details { margin-top: 8px; }
+details pre {
+  margin: 10px 0 0;
+  padding: 12px;
+  background: var(--desk);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow-x: auto;
+  line-height: 1.45;
+}
+.note { color: var(--muted); font-size: 14px; }
+.error { color: var(--ink); font-weight: 600; }
+.site-nav { display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: .875rem; margin-bottom: 12px; }
+.site-nav a { color: var(--muted); text-decoration: none; }
+.site-nav a:hover { color: var(--ink); text-decoration: underline; }
+.site-nav a[aria-current="page"] { color: var(--ink); font-weight: 600; }
+.lede a { color: var(--accent); }
+
+/* The intro beyond its first sentence folds away, so the page starts high. */
+.about { margin-top: 6px; }
+.panel .download { margin: 10px 0 0; }
+.about > summary { color: var(--accent); cursor: pointer; font-size: 14px; width: fit-content; }
+.about[open] > summary { margin-bottom: 4px; }
+
+/* One toolbar for everything you change while reading. It stays at the top
+   of the window, so the next page or another theme is always one click away. */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  margin-inline: -16px;
+  padding: 10px 16px;
+  background: var(--desk);
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "doc pager" "theme theme" "status status";
+  gap: 8px 16px;
+  align-items: center;
+}
+.tool { display: flex; align-items: center; gap: 8px 12px; min-width: 0; }
+.tool-doc { grid-area: doc; }
+.tool-theme { grid-area: theme; }
+.toolbar .pager { grid-area: pager; }
+.toolbar .status { grid-area: status; font-size: 13px; }
+.toolbar .row-label { min-width: 82px; }
+#doc-picker {
+  font: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 4px 8px;
+  min-width: 0;
+  max-width: 100%;
+}
+#doc-picker:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.sheet canvas { scroll-margin-top: calc(var(--bar-h, 120px) + 12px); }
+
+/* Beside the page, the panel keeps in view and scrolls on its own. */
+@media (min-width: 901px) {
+  .panel {
+    position: sticky;
+    top: calc(var(--bar-h, 120px) + 12px);
+    max-height: calc(100vh - var(--bar-h, 120px) - 24px);
+    overflow-y: auto;
+  }
+}
+
+/* On a phone: the labels go above their controls, the themes scroll
+   sideways in one line, and the toolbar keeps to three short rows. */
+@media (max-width: 640px) {
+  .toolbar { grid-template-areas: "doc doc" "theme theme" "status pager"; padding-block: 8px; gap: 6px 10px; }
+  .toolbar .row-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .tool-doc, #doc-picker { width: 100%; }
+  .tool-theme .chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+  .tool-theme .chips::-webkit-scrollbar { display: none; }
+  .tool-theme .chips button { flex: none; }
+  .toolbar .status { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pager { gap: 8px; }
+}
