@@ -1,12 +1,42 @@
 # Colour themes in PDF
 
-Draft 0.3, October 2026. Mathew Newman.
+| | |
+| --- | --- |
+| **Version** | Draft 0.3, October 2026 |
+| **Editor** | Mathew Newman |
+| **Status** | Working draft for discussion with the PDF Association's PDF Technical Working Group |
+| **Discussion** | [pdf-association/pdf-issues#369](https://github.com/pdf-association/pdf-issues/issues/369) |
+| **Implementation** | `pdfthemes` in this repository, and the [live demo](https://thenewmanator15.github.io/pdf-themes/) |
+| **See also** | [Limits](https://thenewmanator15.github.io/pdf-themes/limits/) and [ROADMAP.md](ROADMAP.md) |
 
 This is a working draft for discussion with the PDF Association's PDF Technical
 Working Group. It describes what `pdfthemes` in this repository writes and
-reads. Key names are provisional: the proof of concept stores the theme
-dictionary under the private key `XXThemes` (a third-class name, ISO 32000-2
-Annex E). A standard would use a first-class key, written here as `Themes`.
+reads.
+
+> [!NOTE]
+> Key names are provisional: the proof of concept stores the theme
+> dictionary under the private key `XXThemes` (a third-class name, ISO 32000-2
+> Annex E). A standard would use a first-class key, written here as `Themes`.
+
+> [!TIP]
+> **Shall** marks a requirement, **should** a recommendation and **may** a
+> permission, as in ISO 32000-2.
+
+## Contents
+
+1. [What it does](#1-what-it-does)
+2. [Terms](#2-terms)
+3. [The themes dictionary](#3-the-themes-dictionary)
+4. [Theme dictionaries](#4-theme-dictionaries)
+5. [Replacements](#5-replacements)
+6. [Writers](#6-writers)
+7. [Standard themes](#7-standard-themes)
+8. [Checking](#8-checking)
+9. [Readers](#9-readers)
+10. [Security](#10-security)
+11. [Where colour lives in a PDF, and how a theme reaches it](#11-where-colour-lives-in-a-pdf-and-how-a-theme-reaches-it)
+12. [Open questions](#12-open-questions)
+13. [Example](#13-example)
 
 ## 1. What it does
 
@@ -21,48 +51,52 @@ reader that supports themes picks one from the person's settings, paints the
 theme's paper colour and draws the pages with the swapped objects. A reader
 that doesn't support themes ignores them and shows the default colours.
 
+```mermaid
+flowchart LR
+    page["Page content<br/><code>/Th25 CS 0 SC</code><br/>the same in every theme"] --> pal["Palette 99 0 R<br/>Light colours"]
+    cat["Catalog /Themes"] --> def["Default: Light"]
+    cat --> alt["Alternates"]
+    alt --> dark["Dark<br/>Replace [99 0 R 177 0 R]"]
+    alt --> cream["Cream<br/>Replace [99 0 R 186 0 R]"]
+    dark -. "while Dark is shown,<br/>99 is drawn as" .-> p177["Palette 177 0 R<br/>Dark colours"]
+    cream -. "while Cream is shown,<br/>99 is drawn as" .-> p186["Palette 186 0 R<br/>Cream colours"]
+```
+
 ## 2. Terms
 
-- **Default theme**: the colours as written in the file.
-- **Alternate theme**: a theme that replaces some objects with others.
-- **Palette**: an Indexed colour space (ISO 32000-2, 8.6.6.3) that content
-  streams use for solid colours, for example `/Th25 CS 0 SC`.
-- **Replacement**: a pair of indirect objects. While the theme is shown, the
-  first object is drawn as the second.
-- **Authored theme**: a theme the author built, with its own colours for
-  text, charts and pictures.
-- **Derived theme**: an alternate theme the writer worked out from the default
-  theme rather than one the author built. A fallback for a file with no
-  source to build from.
-- **Contrast ratio**: as WCAG 2.2 defines it, from the relative luminance of
-  two colours. Success criteria are cited by number and name, for example
-  1.4.3 Contrast (Minimum).
-- **Enhanced contrast**: WCAG's term for the 7:1 level of success criterion
-  1.4.6. A theme with `Contrast` `More` is an enhanced contrast theme.
-- **Forced colours**: a mode in which the person's own colours replace the
-  document's, such as a Windows contrast theme (CSS `forced-colors`).
+| Term | Meaning |
+| --- | --- |
+| **Default theme** | The colours as written in the file. |
+| **Alternate theme** | A theme that replaces some objects with others. |
+| **Palette** | An Indexed colour space (ISO 32000-2, 8.6.6.3) that content streams use for solid colours, for example `/Th25 CS 0 SC`. |
+| **Replacement** | A pair of indirect objects. While the theme is shown, the first object is drawn as the second. |
+| **Authored theme** | A theme the author built, with its own colours for text, charts and pictures. |
+| **Derived theme** | An alternate theme the writer worked out from the default theme rather than one the author built. A fallback for a file with no source to build from. |
+| **Contrast ratio** | As WCAG 2.2 defines it, from the relative luminance of two colours. Success criteria are cited by number and name, for example 1.4.3 Contrast (Minimum). |
+| **Enhanced contrast** | WCAG's term for the 7:1 level of success criterion 1.4.6. A theme with `Contrast` `More` is an enhanced contrast theme. |
+| **Forced colours** | A mode in which the person's own colours replace the document's, such as a Windows contrast theme (CSS `forced-colors`). |
 
 ## 3. The themes dictionary
 
 The document catalog's `Themes` entry is a dictionary:
 
-| Key | Type | Value |
-| --- | --- | --- |
-| Default | dictionary | (Required) A theme dictionary describing the default theme. It shall not contain `Replace`. |
-| Alternates | array | (Required) One or more theme dictionaries for alternate themes. |
+| Key | Type | Required | Value |
+| --- | --- | --- | --- |
+| `Default` | dictionary | Required | A theme dictionary describing the default theme. It shall not contain `Replace`. |
+| `Alternates` | array | Required | One or more theme dictionaries for alternate themes. |
 
 ## 4. Theme dictionaries
 
-| Key | Type | Value |
-| --- | --- | --- |
-| Type | name | (Optional) `Theme`. |
-| Name | text string | (Required) The name a reader shows, for example `(Dark)`. Unique within the file. |
-| ColorScheme | name | (Required) `Light` or `Dark`: the setting this theme suits, as in CSS `prefers-color-scheme`. |
-| Contrast | name | (Optional) `More` for an enhanced contrast theme (WCAG 1.4.6), made for people who ask for more contrast, as in CSS `prefers-contrast: more`. Absent means standard contrast. |
-| Tint | name | (Optional) The tint of a tinted theme, from section 7, for example `Cream`. Absent means no tint. |
-| Paper | array | (Optional) Three numbers from 0 to 1: the sRGB colour a reader paints before drawing each page. Default: `[1 1 1]`. |
-| Checked | dictionary | (Optional) What the writer checked this theme against (section 8). |
-| Replace | array | (Required in alternate themes) An even number of indirect references, read in pairs `base replacement`. |
+| Key | Type | Required | Value |
+| --- | --- | --- | --- |
+| `Type` | name | Optional | `Theme`. |
+| `Name` | text string | Required | The name a reader shows, for example `(Dark)`. Unique within the file. |
+| `ColorScheme` | name | Required | `Light` or `Dark`: the setting this theme suits, as in CSS `prefers-color-scheme`. |
+| `Contrast` | name | Optional | `More` for an enhanced contrast theme (WCAG 1.4.6), made for people who ask for more contrast, as in CSS `prefers-contrast: more`. Absent means standard contrast. |
+| `Tint` | name | Optional | The tint of a tinted theme, from section 7, for example `Cream`. Absent means no tint. |
+| `Paper` | array | Optional | Three numbers from 0 to 1: the sRGB colour a reader paints before drawing each page. Default: `[1 1 1]`. |
+| `Checked` | dictionary | Optional | What the writer checked this theme against (section 8). |
+| `Replace` | array | Required in alternate themes | An even number of indirect references, read in pairs `base replacement`. |
 
 `ColorScheme`, `Contrast` and `Tint` are labels a reader can match from one
 document to the next. `Name` is for people and may be translated.
@@ -84,12 +118,13 @@ document to the next. `Name` is for people and may be translated.
    | A text string that carries colour: `DA`, `DS` or `RC` | everything except its colour operators or CSS colour values. |
    | An annotation dictionary | everything except `C`, `IC`, `CA`, `ca`, `BM`, `DA`, `DS` and `RC`. |
 
-   A base object shall not be a page, a content stream, a form XObject, a
-   font, an optional content group, an action or anything in the structure
-   tree other than an attribute's colour value. A theme can therefore repaint
-   a document but cannot change its content streams, its text, its structure
-   or what it does. It can still change what is seen, for example with a
-   replacement image or a text colour that matches the paper (section 10).
+   > [!IMPORTANT]
+   > A base object shall not be a page, a content stream, a form XObject, a
+   > font, an optional content group, an action or anything in the structure
+   > tree other than an attribute's colour value. A theme can therefore repaint
+   > a document but cannot change its content streams, its text, its structure
+   > or what it does. It can still change what is seen, for example with a
+   > replacement image or a text colour that matches the paper (section 10).
 3. A base object shall appear at most once in a theme's `Replace` array.
 4. While a theme is shown, every reference to a base object in the document
    shall be resolved to its replacement, wherever it is referenced from.
@@ -126,7 +161,7 @@ document to the next. `Name` is for people and may be translated.
 
 ## 7. Standard themes
 
-| Name | ColorScheme | Contrast | Tint | For |
+| Name | `ColorScheme` | `Contrast` | `Tint` | For |
 | --- | --- | --- | --- | --- |
 | Light | Light | | | The author's design. |
 | Dark | Dark | | | Light sensitivity, glare, reading in the dark, some low vision. |
@@ -140,10 +175,11 @@ meets that today, at the cost of the design. The standard themes give the
 person a set to select from, each with its text contrast checked by the
 writer.
 
-This is the set an author is asked to build. A themed file should carry a
-theme with `ColorScheme` `Dark` and one with `ColorScheme` `Dark` and
-`Contrast` `More`, because a reader who needs light text on dark otherwise has
-to invert the page. It need not carry the rest, and may carry others.
+> [!IMPORTANT]
+> This is the set an author is asked to build. A themed file should carry a
+> theme with `ColorScheme` `Dark` and one with `ColorScheme` `Dark` and
+> `Contrast` `More`, because a reader who needs light text on dark otherwise has
+> to invert the page. It need not carry the rest, and may carry others.
 
 This draft doesn't specify how a writer works out a derived theme, only its
 labels and the check it shall pass. The proof of concept's method is in
@@ -157,9 +193,13 @@ For an authored theme the writer reports what fails, with the page and the
 text, and leaves the fixing to the author. It writes the theme either way,
 without `Checked` if it failed.
 The check should be made on the drawn page, so it sees gradients, images and
-transparency as a reader shows them. Themes with `Contrast` `More` should be
-held to 1.4.6 Contrast (Enhanced) (7:1, or 4.5:1 for large text, level AAA),
-others to 1.4.3 Contrast (Minimum) (4.5:1, or 3:1 for large text, level AA).
+transparency as a reader shows them. Themes should be held to these levels:
+
+| Themes | Success criterion | Text | Large text | Level |
+| --- | --- | --- | --- | --- |
+| With `Contrast` `More` | 1.4.6 Contrast (Enhanced) | 7:1 | 4.5:1 | AAA |
+| All others | 1.4.3 Contrast (Minimum) | 4.5:1 | 3:1 | AA |
+
 Screens, brightness and room light all change how contrast looks, so a writer
 fixing a colour should aim a little above the minimum.
 
@@ -169,17 +209,18 @@ Non-text Contrast (3:1), and a chart that tells its series apart by colour
 alone comes under 1.4.1 Use of Color. A writer may check those as well (open
 question 13).
 
-`Checked` records the success criterion the writer's check was made against,
-and that the check passed. It is not a claim that the theme conforms to that
-criterion: an automated check can't judge everything WCAG asks, and a writer
-may not be able to measure some text, such as text filled with a gradient.
+> [!NOTE]
+> `Checked` records the success criterion the writer's check was made against,
+> and that the check passed. It is not a claim that the theme conforms to that
+> criterion: an automated check can't judge everything WCAG asks, and a writer
+> may not be able to measure some text, such as text filled with a gradient.
 
 | Key | Type | Value |
 | --- | --- | --- |
-| Standard | text string | For example `(WCAG 2.2)`. |
-| Criterion | text string | For example `(1.4.3 Contrast (Minimum))`. |
-| Level | name | For example `AA`. |
-| Date | date | When the check was made. |
+| `Standard` | text string | For example `(WCAG 2.2)`. |
+| `Criterion` | text string | For example `(1.4.3 Contrast (Minimum))`. |
+| `Level` | name | For example `AA`. |
+| `Date` | date | When the check was made. |
 
 A writer shall not write `Checked` for a theme that failed the check, or for
 one in which there was no text to check. A writer should report any text it
@@ -215,9 +256,13 @@ which criterion each theme was checked against.
 ## 10. Security
 
 Choosing a theme changes no bytes in the file, so a signature covers every
-theme. A theme could still be used to hide content from one reader of a signed
-document, for example by painting text in the paper colour. Because a theme
-cannot change content streams, the check is narrow:
+theme.
+
+> [!WARNING]
+> A theme could still be used to hide content from one reader of a signed
+> document, for example by painting text in the paper colour.
+
+Because a theme cannot change content streams, the check is narrow:
 
 - a reader validating a signature should say which theme is shown;
 - a validator should draw every theme and check text contrast in each, and
@@ -242,6 +287,28 @@ cannot change content streams, the check is narrow:
 | The page background | `Paper` |
 
 ## 12. Open questions
+
+| # | About |
+| --- | --- |
+| 1 | Where the themes live: a catalog key or optional content |
+| 2 | Thicker lines in a higher contrast theme |
+| 3 | Paper as sRGB or a palette entry |
+| 4 | Printing when the default theme is dark |
+| 5 | What `Checked` holds |
+| 6 | Appearances a reader makes itself |
+| 7 | HTML derived from tagged PDF |
+| 8 | Which tints |
+| 9 | Wide-gamut colours in derived themes |
+| 10 | Dark paper on OLED screens |
+| 11 | Editing while a theme is shown |
+| 12 | Stale themes |
+| 13 | Non-text contrast and colour vision deficiency |
+| 14 | Text a writer can't measure |
+| 15 | Colour fonts |
+| 16 | Colours set by scripts |
+| 17 | 3D models and media |
+| 18 | Attached files |
+| 19 | Signed files |
 
 1. A catalog key, or an extension of optional content configurations?
 2. Should a theme be allowed to change line width, so a higher contrast theme
@@ -302,7 +369,7 @@ cannot change content streams, the check is narrow:
 
 ## 13. Example
 
-```
+```text
 1 0 obj
 << /Type /Catalog /Pages 2 0 R
    /Themes <<
