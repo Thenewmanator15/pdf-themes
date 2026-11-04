@@ -55,8 +55,8 @@ that doesn't support themes ignores them and shows the default colours.
 flowchart LR
     page["Page content: /Th25 CS 0 SC<br/>the same bytes in every theme"] --> shown{"Theme shown"}
     shown -->|"Light (default)"| p99["Palette 99 0 R"]
-    shown -->|"Dark: Replace 99 0 R 177 0 R"| p177["Palette 177 0 R"]
-    shown -->|"Cream: Replace 99 0 R 186 0 R"| p186["Palette 186 0 R"]
+    shown -->|"Dark: 99 drawn as 177"| p177["Palette 177 0 R"]
+    shown -->|"Cream: 99 drawn as 186"| p186["Palette 186 0 R"]
 ```
 
 ## 2. Terms
