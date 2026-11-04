@@ -256,7 +256,9 @@ cannot change content streams, the check is narrow:
 4. Which theme prints when the default theme is dark?
 5. Free text in `Checked`, or a minimum contrast ratio a validator can test?
 6. Should readers theme the appearances they make themselves (highlights,
-   form fields without appearance streams)?
+   form fields without appearance streams)? A reader draws these anyway, as
+   it draws a comment's pop-up window and its list of comments in its own
+   interface, so it can draw them in the theme shown.
 7. Should HTML derived from tagged PDF carry the themes as CSS?
 8. A fixed list of tints, or any named tint?
 9. Derived themes for wide-gamut colours such as Display P3: worked out in the
@@ -277,6 +279,26 @@ cannot change content streams, the check is narrow:
 14. Text a writer can't measure, such as text filled with a gradient: should
     it stop `Checked` from being written, or be recorded in it, for example
     as a count?
+15. Colour fonts: a font can carry its own colours, as colour emoji do, and a
+    font can't be a base object (section 5), so those colours are the same in
+    every theme. Should a theme be able to replace a font's colour palette, or
+    should a writer draw such glyphs another way, for example as Type 3
+    glyphs that paint through palettes?
+16. Colours set by scripts: a form's JavaScript can colour a field when its
+    value changes, for example red for a negative number. That colour is in
+    the script, out of a theme's reach. Should a script be able to ask for a
+    colour of the theme shown?
+17. 3D models and media: a theme reaches the PDF's own colours round a 3D
+    model (background, render mode, cross-sections) but not the model's
+    materials and lighting, nor video. Should a theme be able to name a 3D
+    view of its own, or do these stay the same in every theme, as photos do?
+18. Attached files: a PDF attached to a themed PDF, or held in a portfolio,
+    has its own themes or none. Should a reader open an attached file in the
+    theme matching the one shown?
+19. Signed files: showing a theme changes no bytes, but adding or changing
+    themes does, so a signature made before no longer covers the file. Should
+    adding themes be a change that a certification signature's permissions
+    (DocMDP) can allow in an incremental update, as filling in a form is?
 
 ## 13. Example
 
