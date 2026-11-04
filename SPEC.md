@@ -115,7 +115,6 @@ document to the next. `Name` is for people and may be translated.
    | A text string that carries colour: `DA`, `DS` or `RC` | everything except its colour operators or CSS colour values. |
    | An annotation dictionary | everything except `C`, `IC`, `CA`, `ca`, `BM`, `DA`, `DS` and `RC`. |
 
-   > [!IMPORTANT]
    > A base object shall not be a page, a content stream, a form XObject, a
    > font, an optional content group, an action or anything in the structure
    > tree other than an attribute's colour value. A theme can therefore repaint
