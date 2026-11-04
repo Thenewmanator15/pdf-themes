@@ -53,13 +53,10 @@ that doesn't support themes ignores them and shows the default colours.
 
 ```mermaid
 flowchart LR
-    page["Page content<br/><code>/Th25 CS 0 SC</code><br/>the same in every theme"] --> pal["Palette 99 0 R<br/>Light colours"]
-    cat["Catalog /Themes"] --> def["Default: Light"]
-    cat --> alt["Alternates"]
-    alt --> dark["Dark<br/>Replace [99 0 R 177 0 R]"]
-    alt --> cream["Cream<br/>Replace [99 0 R 186 0 R]"]
-    dark -. "while Dark is shown,<br/>99 is drawn as" .-> p177["Palette 177 0 R<br/>Dark colours"]
-    cream -. "while Cream is shown,<br/>99 is drawn as" .-> p186["Palette 186 0 R<br/>Cream colours"]
+    page["Page content: /Th25 CS 0 SC<br/>the same bytes in every theme"] --> shown{"Theme shown"}
+    shown -->|"Light (default)"| p99["Palette 99 0 R"]
+    shown -->|"Dark: Replace 99 0 R 177 0 R"| p177["Palette 177 0 R"]
+    shown -->|"Cream: Replace 99 0 R 186 0 R"| p186["Palette 186 0 R"]
 ```
 
 ## 2. Terms
