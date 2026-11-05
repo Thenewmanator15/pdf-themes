@@ -74,6 +74,9 @@ Size: **S** a day or two, **M** about a week, **L** several weeks. "Needs" names
 | S6 | An image whose soft mask has a Matte keeps its values; a theme may swap in a whole image blended with the same matte | Sections 5 and 6 | S | | Needs a decision |
 | S7 | Say what "draws the same" means for the default theme: within one level of each colour component | Section 6 | S | | Needs a decision: PDFium is four levels out on one Display P3 file |
 | S8 | A writer should check a themed file in more than one reader | Section 8 | S | | Not written |
+| S10 | A writer shall not share a palette between a soft mask group and visible content, since swapping it would change the mask's transparency too | Sections 6 and 11 | S | | Not written |
+| S11 | An editor that changes a base object shall update its replacement in every theme, or drop those themes, since a replacement left behind (a different `hival`, an old `Rect`) makes readers reject the theme | Section 6, and a new section for editors | S | | Not written |
+| S12 | Readers resolve references the same way with and without a theme: at every step of a chain of references, and in a repaired file by object number as the reader does | Section 5, rule 4 | S | | Not written |
 | S9 | Decide questions 2 and 15 to 19 | Open questions | | The PDF Association's working group | Open |
 
 ### Tool
