@@ -66,7 +66,7 @@ Size: **S** a day or two, **M** about a week, **L** several weeks. "Needs" names
 
 | ID | Change | Where | Size | Needs | Status |
 | --- | --- | --- | --- | --- | --- |
-| S1 | Use a registered name: catalog key `PTHM_Themes`, `/Type /PTHM_Theme`, and an `/Extensions << /PTHM << /BaseVersion … /ExtensionLevel 1 /URL … >> >>` entry. Ask whether the keys inside the themes dictionary need the prefix too | Sections 3, 4 and 13, open questions | S | The prefix registered with Adobe | Waiting on registration |
+| S1 | Agree the name a shared file uses, and whether there's an interim one, with the PDF Association's working group, so files carry as few names as possible. Until then prototypes keep `XXThemes`, and readers read the key from a list so an agreed name is a one-line addition. Ask too whether the keys inside the themes dictionary need a prefix, and add an `/Extensions` entry once there's a name to declare | Sections 3, 4 and 13, open questions | S | The working group | Open |
 | S2 | Separate the system's forced colours, which win over any theme, from a reader's own colour setting, where the reader shows the closest theme and offers the setting instead | Section 9 | S | | Drafted |
 | S3 | Readers keep the person's choice for light and for dark apart, switching with the system's dark mode, and match the scheme before the tint | Section 9 | S | | Drafted |
 | S4 | Allow dark tinted themes, such as Dark cream | Section 7 | S | | Drafted |
@@ -83,7 +83,7 @@ Size: **S** a day or two, **M** about a week, **L** several weeks. "Needs" names
 
 | ID | Change | Where | Size | Needs | Status |
 | --- | --- | --- | --- | --- | --- |
-| T1 | Write the registered name and the `/Extensions` entry; read `PTHM_Themes` and `XXThemes`; rebuild the demo files, `tests/objects` and `plan/proposal.pdf` | `pdfthemes/theme.py`, `core.py`, `demo/site/viewer.js`, tests | M | S1 | Planned |
+| T1 | Once a name is agreed: write it and the `/Extensions` entry, read it and `XXThemes`, and rebuild the demo files and `tests/objects` | `pdfthemes/theme.py`, `core.py`, `demo/site/viewer.js`, tests | M | S1 | Waiting on S1 |
 | T2 | Warn before rewriting a signed file, and check a file's permissions before changing it, asking for the owner password where needed | `pdfthemes/cli.py`, `core.py` | S | | No |
 | T3 | Theme 1-bit scans the way grey scans are, after checking how many of the 15 unthemed scans in the test set are 1-bit | `pdfthemes/merge.py` (`grey_scan`), `derive.py` (`scan_pair`) | M | | No |
 | T4 | Work out dark tinted themes beside the light tints | `pdfthemes/derive.py` (`standard_specs`) | S | S4 | No |
@@ -92,7 +92,7 @@ Size: **S** a day or two, **M** about a week, **L** several weeks. "Needs" names
 | T7 | Write a two-colour image 8 bits an index, not 1, because PDFium draws a 1-bit palette image a level off where it resamples it | `pdfthemes/merge.py` | S | | Needs a decision: costs a little size |
 | T8 | Work out wide-gamut themes in the file's own colour space, not sRGB | `pdfthemes/derive.py`, `colour.py` | M | Question 9 | No |
 | T9 | Make worked-out themes hold on large files: all six fail on the 31-page objects test | `pdfthemes/derive.py` | M to L | | No |
-| T10 | Release on PyPI as `pdf-themes` | `pyproject.toml` | S | | No |
+| T10 | Release on PyPI as `pdf-themes` | `pyproject.toml` | S | S1, so a general release never writes `XXThemes` into shared files | Held |
 
 ### Contrast check
 
@@ -111,18 +111,18 @@ Size: **S** a day or two, **M** about a week, **L** several weeks. "Needs" names
 | --- | --- | --- | --- | --- | --- |
 | V1 | Check section 5's rules before swapping, and ignore a theme that breaks them | `demo/site/viewer.js` | S | | No |
 | V2 | Remember a choice for light and one for dark | `demo/site/viewer.js` | S | S3 | No |
-| V3 | Read the registered key | `demo/site/viewer.js` | S | S1 | With T1 |
+| V3 | Read the key from a list, so an agreed name is a one-line addition | `demo/site/viewer.js` | S | | No |
 | V4 | Decide whether people can open their own PDFs, kept in the browser | `demo/site/viewer.js`, the Content Security Policy | M | | Needs a decision |
 
 ### PDF apps and other tools
 
 | ID | Change | Where | Size | Needs | Status |
 | --- | --- | --- | --- | --- | --- |
-| A1 | Reference redirects: open a PDF so given references resolve to other objects, the general piece a theme needs | [LaurenzV/hayro](https://github.com/LaurenzV/hayro) | M | | Planned: an issue, then a pull request |
-| A2 | PdfCraft reads and shows themes, matched to the app, overriding its reading colours, with a theme picker | [storytold/pdfcraft](https://github.com/storytold/pdfcraft) | L | A1, S1 | Planned, eight tasks |
+| A1 | Reference redirects: open a PDF so given references resolve to other objects, the general piece a theme needs | [LaurenzV/hayro](https://github.com/LaurenzV/hayro) | M | | Proposed: [hayro#1812](https://github.com/LaurenzV/hayro/issues/1812) |
+| A2 | PdfCraft reads and shows themes, matched to the app, overriding its reading colours, with a theme picker; its own parser, used for the comments panel and the appearances it draws, applies the same swaps | [storytold/pdfcraft](https://github.com/storytold/pdfcraft) | L | A1 | Planned, eight tasks |
 | A3 | PdfCraft edits themes: a check panel, a colour editor per theme, and themes kept through edits | storytold/pdfcraft | L | A2, R1 | Planned |
 | R1 | A Rust crate under MIT or Apache 2.0: the contrast check first, then writing palettes and themes, then working themes out | New repository | L | | Planned |
-| A4 | pdf.js reads and shows themes | [mozilla/pdf.js](https://github.com/mozilla/pdf.js) | L | S1 | Issue drafted |
+| A4 | pdf.js reads and shows themes | [mozilla/pdf.js](https://github.com/mozilla/pdf.js) | L | A2 | Issue drafted |
 | A5 | Typst: a colour per theme, krilla writing palettes and themes, one layout painted in each theme, a theme switch in the previews | typst, krilla, Tinymist | L | R1 | Forum post drafted |
 | A6 | Typst and Tinymist: draw an embedded SVG in the page's colour scheme | typst, Tinymist | S | | Bug reports drafted |
 | A7 | matplotlib: text written as outlines has no fill, so it stays black in a dark theme | matplotlib | S | | A note to write |
@@ -132,6 +132,19 @@ Size: **S** a day or two, **M** about a week, **L** several weeks. "Needs" names
 
 | ID | What | Status |
 | --- | --- | --- |
-| P1 | Register the `PTHM` prefix with Adobe's PDF name registry | Drafted |
-| P2 | Join the PDF Association and present to its PDF Technical Working Group, once a reader people use supports themes | After A2 |
+| P1 | Ask the PDF Association's working group how the name should be handled (S1), on [pdf-issues #369](https://github.com/pdf-association/pdf-issues/issues/369) | With spec draft 0.4 |
+| P2 | Present to the PDF Technical Working Group, once a reader people use supports themes | After A2 |
+| P4 | Take part in the UK's standards work through BSI's IDT/1 committee, the route to an ISO technical specification | Applying |
 | P3 | Readers with dyslexia, visual stress or low vision try the themes | Needs someone to lead a study |
+
+## The route to the standard
+
+PDF 2.1 hasn't been announced. New PDF features have been arriving as ISO technical specifications (ISO/TS 32001 to 32004) and amendments to ISO 32000-2, so the route is:
+
+1. Spec draft 0.4 with rules for readers, editors, writers and checkers, and a test file per rule.
+2. A reader people use: PdfCraft (A2), with hayro (A1), then its editor (A3).
+3. The PDF Association's PDF Technical Working Group: the proposal, the tests and the implementations (P2), and the name (S1).
+4. An ISO technical specification, through a national body (P4).
+5. The next edition of ISO 32000.
+
+Nothing writes themed files for general use until step 3 has settled the name.
