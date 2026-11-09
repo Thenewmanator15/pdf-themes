@@ -265,6 +265,17 @@ With no source to build from, `pdf-themes add` works the themes out.
 
 ## Limits
 
+The full list, with the work each gap needs, is on the site's
+[Limits page](https://thenewmanator15.github.io/pdf-themes/limits/). In
+short, a theme can't reach colours held in a font (colour emoji), set by a
+form's JavaScript, or inside a 3D model or video; the tool doesn't yet theme
+1-bit scans or photos from a single build, nor warn before rewriting a signed
+or protected file; and the PDF app has to draw some things in the theme
+itself, such as comments without an appearance. These are open questions 15
+to 19 in [the specification](SPEC.md). [ROADMAP.md](ROADMAP.md) has what
+each part supports, kind of content by kind of content, and every piece of
+development work still to do. The tool's own limits:
+
 - Derived themes read every three-channel ICC profile as sRGB and write their
   colours in sRGB. Author-made themes keep wide-gamut colours such as Display
   P3 exactly; derived ones would lose the most saturated.

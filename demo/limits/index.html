@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Limits · pdf-themes</title>
+<meta name="description" content="What colour themes in PDF can't reach yet, what the pdf-themes tool doesn't do yet, and the work each gap needs: colour fonts, scripts, 3D models, photos and scans, comments, the contrast check, and signed or protected files.">
+<link rel="canonical" href="https://thenewmanator15.github.io/pdf-themes/limits/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="pdf-themes">
+<meta property="og:title" content="Limits of colour themes in PDF, and the work to do">
+<meta property="og:description" content="What colour themes in PDF can't reach yet, what the pdf-themes tool doesn't do yet, and the work each gap needs.">
+<meta property="og:url" content="https://thenewmanator15.github.io/pdf-themes/limits/">
+<meta property="og:image" content="https://thenewmanator15.github.io/pdf-themes/site/share.jpg">
+<meta property="og:image:alt" content="The theme lab, a test page of plots, in its eight themes: Light, Dark, Light and Dark with more contrast, Cream, Peach, Yellow and Turquoise.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image:alt" content="The theme lab, a test page of plots, in its eight themes: Light, Dark, Light and Dark with more contrast, Cream, Peach, Yellow and Turquoise.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,600&display=swap">
+<link rel="stylesheet" href="../site/themes.css">
+<link rel="stylesheet" href="../site/site.css">
+<script src="../site/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../index.html">pdf-themes</a>
+  <nav class="site" aria-label="Site">
+    <a href="../index.html">Viewer</a>
+    <a href="../why/index.html">Why themes</a>
+    <a href="../evidence/index.html">Evidence</a>
+    <a href="../questions/index.html">Questions</a>
+    <a href="../limits/index.html" aria-current="page">Limits</a>
+    <a href="https://github.com/Thenewmanator15/pdf-themes">GitHub</a>
+  </nav>
+  <label class="colours">Page colours
+    <select id="page-colours">
+      <option value="auto">Follow my device</option>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+      <option value="light-contrast">Light, more contrast</option>
+      <option value="dark-contrast">Dark, more contrast</option>
+      <option value="cream">Cream</option>
+      <option value="peach">Peach</option>
+      <option value="yellow">Yellow</option>
+      <option value="turquoise">Turquoise</option>
+    </select>
+  </label>
+</div></header>
+
+<main>
+<div class="wrap intro">
+  <p class="eyebrow">Limits · 4 November 2026</p>
+  <h1>What themes can't reach yet, and the work to do</h1>
+  <p class="lede">Most of what a PDF holds can carry a theme. This page lists what can't, what the tool doesn't do yet,
+    and what each gap needs. If you can help with one, say so on the
+    <a href="https://github.com/Thenewmanator15/pdf-themes/issues">issue tracker</a>.</p>
+  <p>The measure is the objects test in the repository (<code>tests/objects</code>), which holds every kind of object
+    a PDF 2.0 file can contain and a viewer can show. Its coverage list has 271 entries. A theme changes 193 of them.
+    48 keep their colours on purpose in every theme: photos, every image format, print-production marks and colour
+    scales that work on both papers. The other 30 are drawn by the PDF app from entries in the file, so the app has to
+    follow the theme. The gaps below are what that leaves. For developers,
+    <a href="https://github.com/Thenewmanator15/pdf-themes/blob/main/ROADMAP.md">the roadmap</a> sets out what each part
+    supports and every piece of work still to do.</p>
+  <nav class="toc" aria-label="On this page">
+    <a href="#reach">Out of a theme's reach</a>
+    <a href="#tool">Not done by the tool yet</a>
+    <a href="#comments">Comments and form fields</a>
+    <a href="#apps">Left to the PDF app</a>
+    <a href="#check">The contrast check</a>
+    <a href="#files">Signed and protected files</a>
+    <a href="#name">The name in the file</a>
+  </nav>
+</div>
+
+<section id="reach"><div class="wrap qa">
+  <p class="eyebrow">01</p>
+  <h2>Out of a theme's reach</h2>
+  <p class="short">A theme can swap palettes, gradients, graphics states, images and colour values. It can't change a
+    font, a script or what's inside a 3D model, so colours held there stay as they are.</p>
+  <ul>
+    <li><strong>Colour fonts.</strong> A font can carry its own colours, as colour emoji do. A theme can't replace a
+      font (section 5 of the <a href="https://github.com/Thenewmanator15/pdf-themes/blob/main/SPEC.md">specification</a>),
+      so these keep their light-page colours. Work: decide whether a theme may swap a font's colour palette, or
+      whether writers should draw such glyphs another way (open question 15).</li>
+    <li><strong>Colours set by scripts.</strong> A form can run JavaScript that colours a field when it changes, for
+      example red for a negative number. The colour is in the script, not where a theme can swap it, so it is pure red
+      on dark paper. Work: a way for a script to ask for a colour of the theme shown (open question 16).</li>
+    <li><strong>Inside 3D models and media.</strong> A theme changes the PDF's own colours round a 3D model (its
+      background, render mode and cross-sections) but not the model's materials and lighting, and not video or sound.
+      A white part stays bright white on a dark page. Work: say whether a 3D view per theme is wanted, or whether these
+      stay as photos do (open question 17).</li>
+    <li><strong>Line widths and dashes.</strong> A more contrast theme can't yet make thin grid lines thicker. Work:
+      open question 2, and the evidence page on <a href="../evidence/index.html#lines">lines, dashes and grids</a>.</li>
+    <li><strong>Attached files.</strong> A PDF attached to a themed PDF, or held in a portfolio, needs themes of its
+      own. The portfolio's own colours are themed. Work: say whether a reader should match an attached file's theme to
+      the one shown (open question 18).</li>
+  </ul>
+</div></section>
+
+<section id="tool"><div class="wrap qa">
+  <p class="eyebrow">02</p>
+  <h2>Not done by the tool yet</h2>
+  <p class="short">These are possible with the specification as it stands, but <code>pdf-themes</code> doesn't do them,
+    or does them at a cost.</p>
+  <ul>
+    <li><strong>Photos, screenshots and figure images.</strong> The only way to theme one is a whole image per theme,
+      which makes the file bigger. Left alone, a screenshot with a white background stays a bright box on dark paper.
+      From a single build, the tool recolours an image only when it looks like a drawing on white or a grey scan.
+      Work: measure how often this matters in the test set, and what a second image costs.</li>
+    <li><strong>Black and white scans.</strong> Grey scans are themed, but a 1-bit scan (JBIG2 or fax-coded) isn't: in
+      the test set, 15 of the 30 scans kept only Light. Work: theme 1-bit scans the way grey ones are, and check
+      whether all 15 are 1-bit.</li>
+    <li><strong>Colour scans.</strong> A colour scan keeps its colours. Dark turns a grey scan light on dark, so a photo
+      on a scanned page becomes a negative.</li>
+    <li><strong>Images whose soft mask has a Matte.</strong> The tool leaves these alone, because palette indices can't
+      carry the arithmetic a reader uses to undo the matte. Work: swap in a whole image per theme, blended with the same
+      matte, and add the rule to section 5 of the specification.</li>
+    <li><strong>Colour scales that change.</strong> A heatmap whose scale changes between themes needs a copy of the
+      image per theme, because its palette and its values both change.</li>
+    <li><strong>Wide-gamut colours in worked-out themes.</strong> Themes the tool works out read every three-channel
+      colour profile as sRGB, so they lose the most saturated Display P3 colours. Themes built from source keep them
+      (open question 9).</li>
+    <li><strong>Large files.</strong> Worked-out themes are fragile on a large file: on the 31-page objects test all six
+      fail their check and are left out. Themes built from source don't have this problem.</li>
+    <li><strong>No released package.</strong> You need a copy of the repository to run the tool. Work: release it on
+      PyPI as <code>pdf-themes</code>.</li>
+  </ul>
+</div></section>
+
+<section id="comments"><div class="wrap qa">
+  <p class="eyebrow">03</p>
+  <h2>Comments and form fields</h2>
+  <p class="short">A comment has two parts. The mark on the page is stored in the file and is themed. The note's window
+    and the comments list are drawn by the PDF app, so they follow the app.</p>
+  <p>The mark on the page (a highlight, a note icon, a drawn box) is stored in the PDF, usually with its own appearance:
+    a small drawing made by the app that added the comment. That is what a theme recolours. The note's text, its pop-up
+    window, the list of comments and their replies are not drawn from the file: the PDF app shows them from the
+    comment's text in its own interface, so they follow the app's own light or dark setting, not the document's
+    theme.</p>
+  <p>The tool works through a comment's appearance the same way as the page, and moves its colour entries
+    (<code>C</code>, <code>IC</code>, and the text colours in <code>DA</code>, <code>DS</code> and <code>RC</code>) into
+    objects a theme can replace. The objects test has all 28 kinds of comment, and every form field's appearance is drawn
+    in each theme's colours.</p>
+  <ul>
+    <li><strong>No stored appearance.</strong> Some comments and fields leave the PDF app to draw the mark too. The app
+      is drawing it anyway, so it can draw it in the theme shown, using the theme's colours or its own. Work: say so in
+      section 9 of the specification (open question 6).</li>
+    <li><strong>Added later.</strong> A comment added afterwards by an app that doesn't know about themes gets no
+      colours for the other themes, and black text vanishes on dark paper (open questions 11 and 12). Work: a way for a
+      reader to tell that the themes no longer match the page.</li>
+    <li><strong>Different opacity.</strong> A comment whose opacity differs between themes is swapped whole, because
+      the specification doesn't yet allow a single number to be replaced.</li>
+  </ul>
+</div></section>
+
+<section id="apps"><div class="wrap qa">
+  <p class="eyebrow">04</p>
+  <h2>Left to the PDF app</h2>
+  <p class="short">30 entries in the objects test are drawn by the PDF app itself. A theme can give the colours, but the
+    app has to use them.</p>
+  <p>Among them are pop-up notes, how a link is highlighted when clicked, link borders, page box colours, article
+    threads and the steps of a presentation. Only the viewer on this site switches themes so far, and every other PDF app
+    shows a themed file in its default colours. Work: support in PDF apps, starting with
+    <a href="https://github.com/mozilla/pdf.js">pdf.js</a>, and in the library
+    <a href="https://github.com/LaurenzV/hayro">hayro</a> that the PdfCraft app draws with.</p>
+</div></section>
+
+<section id="check"><div class="wrap qa">
+  <p class="eyebrow">05</p>
+  <h2>The contrast check</h2>
+  <p class="short">The check measures text in every theme. Some text it can't see as text or can't measure, and some
+    things it doesn't check at all.</p>
+  <ul>
+    <li><strong>Text across two backgrounds</strong> is measured against the one it contrasts with best. It needs a fix,
+      tests and a fresh run over the test set (also listed on the <a href="../evidence/index.html">evidence page</a>).</li>
+    <li><strong>Text drawn as outlines</strong>, as matplotlib writes it, isn't seen as text, so its contrast isn't
+      checked.</li>
+    <li><strong>Text filled with a gradient</strong> can't be measured. It is counted in the report but doesn't stop
+      the mark (open question 14).</li>
+    <li><strong>Lines and shapes</strong> under 3:1 are listed for the author but don't decide the mark, because the
+      tool can't tell which carry meaning (open question 13).</li>
+    <li><strong>Colour alone, and colour vision deficiency.</strong> Nothing checks whether a chart tells its series
+      apart only by colour (WCAG 1.4.1), or how a theme looks to someone with colour vision deficiency (open question
+      13).</li>
+    <li><strong>The mark</strong> says the automated check passed, not that a theme conforms to WCAG, which takes a
+      person as well.</li>
+  </ul>
+</div></section>
+
+<section id="files"><div class="wrap qa">
+  <p class="eyebrow">06</p>
+  <h2>Signed and protected files</h2>
+  <p class="short">Showing a theme changes no bytes, so it never breaks a signature. Adding or changing themes does.</p>
+  <ul>
+    <li><strong>Signed files.</strong> The tool writes a new file, so a signature made before themes were added no
+      longer verifies, and it doesn't warn about that yet. Work: warn before writing, and say whether themes could be
+      added in an incremental update that a signature's permissions allow (open question 19).</li>
+    <li><strong>Protected files.</strong> The tool doesn't check whether a file's permissions allow changes before it
+      rewrites it. Work: check, and ask for the owner password where it's needed.</li>
+  </ul>
+</div></section>
+
+<section id="name"><div class="wrap qa">
+  <p class="eyebrow">07</p>
+  <h2>The name in the file</h2>
+  <p class="short">The themes sit under the private key <code>/XXThemes</code>, which is meant for testing, not for
+    files shared between apps.</p>
+  <p>Work: register a developer prefix with Adobe's PDF name registry, so files use a registered name until the PDF
+    Association agrees a standard one. Apps will keep reading <code>/XXThemes</code> as well, because files with it are
+    already on this site.</p>
+</div></section>
+
+<section id="ask"><div class="wrap qa">
+  <p class="eyebrow">?</p>
+  <h2>Found a gap that isn't here?</h2>
+  <p>Say so on the <a href="https://github.com/Thenewmanator15/pdf-themes/issues">issue tracker</a>, with a file if you
+    can share one. The tracker is public: reading it needs no account, and posting needs a free GitHub account.</p>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <p>pdf-themes · Mathew Newman (<a href="https://orcid.org/0000-0003-1784-3250">ORCID 0000-0003-1784-3250</a>). Part of the <a href="https://github.com/Thenewmanator15/pdf-themes">pdf-themes repository</a>, under the Apache 2.0 licence.</p>
+</div></footer>
+</body>
+</html>
