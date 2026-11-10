@@ -335,38 +335,53 @@ markers, keys, axes, grid lines, cell shading and colour scales.
 
 **Colour**
 
-- **R6.4-1** In every theme, the colours of the series in one chart should
-  differ from each other by a CIEDE2000 colour difference (ΔE00) of at least
-  10, and each should have a contrast ratio of at least 3:1 against the paper
-  (WCAG 1.4.11 Non-text Contrast).
-- **R6.4-2** A key or legend shall draw each series with the same palette
+- **R6.4-1** Each series in a chart should have a second cue as well as its
+  colour: a marker shape, a dash pattern or a label beside it. Of the ways to
+  help readers with colour vision deficiency, a second cue has the best
+  evidence, and it works the same in every theme with no setting to choose.
+- **R6.4-2** In every theme, each series should have a contrast ratio of at
+  least 3:1 against the paper (WCAG 1.4.11 Non-text Contrast), and the series
+  in one chart should differ from each other by a CIEDE2000 colour difference
+  (ΔE00) of at least 10, both as drawn and as simulated for protan, deutan and
+  tritan vision with the model of Brettel, Viénot and Mollon (1997). The value
+  10 is the editor's choice, not a measured threshold, and simulations
+  understate what these readers find hard, so a checker lists pairs that fall
+  short for the author (R9.3-1) rather than failing the file.
+- **R6.4-3** A key or legend shall draw each series with the same palette
   entry as the series itself, so the two always match in every theme.
-- **R6.4-3** A colour that carries a meaning, such as red for a failure or
+- **R6.4-4** A colour that carries a meaning, such as red for a failure or
   green for a pass, should keep its hue family in every theme. The meaning
   shall also be given another way, in text, the tags or a pattern (WCAG 1.4.1
   Use of Color; PDF/UA, Matterhorn 04-001).
-- **R6.4-4** Text in a shaded table cell or a banded row is checked against
+- **R6.4-5** A theme with `Contrast` `More` should get its contrast by
+  changing lightness, keeping each colour's hue and chroma. Mixing colours
+  towards the ink washes them out, which draws the series together and may
+  cost readers with colour vision deficiency most.
+- There is no theme label for colour vision deficiency. No system setting
+  tells a reader about it, so a reader couldn't choose such a theme; R6.4-1
+  and R6.4-2 make every theme serve these readers instead.
+- **R6.4-6** Text in a shaded table cell or a banded row is checked against
   the cell's colour, as drawn, not against the paper (9.2).
-- **R6.4-5** A sequential colour scale should keep its order from light to
+- **R6.4-7** A sequential colour scale should keep its order from light to
   dark in every theme, and a diverging scale's midpoint should suit the
   theme's paper, for example a dark midpoint on dark paper. A colour bar is
-  drawn from the same palette as the data it describes (R6.4-2).
-- **R6.4-6** A plot stored as an image should be written as indices into a
+  drawn from the same palette as the data it describes (R6.4-3).
+- **R6.4-8** A plot stored as an image should be written as indices into a
   palette (R6-6), or as a replacement image per theme the author made.
   Photos, micrographs and other images of real things keep their colours in
   every theme.
 
 **Line width and dashes**
 
-- **R6.4-7** A writer may make lines bolder in a theme, within R5.3-11:
+- **R6.4-9** A writer may make lines bolder in a theme, within R5.3-11:
   grid lines, axes, tick marks, chart lines and the borders of table cells.
   It's for themes with `Contrast` `More` above all, since people with low
   vision find thin, pale lines hard to follow.
-- **R6.4-8** A line width or dash pattern a theme changes shall be set
+- **R6.4-10** A line width or dash pattern a theme changes shall be set
   through a graphics state (`/GS1 gs`), not the `w` or `d` operator, and no
   `w` or `d` shall come after it before the line is drawn. A theme reaches
   only what the content points to, as with palettes.
-- **R6.4-9** A writer that makes lines bolder should check that they don't
+- **R6.4-11** A writer that makes lines bolder should check that they don't
   cover text, markers or other lines in the theme, for example by comparing
   the theme as drawn with the author's own build of it.
 
@@ -605,12 +620,13 @@ fixing a colour should aim a little above the minimum.
 ### 9.3 Graphs, charts and tables
 
 - **R9.3-1** A checker should list, for each theme, pairs of series in one
-  chart closer than R6.4-1 allows, and lines or shapes under 3:1 against what
-  is drawn beside them. Which carry meaning is for the author to say, so the
+  chart closer than R6.4-2 allows, as drawn and as simulated, series with
+  no second cue it can find (R6.4-1), and lines or shapes under 3:1 against
+  what is drawn beside them. Which carry meaning is for the author to say, so the
   list doesn't decide a pass.
 - **R9.3-2** A checker shall report a replacement graphics state that breaks
   R5.3-11, and a changed line width or dash pattern that a `w` or `d`
-  operator overrides before the line is drawn (R6.4-8).
+  operator overrides before the line is drawn (R6.4-10).
 
 ### 9.4 `Checked`
 
@@ -702,8 +718,8 @@ means it is planned. Files to make go in `tests/conformance/`, named by rule.
 | R8.4-1 to R8.4-4 | Editor | `R8.4-merge-a.pdf`, `R8.4-merge-b.pdf`, `R8.4-redact.pdf` | As each rule says | to make |
 | R8.4-5, R10.1-1 | Editor, reader | `tests/objects/out/objects-light-signed.pdf` | Signature still valid after viewing; themes added incrementally | have (signed file) |
 | R5.3-11 | Checker, reader | `R5.3-11-width.pdf`: one replacement at twice the width, one at three times | The first is drawn bolder; the second is reported, and the reader ignores that theme | to make |
-| R6.4-1 to R6.4-6 | Writer | Pages 25 and 26 of the objects test (scientific figures) and its results table, merged | Series 10 apart and 3:1 against the paper in each theme; legends and colour bars match | have (pair) |
-| R6.4-7, R6.4-8 | Writer, reader | `R6.4-7-grid.pdf`: a chart whose `Contrast` `More` theme doubles grid and axis widths through a graphics state | Lines drawn bolder in that theme only | to make |
+| R6.4-1 to R6.4-8 | Writer | Pages 25 and 26 of the objects test (scientific figures) and its results table, merged | Each series has a second cue, is 3:1 against the paper and listed if under 10 apart; legends and colour bars match | have (pair) |
+| R6.4-9, R6.4-10 | Writer, reader | `R6.4-9-grid.pdf`: a chart whose `Contrast` `More` theme doubles grid and axis widths through a graphics state | Lines drawn bolder in that theme only | to make |
 | R9.3-1, R9.3-2 | Checker | `R9.3-series.pdf`: two series 5 apart, one line under 3:1, one width overridden by `w` | All three listed or reported | to make |
 | R9.2-1 to R9.2-4 | Checker | `R9.2-contrast.pdf`: text at known ratios, over gradients and images | Each run passes or fails as labelled | to make |
 | R10.2-1 | Reader | `R10.2-script.pdf`: a script that tries to read the theme | It can't | to make |
@@ -769,7 +785,7 @@ other palettes and its other six themes are left out. Prototypes write
 | 10 | Dark paper on OLED screens | Open |
 | 11 | Editing while a theme is shown | Partly: R8.2-2 |
 | 12 | Stale themes | Partly: R8.1-1 to R8.1-6 cover editors that know about themes |
-| 13 | Non-text contrast and colour vision deficiency | Partly: R6.4-1, 9.3 |
+| 13 | Non-text contrast and colour vision deficiency | Partly: R6.4-1 to R6.4-5, 9.3. No theme label for it. |
 | 14 | Text a writer can't measure | Partly: reported (R9.2-4) |
 | 15 | Colour fonts | Open |
 | 16 | Colours set by scripts | Open |
@@ -808,8 +824,12 @@ other palettes and its other six themes are left out. Prototypes write
     for example), so a reader can tell when the themes no longer match the
     pages and fall back to the default?
 13. Should the check cover 1.4.11 Non-text Contrast, so chart lines and other
-    graphics are held to 3:1 in every theme? Should a theme be able to say it
-    was made for colour vision deficiency?
+    graphics are held to 3:1 in every theme? Draft 0.4 answers the second
+    part, whether a theme can say it was made for colour vision deficiency:
+    no, every theme should serve these readers (6.4). Still open: whether
+    R6.4-2's value of 10 is right. No study has tested today's chart palettes
+    with readers who have the deficiency, in light and in dark, and
+    simulations understate what they find hard.
 14. Text a writer can't measure, such as text filled with a gradient: should
     it stop `Checked` from being written, or be recorded in it, for example
     as a count?
@@ -858,8 +878,11 @@ other palettes and its other six themes are left out. Prototypes write
   interface doesn't (7.5, closing open question 6).
 - Readers apply swaps in every parser that draws colour, and check a theme
   before showing it (7.1).
-- Graphs, charts, tables and figures (6.4, 9.3): series kept apart in every
-  theme, legends and colour bars drawn from the same palette as the data,
+- Graphs, charts, tables and figures (6.4, 9.3): a second cue for each
+  series, series kept apart in every theme, also as simulated for colour
+  vision deficiency (a list for the author, not a pass), more contrast by
+  lightness rather than by washing colours out, no separate theme for colour
+  vision deficiency, legends and colour bars drawn from the same palette as the data,
   colours that carry meaning keep their hue, and a theme may make lines
   bolder, up to twice the width, through a graphics state (R5.3-11, closing
   open question 2).
