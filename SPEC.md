@@ -61,7 +61,8 @@ Readers today offer dark modes and reading colours by working out new colours
 from the page as it is drawn. That can't tell a chart's series apart from its
 text, and images, gradients and patterns are left as they were. A themed file
 carries colours the author chose and checked for each theme, so every table,
-chart and figure looks as intended.
+chart and figure looks as intended, and a theme for low vision can draw thin
+lines bolder (6.4).
 
 ## 1. Scope
 
@@ -183,7 +184,7 @@ The document catalog's `Themes` entry is a dictionary:
 | `Contrast` | name | Optional | `More` for an enhanced contrast theme (WCAG 1.4.6), made for people who ask for more contrast, as in CSS `prefers-contrast: more`. Absent means standard contrast. |
 | `Tint` | name | Optional | The tint of a tinted theme, from 5.4, for example `Cream`. Absent means no tint. A tint may go with either `ColorScheme`. |
 | `Paper` | array | Optional | Three numbers from 0 to 1: the sRGB colour a reader paints before drawing each page. Default: `[1 1 1]`. |
-| `Checked` | dictionary | Optional | What the writer checked this theme against (9.3). |
+| `Checked` | dictionary | Optional | What the writer checked this theme against (9.4). |
 | `Replace` | array | Required in alternate themes | An even number of indirect references, read in pairs `base replacement`. |
 
 - **R5.2-1** No two themes in a file shall have the same `Name`.
@@ -209,7 +210,7 @@ wants the same tint, darker, at night.
   | Another colour space | the same family and number of components. |
   | A function | the same number of inputs and outputs. |
   | A shading or a shading pattern | the same shading type, geometry (`Coords`, `Domain`, `Extend`, `BBox`, `Matrix`) and, for meshes, the same vertices. |
-  | A graphics state parameter dictionary | everything except `CA`, `ca` and `BM`. |
+  | A graphics state parameter dictionary | everything except `CA`, `ca`, `BM`, `LW` and `D`, within the limits of R5.3-11. |
   | An image XObject, or a page thumbnail | the same `Width`, `Height`, `SMask` and `Mask`. |
   | A colour value: an array of 0, 1, 3 or 4 numbers, or an array of such arrays | the same structure. Used for annotation `C` and `IC`, `MK` `BG` and `BC`, bookmark `C`, `BoxColorInfo` `C`, soft mask `BC`, structure attributes such as `Color` and `BorderColor`, and portfolio colours. |
   | A text string that carries colour: `DA`, `DS` or `RC` | everything except its colour operators or CSS colour values. |
@@ -232,6 +233,12 @@ wants the same tint, darker, at night.
 - **R5.3-6** A palette that a soft mask group paints with shall not also be
   used by visible content, unless every theme gives it the same colours.
   Swapping it would change the mask's transparency as well as the colours.
+- **R5.3-11** A replacement graphics state may change line width (`LW`) and
+  dash pattern (`D`), so that a theme can draw thin lines bolder (6.4). Its
+  `LW` shall be at least the base's and at most twice it, so a line can't
+  cover what is drawn beside it. Where the base has no `LW`, the replacement
+  shall not add one. Its `D` shall keep the same phase and may only lengthen
+  the dashes and gaps, by the same factor as `LW` at most.
 
 #### How replacements resolve
 
@@ -313,9 +320,61 @@ writer.
   fails its check or that draws every page exactly as the default theme does.
 - **R6-10** A writer shall not change a colour in an authored theme.
 - **R6-11** A writer should check each theme (section 9) before writing it,
-  and shall write `Checked` only for a theme that passed (9.3).
+  and shall write `Checked` only for a theme that passed (9.4).
 - **R6-12** A writer should give every annotation and form field an
   appearance stream. Readers draw ones without differently (7.5).
+
+### 6.4 Graphs, charts, tables and figures
+
+This is where themes do most for accessibility. Reader colours turn a
+chart's series the same grey and leave images, gradients and patterns as
+they were. A themed file carries colours, and line widths, the author chose
+for each theme, so a chart still reads as a chart. These rules apply to
+whatever carries meaning in a graph, chart, diagram, map or table: series,
+markers, keys, axes, grid lines, cell shading and colour scales.
+
+**Colour**
+
+- **R6.4-1** In every theme, the colours of the series in one chart should
+  differ from each other by a CIEDE2000 colour difference (ΔE00) of at least
+  10, and each should have a contrast ratio of at least 3:1 against the paper
+  (WCAG 1.4.11 Non-text Contrast).
+- **R6.4-2** A key or legend shall draw each series with the same palette
+  entry as the series itself, so the two always match in every theme.
+- **R6.4-3** A colour that carries a meaning, such as red for a failure or
+  green for a pass, should keep its hue family in every theme. The meaning
+  shall also be given another way, in text, the tags or a pattern (WCAG 1.4.1
+  Use of Color; PDF/UA, Matterhorn 04-001).
+- **R6.4-4** Text in a shaded table cell or a banded row is checked against
+  the cell's colour, as drawn, not against the paper (9.2).
+- **R6.4-5** A sequential colour scale should keep its order from light to
+  dark in every theme, and a diverging scale's midpoint should suit the
+  theme's paper, for example a dark midpoint on dark paper. A colour bar is
+  drawn from the same palette as the data it describes (R6.4-2).
+- **R6.4-6** A plot stored as an image should be written as indices into a
+  palette (R6-6), or as a replacement image per theme the author made.
+  Photos, micrographs and other images of real things keep their colours in
+  every theme.
+
+**Line width and dashes**
+
+- **R6.4-7** A writer may make lines bolder in a theme, within R5.3-11:
+  grid lines, axes, tick marks, chart lines and the borders of table cells.
+  It's for themes with `Contrast` `More` above all, since people with low
+  vision find thin, pale lines hard to follow.
+- **R6.4-8** A line width or dash pattern a theme changes shall be set
+  through a graphics state (`/GS1 gs`), not the `w` or `d` operator, and no
+  `w` or `d` shall come after it before the line is drawn. A theme reaches
+  only what the content points to, as with palettes.
+- **R6.4-9** A writer that makes lines bolder should check that they don't
+  cover text, markers or other lines in the theme, for example by comparing
+  the theme as drawn with the author's own build of it.
+
+> [!NOTE]
+> A theme can't change marker size or shape, font weight, spacing or layout:
+> they are in content streams and fonts, which a theme can't replace (R5.3-3).
+> An author who needs them changed for a high-contrast version makes a
+> separate file.
 
 ## 7. Readers
 
@@ -535,16 +594,25 @@ is why stale themes (open question 12) need a way for a reader to notice.
 - **R9.2-4** A checker shall report each run that fails, with the theme, the
   page, the text, its ratio and the ratio it needs, and shall report text it
   could not measure, such as text filled with a gradient (open question 14).
-- **R9.2-5** A checker may list lines and shapes against 1.4.11 Non-text
-  Contrast (3:1), for the author to look over. Which carry meaning is for the
-  author to say, so the list doesn't decide a pass (open question 13).
+- **R9.2-5** Lines, shapes and chart series are listed, not passed or
+  failed (9.3, open question 13).
 - **R9.2-6** A writer or checker should check a themed file in more than one
   reader, since readers draw some things differently.
 
 Screens, brightness and room light all change how contrast looks, so a writer
 fixing a colour should aim a little above the minimum.
 
-### 9.3 `Checked`
+### 9.3 Graphs, charts and tables
+
+- **R9.3-1** A checker should list, for each theme, pairs of series in one
+  chart closer than R6.4-1 allows, and lines or shapes under 3:1 against what
+  is drawn beside them. Which carry meaning is for the author to say, so the
+  list doesn't decide a pass.
+- **R9.3-2** A checker shall report a replacement graphics state that breaks
+  R5.3-11, and a changed line width or dash pattern that a `w` or `d`
+  operator overrides before the line is drawn (R6.4-8).
+
+### 9.4 `Checked`
 
 | Key | Type | Value |
 | --- | --- | --- |
@@ -553,7 +621,7 @@ fixing a colour should aim a little above the minimum.
 | `Level` | name | For example `AA`. |
 | `Date` | date | When the check was made. |
 
-- **R9.3-1** `Checked` shall be written only for a theme that passed, and
+- **R9.4-1** `Checked` shall be written only for a theme that passed, and
   not for one with no text to check.
 
 > [!NOTE]
@@ -633,6 +701,10 @@ means it is planned. Files to make go in `tests/conformance/`, named by rule.
 | R8.1-1 to R8.1-6 | Editor | `R8.1-edit.pdf`, with a script of edits | Every result still meets section 5, `Checked` removed | to make |
 | R8.4-1 to R8.4-4 | Editor | `R8.4-merge-a.pdf`, `R8.4-merge-b.pdf`, `R8.4-redact.pdf` | As each rule says | to make |
 | R8.4-5, R10.1-1 | Editor, reader | `tests/objects/out/objects-light-signed.pdf` | Signature still valid after viewing; themes added incrementally | have (signed file) |
+| R5.3-11 | Checker, reader | `R5.3-11-width.pdf`: one replacement at twice the width, one at three times | The first is drawn bolder; the second is reported, and the reader ignores that theme | to make |
+| R6.4-1 to R6.4-6 | Writer | Pages 25 and 26 of the objects test (scientific figures) and its results table, merged | Series 10 apart and 3:1 against the paper in each theme; legends and colour bars match | have (pair) |
+| R6.4-7, R6.4-8 | Writer, reader | `R6.4-7-grid.pdf`: a chart whose `Contrast` `More` theme doubles grid and axis widths through a graphics state | Lines drawn bolder in that theme only | to make |
+| R9.3-1, R9.3-2 | Checker | `R9.3-series.pdf`: two series 5 apart, one line under 3:1, one width overridden by `w` | All three listed or reported | to make |
 | R9.2-1 to R9.2-4 | Checker | `R9.2-contrast.pdf`: text at known ratios, over gradients and images | Each run passes or fails as labelled | to make |
 | R10.2-1 | Reader | `R10.2-script.pdf`: a script that tries to read the theme | It can't | to make |
 
@@ -686,7 +758,7 @@ other palettes and its other six themes are left out. Prototypes write
 | # | About | Status in 0.4 |
 | --- | --- | --- |
 | 1 | Where the themes live: a catalog key or optional content | Open |
-| 2 | Thicker lines in a higher contrast theme | Open |
+| 2 | Thicker lines in a higher contrast theme | **Closed:** R5.3-11, 6.4. How much bolder helps is still to measure. |
 | 3 | Paper as sRGB or a palette entry | Open. The space around pages follows the reader (R7.5-1). |
 | 4 | Printing when the default theme is dark | Open |
 | 5 | What `Checked` holds | Open |
@@ -697,7 +769,7 @@ other palettes and its other six themes are left out. Prototypes write
 | 10 | Dark paper on OLED screens | Open |
 | 11 | Editing while a theme is shown | Partly: R8.2-2 |
 | 12 | Stale themes | Partly: R8.1-1 to R8.1-6 cover editors that know about themes |
-| 13 | Non-text contrast and colour vision deficiency | Open |
+| 13 | Non-text contrast and colour vision deficiency | Partly: R6.4-1, 9.3 |
 | 14 | Text a writer can't measure | Partly: reported (R9.2-4) |
 | 15 | Colour fonts | Open |
 | 16 | Colours set by scripts | Open |
@@ -708,8 +780,9 @@ other palettes and its other six themes are left out. Prototypes write
 | 21 | What "draws the same" means | Open |
 
 1. A catalog key, or an extension of optional content configurations?
-2. Should a theme be allowed to change line width, so a higher contrast theme
-   can thicken thin lines? `LW` in a replacement graphics state would do it,
+2. *Closed in 0.4: a theme may, up to twice the width (R5.3-11, 6.4).* The
+   question was: should a theme be allowed to change line width, so a higher
+   contrast theme can thicken thin lines? `LW` in a replacement graphics state would do it,
    and Poppler, MuPDF and PDFium already draw it. Readers with low vision
    find grid lines and tick marks in charts too thin and too pale
    ([Wang, Zhao and Kim 2024](https://doi.org/10.1145/3613904.3642188)), but
@@ -785,6 +858,11 @@ other palettes and its other six themes are left out. Prototypes write
   interface doesn't (7.5, closing open question 6).
 - Readers apply swaps in every parser that draws colour, and check a theme
   before showing it (7.1).
+- Graphs, charts, tables and figures (6.4, 9.3): series kept apart in every
+  theme, legends and colour bars drawn from the same palette as the data,
+  colours that carry meaning keep their hue, and a theme may make lines
+  bolder, up to twice the width, through a graphics state (R5.3-11, closing
+  open question 2).
 - Privacy (10.2).
 - Open questions 20 and 21, from the roadmap.
 - *Editor's call, for discussion:* when reader colours are on and the file

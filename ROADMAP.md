@@ -30,7 +30,7 @@ The parts are the specification (`SPEC.md`), `pdf-themes merge` (themes built fr
 | Colour fonts (colour emoji) | No (question 15) | No | No | No | No |
 | Colours set by JavaScript | No (question 16) | No | No | No | No |
 | Inside 3D models, video and sound | No (question 17) | No | No | No | No |
-| Line widths and dashes | No (question 2) | No | No | No | No |
+| Line widths and dashes | Yes, up to twice the width (R5.3-11, 6.4) | No | No | No | No |
 | PDFs attached or in a portfolio | No (question 18); the portfolio's own colours are Yes | No | No | No | No |
 
 ## Support in the contrast check
@@ -93,6 +93,7 @@ Size: **S** a day or two, **M** about a week, **L** several weeks. "Needs" names
 | T8 | Work out wide-gamut themes in the file's own colour space, not sRGB | `pdfthemes/derive.py`, `colour.py` | M | Question 9 | No |
 | T9 | Make worked-out themes hold on large files: all six fail on the 31-page objects test | `pdfthemes/derive.py` | M to L | | No |
 | T10 | Release on PyPI as `pdf-themes` | `pyproject.toml` | S | S1, so a general release never writes `XXThemes` into shared files | Held |
+| T11 | Let `pdf-themes merge` take builds that differ in line widths and dashes as well as colours, moving those into graphics states a theme replaces (R5.3-11, R6.4-8), and make `pair_check.py` allow them | `pdfthemes/merge.py`, `tests/objects/tools/pair_check.py` | M | | No |
 
 ### Contrast check
 
@@ -104,6 +105,7 @@ Size: **S** a day or two, **M** about a week, **L** several weeks. "Needs" names
 | C4 | Check meaning carried by colour alone (WCAG 1.4.1), and how each theme looks with colour vision deficiency | `pdfthemes/contrast.py` | L | Question 13 | No |
 | C5 | Aim higher for text drawn at less than full opacity (fault 9) | `pdfthemes/derive.py` | S | | No |
 | C6 | Draw each theme in a second reader as well as PDFium | `pdfthemes/contrast.py` | M | S8 | No |
+| C7 | Check that chart series stay 10 apart (ΔE00) and 3:1 against the paper in every theme, and report widths that break R5.3-11 or that a `w` overrides (9.3) | `pdfthemes/contrast.py` | M | | No |
 
 ### Site viewer
 
