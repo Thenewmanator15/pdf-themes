@@ -81,7 +81,7 @@
     font, a script or what's inside a 3D model, so colours held there stay as they are.</p>
   <ul>
     <li><strong>Colour fonts.</strong> A font can carry its own colours, as colour emoji do. A theme can't replace a
-      font (section 5 of the <a href="https://github.com/Thenewmanator15/pdf-themes/blob/main/SPEC.md">specification</a>),
+      font (rule R5.3-3 of the <a href="https://github.com/Thenewmanator15/pdf-themes/blob/main/SPEC.md">specification</a>),
       so these keep their light-page colours. Work: decide whether a theme may swap a font's colour palette, or
       whether writers should draw such glyphs another way (open question 15).</li>
     <li><strong>Colours set by scripts.</strong> A form can run JavaScript that colours a field when it changes, for
@@ -116,7 +116,7 @@
       on a scanned page becomes a negative.</li>
     <li><strong>Images whose soft mask has a Matte.</strong> The tool leaves these alone, because palette indices can't
       carry the arithmetic a reader uses to undo the matte. Work: swap in a whole image per theme, blended with the same
-      matte, and add the rule to section 5 of the specification.</li>
+      matte, and add the rule to section 5.3 of the specification (open question 20).</li>
     <li><strong>Colour scales that change.</strong> A heatmap whose scale changes between themes needs a copy of the
       image per theme, because its palette and its values both change.</li>
     <li><strong>Wide-gamut colours in worked-out themes.</strong> Themes the tool works out read every three-channel
@@ -145,8 +145,8 @@
     in each theme's colours.</p>
   <ul>
     <li><strong>No stored appearance.</strong> Some comments and fields leave the PDF app to draw the mark too. The app
-      is drawing it anyway, so it can draw it in the theme shown, using the theme's colours or its own. Work: say so in
-      section 9 of the specification (open question 6).</li>
+      is drawing it anyway, so it can draw it in the theme shown. Draft 0.4 of the specification says so (rules R7.5-2
+      to R7.5-4). Work: readers that do it.</li>
     <li><strong>Added later.</strong> A comment added afterwards by an app that doesn't know about themes gets no
       colours for the other themes, and black text vanishes on dark paper (open questions 11 and 12). Work: a way for a
       reader to tell that the themes no longer match the page.</li>

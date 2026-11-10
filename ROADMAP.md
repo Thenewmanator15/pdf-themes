@@ -48,13 +48,13 @@ The parts are the specification (`SPEC.md`), `pdf-themes merge` (themes built fr
 
 ## Support in PDF apps
 
-| What a reader should do (SPEC section 9) | Site viewer | PdfCraft | Others |
+| What a reader should do (SPEC section 7) | Site viewer | PdfCraft | Others |
 | --- | --- | --- | --- |
 | Read the themes | Yes (`/XXThemes`) | Planned | No: Poppler, MuPDF, PDFium, pdf.js and Acrobat show the default theme |
 | Pick the theme matching light or dark and more contrast | Yes | Planned | No |
 | Remember the person's choice | Yes, one choice | Planned, one for light and one for dark | No |
 | Paint the paper colour | Yes | Planned | No |
-| Ignore a theme that breaks section 5's rules | No | Planned | No |
+| Ignore a theme that breaks section 5's rules (R7.1-3) | No | Planned | No |
 | Print the default theme | n/a | Planned | n/a |
 | Open your own PDFs | No: the site's documents only | Yes, it's a PDF app | n/a |
 
@@ -66,18 +66,18 @@ Size: **S** a day or two, **M** about a week, **L** several weeks. "Needs" names
 
 | ID | Change | Where | Size | Needs | Status |
 | --- | --- | --- | --- | --- | --- |
-| S1 | Agree the name a shared file uses, and whether there's an interim one, with the PDF Association's working group, so files carry as few names as possible. Until then prototypes keep `XXThemes`, and readers read the key from a list so an agreed name is a one-line addition. Ask too whether the keys inside the themes dictionary need a prefix, and add an `/Extensions` entry once there's a name to declare | Sections 3, 4 and 13, open questions | S | The working group | Open |
-| S2 | Separate the system's forced colours, which win over any theme, from a reader's own colour setting, where the reader shows the closest theme and offers the setting instead | Section 9 | S | | Drafted |
-| S3 | Readers keep the person's choice for light and for dark apart, switching with the system's dark mode, and match the scheme before the tint | Section 9 | S | | Drafted |
-| S4 | Allow dark tinted themes, such as Dark cream | Section 7 | S | | Drafted |
-| S5 | Readers draw the appearances they make themselves in the theme shown (question 6 as a rule) | Section 9 | S | | Proposed |
-| S6 | An image whose soft mask has a Matte keeps its values; a theme may swap in a whole image blended with the same matte | Sections 5 and 6 | S | | Needs a decision |
-| S7 | Say what "draws the same" means for the default theme: within one level of each colour component | Section 6 | S | | Needs a decision: PDFium is four levels out on one Display P3 file |
-| S8 | A writer should check a themed file in more than one reader | Section 8 | S | | Not written |
-| S10 | A writer shall not share a palette between a soft mask group and visible content, since swapping it would change the mask's transparency too | Sections 6 and 11 | S | | Not written |
-| S11 | An editor that changes a base object shall update its replacement in every theme, or drop those themes, since a replacement left behind (a different `hival`, an old `Rect`) makes readers reject the theme | Section 6, and a new section for editors | S | | Not written |
-| S12 | Readers resolve references the same way with and without a theme: at every step of a chain of references, and in a repaired file by object number as the reader does | Section 5, rule 4 | S | | Not written |
-| S9 | Decide questions 2 and 15 to 19 | Open questions | | The PDF Association's working group | Open |
+| S1 | Agree the name a shared file uses, and whether there's an interim one, with the PDF Association's working group, so files carry as few names as possible. Until then prototypes keep `XXThemes`, and readers read the key from a list so an agreed name is a one-line addition. Ask too whether the keys inside the themes dictionary need a prefix, and add an `/Extensions` entry once there's a name to declare | 4.4 (R4.4-1), Annex C | S | The working group | Open |
+| S2 | Separate the system's forced colours, which win over any theme, from a reader's own colour setting, where the reader shows the closest theme and offers the setting instead | R7.2-1, R7.2-3, 7.4 | S | | Written in 0.4 |
+| S3 | Readers keep the person's choice for light and for dark apart, switching with the system's dark mode, and match the scheme before the tint | 7.3, R7.2-6 | S | | Written in 0.4 |
+| S4 | Allow dark tinted themes, such as Dark cream | 5.2, 5.4 | S | | Written in 0.4 |
+| S5 | Readers draw the appearances they make themselves in the theme shown (question 6 as a rule) | R7.5-2 to R7.5-4 | S | | Written in 0.4 |
+| S6 | An image whose soft mask has a Matte keeps its values; a theme may swap in a whole image blended with the same matte | Open question 20 | S | | Needs a decision |
+| S7 | Say what "draws the same" means for the default theme: within one level of each colour component | Open question 21 | S | | Needs a decision: PDFium is four levels out on one Display P3 file |
+| S8 | A writer should check a themed file in more than one reader | R9.2-6 | S | | Written in 0.4 |
+| S10 | A writer shall not share a palette between a soft mask group and visible content, since swapping it would change the mask's transparency too | R5.3-6 | S | | Written in 0.4 |
+| S11 | An editor that changes a base object shall update its replacement in every theme, or drop those themes, since a replacement left behind (a different `hival`, an old `Rect`) makes readers reject the theme | 8.1 (R8.1-2) | S | | Written in 0.4 |
+| S12 | Readers resolve references the same way with and without a theme: at every step of a chain of references, and in a repaired file by object number as the reader does | R5.3-8, R7.1-1 | S | | Written in 0.4 |
+| S9 | Decide questions 2 and 15 to 19 | Annex D | | The PDF Association's working group | Open |
 
 ### Tool
 
@@ -109,7 +109,7 @@ Size: **S** a day or two, **M** about a week, **L** several weeks. "Needs" names
 
 | ID | Change | Where | Size | Needs | Status |
 | --- | --- | --- | --- | --- | --- |
-| V1 | Check section 5's rules before swapping, and ignore a theme that breaks them | `demo/site/viewer.js` | S | | No |
+| V1 | Check section 5's rules before swapping (R7.1-3), and ignore a theme that breaks them | `demo/site/viewer.js` | S | | No |
 | V2 | Remember a choice for light and one for dark | `demo/site/viewer.js` | S | S3 | No |
 | V3 | Read the key from a list, so an agreed name is a one-line addition | `demo/site/viewer.js` | S | | No |
 | V4 | Decide whether people can open their own PDFs, kept in the browser | `demo/site/viewer.js`, the Content Security Policy | M | | Needs a decision |
