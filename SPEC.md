@@ -264,7 +264,7 @@ wants the same tint, darker, at night.
 | Dark | Dark | | | Light sensitivity, glare, reading in the dark, some low vision. |
 | Light, more contrast | Light | More | | Low vision. Enhanced contrast. |
 | Dark, more contrast | Dark | More | | Low vision with light sensitivity. Enhanced contrast. |
-| Cream, Peach, Yellow, Turquoise | Light | | the same as the name | Readers who find a tinted background easier, including many with dyslexia or visual stress. It does the job of a coloured overlay. Which tint helps differs from person to person, hence a range. |
+| Cream, Peach, Yellow, Turquoise | Light | | the same as the name | Readers who find a tinted background more comfortable, including many with dyslexia or visual stress, as a coloured overlay is used. The evidence is for comfort and preference, not faster reading. Which tint people choose differs from person to person, hence a range. |
 | Dark cream, Dark peach, Dark yellow, Dark turquoise | Dark | | the same as the tint | The same readers at night, or in a dim room. |
 
 WCAG 2.2 success criterion 1.4.8 Visual Presentation asks that the person can
@@ -337,8 +337,9 @@ markers, keys, axes, grid lines, cell shading and colour scales.
 
 - **R6.4-1** Each series in a chart should have a second cue as well as its
   colour: a marker shape, a dash pattern or a label beside it. Of the ways to
-  help readers with colour vision deficiency, a second cue has the best
-  evidence, and it works the same in every theme with no setting to choose.
+  help readers with colour vision deficiency, a second cue has the most
+  support, in small studies on light backgrounds. Because it doesn't depend on
+  colour, it should hold in every theme, with no setting to choose.
 - **R6.4-2** In every theme, each series should have a contrast ratio of at
   least 3:1 against the paper (WCAG 1.4.11 Non-text Contrast), and the series
   in one chart should differ from each other by a CIEDE2000 colour difference

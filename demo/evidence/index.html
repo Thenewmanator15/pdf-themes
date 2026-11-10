@@ -51,7 +51,7 @@
 
 <main>
 <div class="wrap intro">
-  <p class="eyebrow">Evidence · updated 24 October 2026</p>
+  <p class="eyebrow">Evidence · updated 10 November 2026</p>
   <h1>What is known about colours, themes and readable figures</h1>
   <p class="lede">This page gathers what published studies and standards say about reading in light, dark, tinted and
     higher contrast colours, about what happens when a reader's software recolours a page, and about making charts that
@@ -91,36 +91,33 @@
 <section id="summary"><div class="wrap">
   <h2>Summary</h2>
   <div class="keys">
-    <div class="key"><span class="k est">Established</span><p>People with low vision differ in which way round they
+    <div class="key"><span class="k est">Established, with limits</span><p>People with low vision differ in which way round they
       prefer text. In an online survey of 133 adults with low vision, 46% preferred white text on black and 39% black on
-      white <a class="ref" href="#wu2020">[1]</a>. That is what they said, not how they read.</p></div>
-    <div class="key"><span class="k est">Established</span><p>For people with typical sight, dark text on light gives
-      better proofreading and sharper fine detail, most of all for small text
+      white <a class="ref" href="#wu2020">[1]</a>. That is what they said, not how they read, in a self-selected sample with self-reported diagnoses.</p></div>
+    <div class="key"><span class="k est">Established, with limits</span><p>For people with typical sight, dark text on light gives better proofreading and sharper fine detail, most of all for small text, in lab studies in dim or dark rooms, all from one lab
       <a class="ref" href="#piepenbrock2013">[2]</a> <a class="ref" href="#piepenbrock2014">[3]</a>. An earlier study from
       the same lab, with 124 adults and low-contrast text, put the advantage down to the brighter screen rather than the polarity
       itself <a class="ref" href="#buchner2009">[4]</a>.</p></div>
     <div class="key"><span class="k est">Established, with limits</span><p>Some people with low vision use colour
-      inversion, and on charts it gives unpredictable results. In interviews with 11 people, one participant's bar chart
+      inversion, and on charts it gives unpredictable results. In observed sessions with 11 people, one participant's bar chart
       didn't invert as he expected, and one chart still didn't comply with WCAG once a participant's filter had inverted
       it <a class="ref" href="#wang2024">[5]</a>.</p></div>
     <div class="key"><span class="k est">Established, with limits</span><p>In one small study, the main loss from
       inverting a chart was what its colours mean. Twelve people with typical sight read inverted charts with no significant
       difference in accuracy or speed from the originals, but rated the inverted colours far less like the originals than a designed dark
-      version (1.4 against 4.4 out of 7) <a class="ref" href="#karunathilaka2025">[6]</a>.</p></div>
-    <div class="key"><span class="k est">Established, with limits</span><p>Warm backgrounds gave faster reading than
-      cool ones in 341 readers, with and without dyslexia, though white wasn't among the colours tested
-      <a class="ref" href="#rello2017">[7]</a>. Colour doesn't treat dyslexia, and the systematic reviews of coloured
-      overlays disagree <a class="ref" href="#griffiths2016">[8]</a> <a class="ref" href="#evans2016">[9]</a>.</p></div>
+      version (1.4 against 4.4 out of 7) <a class="ref" href="#karunathilaka2025">[6]</a>. The tasks used only 4 charts, too few to rule out a modest cost.</p></div>
+    <div class="key"><span class="k est">Established, with limits</span><p>In one online study of 341 readers, with and without dyslexia, warm backgrounds gave faster reading than cool ones, though white wasn't among the colours tested, each colour was one short text and the screens weren't controlled <a class="ref" href="#rello2017">[7]</a>; an eye-tracking study found no effect of colour <a class="ref" href="#rello2017uais">[8]</a>. Colour doesn't treat dyslexia, and the systematic reviews of coloured
+      overlays disagree <a class="ref" href="#griffiths2016">[9]</a> <a class="ref" href="#evans2016">[10]</a>.</p></div>
     <div class="key"><span class="k est">Established, with limits</span><p>Colour choice matters, and a second cue
       helps. In a crowded display shown for about a tenth of a second, people picked out a group more accurately when it
-      differed in both colour and shape than in either alone <a class="ref" href="#nothelfer2017">[10]</a>, and a rainbow
-      colour scale cost medical students accuracy against a diverging one <a class="ref" href="#borkin2011">[11]</a>.
-      Both studies were small.</p></div>
+      differed in both colour and shape than in either alone <a class="ref" href="#nothelfer2017">[11]</a>, and a rainbow
+      colour scale cost medical students accuracy against a diverging one <a class="ref" href="#borkin2011">[12]</a>.
+      Both studies were small: about 10 students saw each colour scale, and the first study didn't report colour vision.</p></div>
     <div class="key"><span class="k est">Established, with limits</span><p>A colour scale can keep its colours on a
       dark page if its darkest colours still stand out from the page. With no key on the maps, 214 people, two thirds of
       them self-rated map experts, took darker as more in 95 to 97% of answers on a light page and 87 to 94% with the
       same colours on a dark page. A tool's dark version whose darkest colours nearly matched the page (1.2 to 1.8:1) cut
-      that to about half, with a third unsure <a class="ref" href="#schiewe2024">[12]</a>.</p></div>
+      that to about half, with a third unsure, though its colours also changed hue <a class="ref" href="#schiewe2024">[13]</a>. The drop from a light to a dark page with the usual colours wasn't significant.</p></div>
     <div class="key"><span class="k meas">Measured</span><p>Adding themes to 299 public PDFs, the tool refused one broken
       file and left 297 of the other 298 drawing as before in their default colours in PDFium: 266 identically and 31
       within one colour level. Eight themes added 4.3% to a page of plots.</p></div>
@@ -129,8 +126,7 @@
       out is held to the minimum anyway, so it lifts faint text rather than copying the problem.</p></div>
     <div class="key"><span class="k meas">Measured</span><p>When a theme swapped in a heavier line width or a different
       dash pattern, three PDF engines (PDFium, which is in Chrome, MuPDF and Poppler) drew it, so a theme could draw
-      lines heavier. Most tools set line widths where a theme can't reach them, and the proposal keeps themes to colour
-      for now.</p></div>
+      lines heavier. Most tools set line widths where a theme can't reach them. Draft 0.4 of the specification lets a theme draw lines up to twice as heavy; whether that helps hasn't been measured.</p></div>
     <div class="key"><span class="k open">Open</span><p>Inverting the colours in a document editor's preview turned a
       photo into a negative and flipped a figure that had its own dark version back to light. The test page used thesis
       material, so it isn't published, and the test is to be repeated on a page that can be.</p></div>
@@ -151,88 +147,106 @@
       <tr id="row-wu2020"><th scope="row">Wu et al. 2020 <a class="ref" href="#wu2020">[1]</a></th><td>133 adults with low vision, online survey</td>
         <td>which polarity they preferred</td>
         <td>46% white on black, 39% black on white, 14% no preference: what they said, not how they read. Those who
-          preferred white on black reported worse acuity on average. Each of the three largest groups had people on both
+          preferred white on black reported worse acuity on average; acuity and diagnosis were self-reported, not
+          tested. Each of the three largest groups had people on both
           sides: albinism 15 for white on black and 16 for black on white, retinitis pigmentosa 13 and 5, glaucoma 8 and
           3. Nine of the 15 with cloudy optics preferred white on black. The volunteers were younger than most people
-          with low vision, and few had macular degeneration, its commonest cause; five of the six who did preferred black
-          on white</td><td>Established</td></tr>
-      <tr id="row-rubin1989"><th scope="row">Rubin and Legge 1989 <a class="ref" href="#rubin1989">[13]</a></th><td>19 eyes of 17 adults with low
+          with low vision, three in four were women and most had a degree. Few had macular degeneration, its commonest
+          cause; five of the six who did preferred black on white</td><td>With limits: self-reported preference, unrepresentative sample</td></tr>
+      <tr id="row-rubin1989"><th scope="row">Rubin and Legge 1989 <a class="ref" href="#rubin1989">[14]</a></th><td>19 eyes of 17 adults with low
         vision, in a lab</td><td>reading speed in both polarities</td>
-        <td>Five of the 19 read faster with white text on black. Four of the five had cloudy ocular media, mostly
-          cataract. Where one polarity was better, it was better by no more than 50%</td>
-        <td>With limits: 17 people</td></tr>
-      <tr id="row-elliott2001"><th scope="row">Elliott et al. 2001 <a class="ref" href="#elliott2001">[14]</a></th><td>47 older adults: 19 with cataract,
-        15 with macular degeneration, 13 controls</td><td>white letters on black, for one eye at a time</td>
-        <td>The cataract group's best reading speed rose slightly, from 99.1 to 102.7 words a minute; the macular
-          degeneration group's didn't change. The authors judged the difference minimal</td>
-        <td>With limits: groups of 13 to 19</td></tr>
-      <tr id="row-loh2025"><th scope="row">Loh et al. 2025 <a class="ref" href="#loh2025">[15]</a></th><td>48 children and teenagers with vision
-        impairment</td><td>white text on black</td><td>The authors say it improved reading for some, but found no
-          diagnosis or measure of vision that could predict who. In the first author's thesis version it made no
-          difference on average, and some read more slowly</td>
+        <td>Five of the 19 read faster with white text on black, and one with black on white; the other 13 showed no
+          consistent difference. Four of the five had cloudy ocular media, such as cataract. Where one polarity was
+          better, it was better by no more than 50%. Black on white was always tested first, with very large letters
+          on a 1989 screen</td>
+        <td>With limits: 17 people, order not balanced</td></tr>
+      <tr id="row-elliott2001"><th scope="row">Elliott et al. 2001 <a class="ref" href="#elliott2001">[15]</a></th><td>47 adults: 19 with cataract,
+        15 with macular degeneration, 13 controls</td><td>white letters on black, on printed word charts</td>
+        <td>White on black slightly raised word acuity and best reading speed in the cataract group. The study was built
+          to test eyes before cataract surgery, not polarity, and the authors judged the difference minimal</td>
+        <td>Open: abstract only</td></tr>
+      <tr id="row-loh2025"><th scope="row">Loh et al. 2025 <a class="ref" href="#loh2025">[16]</a></th><td>48 children and teenagers with vision
+        impairment</td><td>white text on black</td><td>On average it made no difference to reading speed (1.0 words a
+          minute faster, range 29 slower to 37 faster); some read faster and some more slowly. Acuity and contrast
+          sensitivity didn't predict who gained. Weaker responses on a retinal test (flicker ERG, 27 children) went with
+          a larger gain, but the authors found no clinical marker. Black on white was always tested first</td>
         <td>Open: abstract, and the first author's thesis</td></tr>
-      <tr id="row-legge2016"><th scope="row">Legge 2016 <a class="ref" href="#legge2016">[16]</a></th><td>review</td><td>not applicable: a review</td>
-        <td>"A subset of people with low vision read 10% to 50% faster with bright letters on a black background",
-          often because of light scatter in the eye, as with cataract. For typical sight polarity has little or no
-          effect on reading speed. His summary: "Bright displays and contrast reversal are desirable"</td>
-        <td>With limits: a narrative review</td></tr>
+      <tr id="row-legge2016"><th scope="row">Legge 2016 <a class="ref" href="#legge2016">[17]</a></th><td>review</td><td>not applicable: a review</td>
+        <td>Some people with low vision read 10% to 50% faster with bright letters on black, often because light scatters
+          in the eye, as with cataract; the figure is uncited here but matches the author's own lab work [13]. For
+          typical sight polarity has little or no effect on reading speed. His summary for low vision: "Bright displays
+          and contrast reversal are desirable"</td>
+        <td>perspective</td></tr>
       <tr id="row-piepenbrock2013"><th scope="row">Piepenbrock et al. 2013 <a class="ref" href="#piepenbrock2013">[2]</a></th><td>169 adults: 85 aged 60 to
         85, 84 aged 18 to 33</td><td>one polarity each, in a dark room</td><td>Dark on light gave better acuity and
           better proofreading in both age groups, though the acuity advantage was much smaller for the older adults.
-          Reading speed was the same</td><td>Established</td></tr>
-      <tr id="row-buchner2007"><th scope="row">Buchner and Baumgartner 2007 <a class="ref" href="#buchner2007">[17]</a></th><td>at least three
-        experiments</td><td>polarity, room light</td><td>Dark on light gave better proofreading on screen, in a dark
-          room and in office light</td><td>Open: abstract only</td></tr>
+          Reading speed was the same. Older adults with cataract, macular degeneration, glaucoma or other eye disease
+          were excluded</td><td>With limits: dark room, eye disease excluded</td></tr>
+      <tr id="row-buchner2007"><th scope="row">Buchner and Baumgartner 2007 <a class="ref" href="#buchner2007">[18]</a></th><td>at least three
+        experiments</td><td>polarity, room light, colour</td><td>Dark on light gave better proofreading on screen, in a dark
+          room and in office light, and in blue and yellow as well as black and white. Red text on green, with colour
+          contrast but little difference in brightness, didn't make up for the missing brightness contrast</td><td>Open: abstract only</td></tr>
       <tr id="row-buchner2009"><th scope="row">Buchner, Mayr and Brandt 2009 <a class="ref" href="#buchner2009">[4]</a></th><td>124 adults aged 18 to
         55, proofreading on screen in a dark room</td><td>polarity and screen brightness, varied separately</td>
         <td>With both screens equally bright, dark on light had no advantage, and only brightness mattered: "Display
           polarity per se does not affect readability". The text was low in contrast throughout (a Michelson contrast
           of 0.30, a luminance ratio of about 1.9 to 1)</td><td>With limits: one experiment, low-contrast text</td></tr>
       <tr id="row-piepenbrock2014"><th scope="row">Piepenbrock, Mayr and Buchner 2014 <a class="ref" href="#piepenbrock2014">[3]</a></th>
-        <td>160 adults (78 read dark on light, 82 light on dark)</td><td>8, 10, 12 and 14 pt text</td>
-        <td>The advantage of dark on light, in proofreading and in reading speed, grew steadily as the text got smaller. The authors put it down to the
-          brighter display</td><td>Established</td></tr>
-      <tr id="row-piepenbrock2014b"><th scope="row">Piepenbrock, Mayr and Buchner 2014 <a class="ref" href="#piepenbrock2014b">[18]</a></th><td>35 adults (in
-        the authors' manuscript)</td><td>both polarities</td><td>Smaller pupils and better proofreading with dark on
-          light</td><td>With limits: read in the authors' manuscript</td></tr>
-      <tr id="row-dobres2016"><th scope="row">Dobres et al. 2016 <a class="ref" href="#dobres2016">[19]</a></th><td>48 adults aged 23 to 65 (of 67
-        recruited)</td><td>single words read at a glance, both polarities</td>
+        <td>160 adults aged 18 to 44 (78 read dark on light, 82 light on dark), in a dark room</td><td>8, 10, 12 and 14 pt text</td>
+        <td>The advantage of dark on light grew steadily as the text got smaller, in proofreading and in reading speed;
+          averaged over sizes, the speed difference just missed significance. Readers rated light on dark as more
+          blurred, and dark on light as more glaring. The authors put the advantage down to the brighter display, but
+          didn't measure that here</td><td>With limits: young adults, dark room</td></tr>
+      <tr id="row-piepenbrock2014b"><th scope="row">Piepenbrock, Mayr and Buchner 2014 <a class="ref" href="#piepenbrock2014b">[19]</a></th><td>35 adults aged 20 to
+        30 (in the authors' manuscript)</td><td>proofreading small text, both polarities, in a dark room</td><td>Smaller pupils
+          (2.09 against 3.65 mm) and better proofreading with dark on light. The screen was at full brightness in a dark
+          room, so the light reaching the eye differed about 40-fold between polarities. Pupil size was measured, not
+          varied, so the authors don't claim it is the cause</td><td>With limits: one dark room; read in the authors'
+          manuscript</td></tr>
+      <tr id="row-dobres2016"><th scope="row">Dobres et al. 2016 <a class="ref" href="#dobres2016">[20]</a></th><td>48 adults aged 23 to 65 (of 67
+        recruited; 11 dropped for unstable thresholds)</td><td>single words read at a glance, both polarities</td>
         <td>Light on dark needed 119 ms on average to be read, against 85 ms for dark on light, and times were longer
-          with age overall (no test of age against polarity is reported). Accuracy and response time didn't change. One
-          dim room, with the screen at its lowest brightness</td><td>Established</td></tr>
-      <tr id="row-dobres2017"><th scope="row">Dobres et al. 2017 <a class="ref" href="#dobres2017">[20]</a></th><td>34 working adults</td>
+          with age overall (no test of age against polarity is reported). Response time didn't change; accuracy was
+          held near 79% by the method. One dim room (about 23 lux), with the screen at its lowest brightness, and the
+          authors expect a small word on a large dark field to make the dark effect bigger</td><td>With limits: one
+          dim room, single words</td></tr>
+      <tr id="row-dobres2017"><th scope="row">Dobres et al. 2017 <a class="ref" href="#dobres2017">[21]</a></th><td>34 working adults</td>
         <td>polarity, room light, letter size</td><td>In a near-dark room white text on black needed the longest glance
           to be read (122 and 107 ms against 77 to 92 ms for everything else). In daylight-bright light (4,750 lux)
           polarity made no significant difference; office lighting wasn't tested</td>
         <td>With limits: bright light was always tested first</td></tr>
-      <tr id="row-sethi2023"><th scope="row">Sethi and Ziat 2023 <a class="ref" href="#sethi2023">[21]</a></th><td>younger and older adults; numbers
+      <tr id="row-sethi2023"><th scope="row">Sethi and Ziat 2023 <a class="ref" href="#sethi2023">[22]</a></th><td>younger and older adults; numbers
         not in the abstract</td><td>writing and search tasks, both polarities, bright and dim rooms</td>
-        <td>Light on dark showed signs of more mental effort for older adults in a bright room and younger adults in a
-          dim one</td><td>Open: abstract only</td></tr>
-      <tr id="row-ettling2025"><th scope="row">Ettling et al. 2025 <a class="ref" href="#ettling2025">[22]</a></th><td>17 young adults aged 18 to 38, 15
+        <td>With light on dark, searches took longer and pupils were larger for older adults in a bright room and
+          younger adults in a dim one; older adults also rated the search as more effort. A darker screen alone
+          enlarges the pupil, so the pupil result isn't clean evidence of effort</td><td>Open: abstract only</td></tr>
+      <tr id="row-ettling2025"><th scope="row">Ettling et al. 2025 <a class="ref" href="#ettling2025">[23]</a></th><td>17 young adults aged 18 to 38, 15
         analysed, in a dim lab (114 lux)</td><td>six dashboards, one trial each in a dark and a light theme at three
           difficulties</td><td>No difference in time. The paper reports better accuracy at medium difficulty and a lower
-          workload rating in the dark theme, but each theme was tied to a different item and the tests treated paired
-          data as independent. Checked as paired data, the accuracy result isn't significant, so the study shows no cost
-          for dark, not a benefit</td><td>With limits: 15 people</td></tr>
-      <tr id="row-while2024"><th scope="row">While and Sarvghad 2024 <a class="ref" href="#while2024">[23]</a></th><td>104 analysed of 135 recruited
+          workload rating in the dark theme, but each theme was tied to a different item (the two "medium" items
+          weren't equally hard), the tests treated paired data as independent, and the printed test values for accuracy
+          don't fit the printed p-values. So the study shows no cost for dark, not a benefit</td><td>With limits: 15
+          people, one trial per condition</td></tr>
+      <tr id="row-while2024"><th scope="row">While and Sarvghad 2024 <a class="ref" href="#while2024">[24]</a></th><td>104 analysed of 135 recruited
         online: 52 under 60, 52 aged 60 or over</td><td>bar, line and scatter chart tasks in light and dark</td>
         <td>No measurable effect of polarity on average. Of the 52 under 60, 24 preferred dark and 14 light; of the 52
           aged 60 or over, 23 preferred light and 6 dark; the rest had no preference or weren't sure (as in the paper's
           Figure 5 and its posted data; its supplementary Table 6 prints them the other way round). The polarity a
-          person did best with "did not always match" the one they preferred, but each person did few trials. The dark
+          person did best with "did not always match" the one they preferred, but each person did only 12 trials in
+          each polarity, and the paper doesn't test whether its person-by-person differences exceed chance. The dark
           charts also had lower contrast (4.5:1 against 10.3:1), and people who use accessibility tools were left
-          out</td><td>With limits: preprint read; few trials per person</td></tr>
-      <tr id="row-aleman2018"><th scope="row">Aleman et al. 2018 <a class="ref" href="#aleman2018">[24]</a></th><td>7 adults aged 23 to 29</td>
-        <td>an hour of reading text on a large screen 3.2 m away</td><td>The choroid, a layer at the back of the eye, was
-          about 16 µm thinner after black on white and about 10 µm thicker after white on black. A short-term marker,
-          not a measure of short sight, and repeat measurements varied by about as much as the effects, so too weak to
+          out</td><td>With limits: preprint read; 12 trials per polarity</td></tr>
+      <tr id="row-aleman2018"><th scope="row">Aleman et al. 2018 <a class="ref" href="#aleman2018">[25]</a></th><td>7 adults aged 23 to 29</td>
+        <td>an hour of reading text on a large screen 3.2 m away, both polarities at the same brightness</td><td>The
+          choroid, a layer at the back of the eye, was about 16 µm thinner after black on white and about 10 µm thicker
+          after white on black. The authors measured it by hand, repeat measurements varied by 5 to 10 µm, and the two
+          eyes of each person were counted separately. A short-term marker, not a measure of short sight, so too weak to
           count for or against dark</td><td>With limits: 7 people</td></tr>
-      <tr id="row-luo2020"><th scope="row">Luo 2020 <a class="ref" href="#luo2020">[25]</a></th><td>16,787 users of a phone magnifier app, 30
+      <tr id="row-luo2020"><th scope="row">Luo 2020 <a class="ref" href="#luo2020">[26]</a></th><td>16,787 users of a phone magnifier app, 30
         days</td><td>which functions they used</td><td>As the abstract gives it, inverted colours were used for 28
           seconds a day per device on average, the torch for 209. Here inverting applies to the camera's magnified view,
           not to a document</td><td>Open: abstract only</td></tr>
-      <tr id="row-sheedy1990"><th scope="row">Sheedy et al. 1990 <a class="ref" href="#sheedy1990">[26]</a></th><td>19 young adults with typical sight,
+      <tr id="row-sheedy1990"><th scope="row">Sheedy et al. 1990 <a class="ref" href="#sheedy1990">[27]</a></th><td>19 young adults with typical sight,
         astigmatism simulated with lenses</td><td>counting letters on a white-on-black screen and on photographs of it
           in both polarities</td>
         <td>On the photographs, black on white was 6.6% faster. 1.5 dioptres of simulated astigmatism impaired
@@ -241,18 +255,13 @@
     </tbody>
   </table></div>
   <p class="note">Light text on dark helps some people with low vision, more often those whose eyes scatter light, as
-    with cataract, but one study of children and teenagers found no clinical test that predicted who, and one test
-    with cataract found only a slight gain. So
-    readers have to be able to choose. For typical sight dark on light gives better proofreading and acuity, most of all
-    for small text; the same lab found the advantage comes from the brighter
-    screen rather than the polarity itself, in one study that used low-contrast text in a dark room. In a near-dark room light text on
-    dark took longer to read at a glance; in bright light it didn't. So light stays the default, and dark is a choice. In
-    the chart study each person did only a few trials in each polarity, so a single person's "better polarity" is a
-    noisy measure; the paper itself found no effect of polarity on average. The claim that light text looks smeared on
+    with cataract, but in one study of children and teenagers it made no difference on average, and neither acuity nor contrast sensitivity predicted who gained; only a retinal test that few clinics use gave a hint. One test with cataract found only a slight gain. So
+    readers have to be able to choose. For typical sight dark on light gives better proofreading and acuity, most of all for small text, in lab studies run in dim or dark rooms. All four of these studies come from one lab, and its study of older adults left out those with eye disease. The same lab's results suggest the advantage comes mostly from the brighter screen rather than the polarity itself, in one study that used low-contrast text in a dark room. In a near-dark room light text on
+    dark took longer to read at a glance; in bright light it didn't. So light stays the default, and dark is a choice. In the chart study each person did 12 trials in each polarity, and the paper didn't test whether the person-by-person differences were bigger than chance, so a single person's "better polarity" is a noisy measure; the paper itself found no effect of polarity on average. The claim that light text looks smeared on
     dark to people with astigmatism ("halation") appears in accessibility advice, for example from Level Access
-    <a class="ref" href="#levelaccess2020">[27]</a>, which cites no study for it. The only controlled study I found that
+    <a class="ref" href="#levelaccess2020">[28]</a>, which cites no study for it. The only controlled study I found that
     varied both astigmatism and polarity measured speed, not smearing. It was small, simulated the astigmatism with
-    lenses and used 1990 displays. In a later small study, light squares among black and white noise were harder to count than dark ones, more so with strong blur from lenses, but the blur wasn't astigmatism and smearing wasn't measured <a class="ref" href="#pons2017">[28]</a>.</p>
+    lenses and used 1990 displays. In a later small study, light squares among black and white noise were harder to count than dark ones, more so with strong blur from lenses, but the blur wasn't astigmatism and smearing wasn't measured <a class="ref" href="#pons2017">[29]</a>.</p>
 </div></section>
 
 <section id="recolouring"><div class="wrap">
@@ -262,12 +271,12 @@
     <thead><tr><th scope="col">Study</th><th scope="col">Who</th><th scope="col">Found</th><th scope="col">Strength</th></tr></thead>
     <tbody>
       <tr id="row-wang2024"><th scope="row">Wang, Zhao and Kim 2024 <a class="ref" href="#wang2024">[5]</a></th><td>11 legally blind adults with
-        remaining vision, interviews</td>
+        remaining vision, aged 25 to 78, each reading 3 real-world charts with their own tools over Zoom</td>
         <td>Some used colour inversion at the system or browser level, some several tools at once. Inversion results "do
           not always deliver the preferred result or provide coherent results across participants": one participant's
           bar chart didn't invert as he expected and came across in very light grey, and one chart, once a participant's
-          filter had inverted it, still didn't comply with WCAG</td><td>With limits: 11 people, interviews</td></tr>
-      <tr id="row-sechayk2026"><th scope="row">Sechayk et al. 2026 <a class="ref" href="#sechayk2026">[29]</a></th><td>22 adults with low vision, aged
+          filter had inverted it, still didn't comply with WCAG. These are single cases, not counts or measures</td><td>With limits: 11 people, observed sessions, no measures</td></tr>
+      <tr id="row-sechayk2026"><th scope="row">Sechayk et al. 2026 <a class="ref" href="#sechayk2026">[30]</a></th><td>22 adults with low vision, aged
         23 to 66, after a first study with 5</td>
         <td>During the study 5 used full-screen colour filters and 3 used colour themes. The chart aids being tested
           mostly worked with people's own tools; where they didn't, colour filters and themes were the most common
@@ -275,29 +284,30 @@
           darken the surroundings brightened them, so people with light sensitivity switched it off. In the first study
           one person turned off a dark mode extension part way through because of contrast problems. The paper didn't
           test themes, dark mode or PDF</td><td>With limits: 22 people</td></tr>
-      <tr id="row-andrew2025"><th scope="row">Andrew and Tigwell 2025 <a class="ref" href="#andrew2025">[30]</a></th><td>29 people, 13 with vision
+      <tr id="row-andrew2025"><th scope="row">Andrew and Tigwell 2025 <a class="ref" href="#andrew2025">[31]</a></th><td>29 people with and without vision
         impairments, interviews</td>
-        <td>Light, dark and high-contrast modes on phones and tablets help, but modes missing from many apps, or only
-          partly built, cause accessibility and usability problems, particularly for people with vision impairments.
-          Two described headaches when an app offered no other mode, one of them at work: individual accounts, not
-          measured outcomes</td><td>With limits: 29 people, interviews</td></tr>
-      <tr id="row-karunathilaka2025"><th scope="row">Karunathilaka et al. 2025 <a class="ref" href="#karunathilaka2025">[6]</a></th><td>12 adults with typical
-        sight</td><td>Inverting a chart doesn't keep what its colours mean: in its example blue turns yellow and orange
-          turns blue, and people rated inverted colours far less like the originals than a designed dark version (1.4
-          against 4.4 out of 7). Yet accuracy, time and visual fatigue didn't differ significantly between light,
-          inverted and dark charts, and on 85 example charts the inverted ones met the 3:1 minimum for graphics more
-          often (78% against 67%). Light charts were rated most legible. Only a plain inversion was tested</td>
-        <td>With limits: 12 people; preprint read</td></tr>
-      <tr id="row-prakash2024"><th scope="row">Prakash et al. 2024 <a class="ref" href="#prakash2024">[31]</a></th><td>25 screen magnifier users with low
-        vision</td><td>Reading bar charts, 80% often over- or underestimated the marked bars' heights when thinking
+        <td>Light, dark and high-contrast modes on phones help, but the way apps build them today causes accessibility and
+          usability problems, particularly for people with vision impairments. The abstract mentions possible effects on
+          health and on work. These are people's accounts in interviews, not measured outcomes</td><td>Open: abstract only</td></tr>
+      <tr id="row-karunathilaka2025"><th scope="row">Karunathilaka et al. 2025 <a class="ref" href="#karunathilaka2025">[6]</a></th><td>12 adults aged 24 to 31
+        with typical sight and colour vision</td><td>Inverting a chart doesn't keep what its colours mean: in its example blue turns yellow and orange
+          turns blue, and people rated inverted colours far less like the originals than the authors' own dark version (1.4
+          against 4.4 out of 7). Accuracy, time and visual fatigue didn't differ significantly between light,
+          inverted and dark charts, but the tasks used only 4 charts, too few to show a modest difference. On 85 example
+          charts the inverted ones met the 3:1 minimum for graphics more often (78% against 67% for both the originals and
+          the dark versions). Light charts were rated slightly more legible (4.7 against 4.3 and 4.4 out of 7). Only a
+          plain inversion was tested</td>
+        <td>With limits: 12 people, 4 charts for the tasks; the authors tested their own tool; preprint read</td></tr>
+      <tr id="row-prakash2024"><th scope="row">Prakash et al. 2024 <a class="ref" href="#prakash2024">[32]</a></th><td>25 screen magnifier users with low
+        vision, self-reported, aged 17 to 37</td><td>Reading bar charts, 80% often over- or underestimated the marked bars' heights when thinking
           aloud. The abstract's claim that they spent much of their time working against blur and low contrast isn't
-          backed by data in the paper. Participants couldn't change contrast or colours in this study</td>
-        <td>With limits: 25 people</td></tr>
+          backed by data in the paper, and answers that matched the true values poorly were dropped afterwards, without
+          saying how many. Participants couldn't change contrast or colours in this study</td>
+        <td>With limits: 25 people, self-reported low vision, data dropped after the fact</td></tr>
     </tbody>
   </table></div>
   <p class="note">None of these tested a PDF app's dark mode. They show that the recolouring people rely on gives
-    unpredictable results on charts. Whether it makes charts harder to read hasn't been shown: the one study that
-    measured it, in 12 people with typical sight, found no cost in accuracy or time. Prakash and others didn't test
+    unpredictable results on charts. Whether it makes charts harder to read hasn't been shown: the one study that measured it, in 12 people with typical sight, found no significant difference in accuracy or time, but used only 4 charts, too few to rule out a modest cost. Prakash and others didn't test
     recolouring; their study is here for what it shows about reading charts with low vision. My own test of inversion in
     a document editor is under <a href="#measured">What I measured</a>, and is still open.</p>
   <p class="note">Open: PDF apps that recolour a page themselves include Evince's night mode, Skim's lightness
@@ -314,34 +324,39 @@
   <div class="scroll" role="region" tabindex="0" aria-labelledby="t-3"><table><caption id="t-3" class="visually-hidden">Coloured backgrounds: what was tested, and what it means</caption>
     <thead><tr><th scope="col">Study</th><th scope="col">Who</th><th scope="col">Compared</th><th scope="col">Found</th><th scope="col">Strength</th></tr></thead>
     <tbody>
-      <tr id="row-rello2012"><th scope="row">Rello and Baeza-Yates 2012 <a class="ref" href="#rello2012">[32]</a></th><td>23 with dyslexia as printed
+      <tr id="row-rello2012"><th scope="row">Rello and Baeza-Yates 2012 <a class="ref" href="#rello2012">[33]</a></th><td>23 with dyslexia as printed
         (22 in the study the data came from), 92 without, eye tracking</td><td>8 text and background pairs</td>
         <td>For the readers with dyslexia, black on cream (#FAFAC8) gave the shortest mean fixations (0.214 s) and
-          black on yellow (#FFFF00) the longest (0.239 s), with blue on white almost as long. No variance or test is
-          reported, what people preferred didn't correlate with how they read, and the authors say the texts were too
-          short for strong conclusions</td><td>With limits: a short symposium paper with no statistics</td></tr>
-      <tr id="row-rello2017"><th scope="row">Rello and Bigham 2017 <a class="ref" href="#rello2017">[7]</a></th><td>341 adults: 89 with dyslexia or at
-        risk of it (66 diagnosed), 252 without</td><td>10 backgrounds, all with black text</td>
-        <td>Peach, orange and yellow gave significantly faster reading than blue, blue grey and green, in both groups.
-          Every pair is above 7:1 contrast. White wasn't tested, so it says nothing about a tint against white, and the
-          authors say the results don't necessarily mean warm colours are recommended</td><td>Established</td></tr>
-      <tr id="row-rello2017uais"><th scope="row">Rello and Baeza-Yates 2017 <a class="ref" href="#rello2017uais">[33]</a></th><td>92 Spanish speakers, 46
-        with dyslexia, eye tracking</td><td>8 text and background pairs, cream among them</td><td>Colour made no
+          black on yellow (#FFFF00) the longest (0.239 s), with blue on white second longest. No variance or test is
+          reported, the colours came in random but not counterbalanced order, what people preferred didn't correlate
+          with how they read, and the authors say the texts were too short for strong conclusions</td><td>With limits: a short symposium paper with no statistics</td></tr>
+      <tr id="row-rello2017"><th scope="row">Rello and Bigham 2017 <a class="ref" href="#rello2017">[7]</a></th><td>341 adults online, on their own
+        computers: 89 with dyslexia or at risk of it (66 diagnosed), 252 without</td><td>10 backgrounds, all with black text</td>
+        <td>Peach, orange and yellow gave significantly faster reading than blue, blue grey and green, in both groups;
+          for readers with dyslexia, blue grey took 45% longer than peach. Each colour was one 55-word text, the screens
+          weren't controlled, and no effect sizes are given. Every pair is above 7:1 contrast. White wasn't tested, so it
+          says nothing about a tint against white, and the authors say the results don't necessarily mean warm colours
+          are recommended</td><td>With limits: one online study; screens not controlled</td></tr>
+      <tr id="row-rello2017uais"><th scope="row">Rello and Baeza-Yates 2017 <a class="ref" href="#rello2017uais">[8]</a></th><td>92 Spanish speakers, 46
+        with diagnosed dyslexia, eye tracking</td><td>8 text and background pairs, cream among them</td><td>Colour made no
           significant difference to fixation times, in either group. Black on cream again had the shortest mean fixation
-          for readers with dyslexia (0.21 s), but not significantly, so it doesn't confirm the cream result above</td>
-        <td>Established</td></tr>
+          for readers with dyslexia (0.21 s, against an average of 0.22 s), but not significantly, so it doesn't confirm
+          the cream result above. Each colour was one short passage, so a small effect can't be ruled out</td>
+        <td>With limits: a null result; one short text per colour</td></tr>
       <tr id="row-vajs2022"><th scope="row">Vajs et al. 2022 and 2023 <a class="ref" href="#vajs2022">[34]</a> <a class="ref" href="#vajs2023">[35]</a></th>
-        <td>30 children aged 7 to 13, 15 with dyslexia; the same data in both papers</td><td>six colours as background
-          and as overlay, by eye-movement measures</td><td>No colour stood out: only 3 of 78 pairs of colours differed,
-          all on the same one of three eye-movement measures, about what chance would give. The authors infer that colours
-          affect each child differently, but each child read each colour only once</td>
+        <td>30 children aged 7 to 13, 15 with dyslexia; the same children in both papers</td><td>black on white, then six colours as background
+          and as overlay, by eye-movement measures</td><td>No colour stood out. In 2022 only 3 pairs of colours differed, all
+          on one of three eye-movement measures, with no correction for the 78 possible pairs, about what chance would give;
+          in 2023 none did. The authors infer that colours affect each child differently, but each child read each colour
+          only once</td>
         <td>With limits: 15 children with dyslexia; one data set</td></tr>
       <tr id="row-otermans2026"><th scope="row">Otermans et al. 2026 <a class="ref" href="#otermans2026">[36]</a></th><td>204 UK adults with ADHD, autism,
-        or dyslexia, dyscalculia or dyspraxia; survey</td><td>how they prefer information presented</td>
+        or dyslexia, dyscalculia or dyspraxia, recruited on social media; online survey</td><td>how they prefer information presented</td>
         <td>Background colour was the only setting on which the groups' favourites differed: blue for ADHD (34%), white
           for autism (38%), yellow for the dyslexia, dyscalculia and dyspraxia group (42%). No colour was chosen by a
-          majority, and blue got the most "easy to read" votes in every group. The group difference is reported as
-          p = .04 with 4 degrees of freedom, but the design implies 6, which gives about .14</td>
+          majority, and blue got the most "easy to read" votes in every group, though the discussion says yellow for the
+          dyslexia group. The group difference is reported as p = .04 with 4 degrees of freedom, but four colours and three
+          groups imply 6, which gives about .14</td>
         <td>With limits: stated preferences; a doubtful test</td></tr>
       <tr id="row-gregor2000"><th scope="row">Gregor and Newell 2000 <a class="ref" href="#gregor2000">[37]</a></th><td>12 students with dyslexia,
         then 7 more people</td><td>their own colours, typeface and spacing</td><td>All 12 found settings they judged
@@ -360,24 +375,30 @@
         <td>Seven of the 25 read at different speeds across the colours, two of them by under 5%; for typical sight
           colour didn't matter, except near the acuity limit</td><td>With limits: small groups</td></tr>
       <tr id="row-vieira2020"><th scope="row">Vieira et al. 2020 <a class="ref" href="#vieira2020">[40]</a></th><td>18 people with migraine with aura,
-        with two comparison groups</td><td>tinted lenses of the colour each chose, against none</td>
-        <td>A word search took 16.8 s on average with the lenses and 22.5 s without. The lenses made no significant
-          difference for people without migraine or with migraine without aura. No placebo lens</td>
+        with two comparison groups of 18</td><td>tinted lenses of the colour each chose, against none</td>
+        <td>For those with aura, a word search took 16.8 s on average with the lenses and 22.5 s without. The lenses made
+          no significant difference for people with migraine without aura (who were also faster, p = .071) or without
+          migraine. No placebo lens, nobody was masked, and one author invented the colorimeter used</td>
         <td>With limits: 18 people per group; no placebo</td></tr>
-      <tr id="row-griffiths2016"><th scope="row">Griffiths et al. 2016 <a class="ref" href="#griffiths2016">[8]</a></th><td>systematic review: 51
+      <tr id="row-griffiths2016"><th scope="row">Griffiths et al. 2016 <a class="ref" href="#griffiths2016">[9]</a></th><td>systematic review: 51
         publications, 54 data sets</td><td>coloured overlays and lenses</td><td>Their use for reading difficulties
           "cannot be endorsed"; benefits people report are likely placebo, practice or Hawthorne effects. Studies at
-          lower risk of bias gave less support</td><td>Established</td></tr>
-      <tr id="row-evans2016"><th scope="row">Evans and Allen 2016 <a class="ref" href="#evans2016">[9]</a></th><td>systematic review of 13 trials of
-        one system (Intuitive Overlays and Colorimeter), several of them by the authors</td>
-        <td>individually prescribed filters</td><td>They can ease symptoms or speed up reading in people with visual
-          stress, but the evidence is weak and larger trials are needed. About one in five people with dyslexia may
-          have visual stress. Filters don't treat dyslexia</td><td>Established</td></tr>
+          lower risk of bias gave less support. No pooled analysis. It grouped reading difficulty with visual stress,
+          which is the main point the review in [9] disputes</td><td>Established</td></tr>
+      <tr id="row-evans2016"><th scope="row">Evans and Allen 2016 <a class="ref" href="#evans2016">[10]</a></th><td>systematic review of 13 trials (12
+        papers) of one system, Intuitive Overlays and the Intuitive Colorimeter; 4 of the papers by the review's
+        authors</td>
+        <td>individually prescribed filters</td><td>On balance, they can ease symptoms or speed up reading in people with
+          visual stress. But the authors call the evidence weak, most overlay trials couldn't be masked, and larger
+          trials are needed. About one in five children with dyslexia may have visual stress, judged by reading faster
+          with an overlay. Filters don't treat dyslexia. One author is secretary of a society of coloured lens
+          prescribers</td><td>With limits: weak evidence, partly the authors' own trials</td></tr>
       <tr id="row-wilkins1994"><th scope="row">Wilkins et al. 1994 <a class="ref" href="#wilkins1994">[41]</a></th><td>68 children who already used
         coloured overlays; 36 kept diaries</td><td>a precise tint chosen for each child against a near-miss tint, both
           masked</td><td>Symptoms such as eye strain and headache were less frequent on days with the chosen tint
-          (P &lt; 0.003). By the accounts of two later papers, reading wasn't better with the chosen tint, and one gives
-          about 14 symptom-free days against 12, of about 18 worn</td><td>Open: abstract only</td></tr>
+          (P &lt; 0.003). By the accounts of two later papers, reading wasn't better with the chosen tint. One gives
+          about 14 symptom-free days against 12, of about 18 worn, and 19 of the 36 children had fewer symptom days with
+          the chosen tint, 11 with the near miss. Almost half the children kept no diary</td><td>Open: abstract only</td></tr>
       <tr id="row-wilkins2001"><th scope="row">Wilkins et al. 2001 <a class="ref" href="#wilkins2001">[42]</a></th><td>unselected schoolchildren in three
         studies (89, 378 and about 426)</td><td>a coloured overlay each child chose</td><td>In one study, reading was
           11% more fluent with the chosen overlay. In another, of 378 children, those who chose a colour read 112.7 words
@@ -386,20 +407,27 @@
           these studies</td><td>With limits: no masking or placebo</td></tr>
       <tr id="row-henderson2013"><th scope="row">Henderson, Tsogka and Snowling 2013 <a class="ref" href="#henderson2013">[43]</a></th><td>42 students, 16
         with dyslexia</td><td>a chosen overlay against none</td><td>Overlays sped up reading of a word-list test in both
-          groups, by 5.9% and 11.2% on average (no significant difference between the groups), but didn't improve
-          reading speed or comprehension of ordinary passages. At a retest two weeks later the dyslexic group's gain was
-          smaller, and most controls chose a different colour. No grey or clear overlay was compared</td>
+          groups, by 5.9% and 11.2% on average (no significant difference between the groups). They didn't detectably
+          improve reading speed or comprehension of ordinary passages, though that test was one passage each way with
+          five questions. At a retest two weeks later the dyslexic group's gain was smaller, and most controls chose a
+          different colour. No grey or clear overlay was compared</td>
         <td>With limits: 16 with dyslexia; the authors' manuscript</td></tr>
       <tr id="row-suttle2025"><th scope="row">Suttle and Conway 2025 <a class="ref" href="#suttle2025">[44]</a></th><td>29 people diagnosed with visual
         stress, aged 11 to 72</td><td>no colour, their overlay, their best tint and a near-miss tint</td>
         <td>Reading was faster with any of the three colours than with none, which was always measured first, and not
-          significantly faster with the best tint than with the near miss (p = 1.0 after correction)</td><td>With limits: 29 people</td></tr>
-      <tr id="row-li2025"><th scope="row">Li et al. 2025 <a class="ref" href="#li2025">[45]</a></th><td>40 students</td><td>light green against
-        white, on screen</td><td>No difference in reading time or accuracy. Readers rated the task a little easier on
-          green in Chinese, and pupil size differed; the green was also dimmer than white</td><td>Established</td></tr>
+          significantly faster with the best tint than with the near miss (p = 1.0 after correction). Comfort ratings
+          didn't differ either, and 13 of 28 preferred the best tint, 11 the near miss. The diagnosis was lenient: one
+          symptom and relief from an overlay</td><td>With limits: 29 people, lenient diagnosis, 11 of 41 dropped out</td></tr>
+      <tr id="row-li2025"><th scope="row">Li et al. 2025 <a class="ref" href="#li2025">[45]</a></th><td>40 Chinese students</td><td>light green against
+        white, on screen</td><td>No difference in reading time or accuracy, in Chinese or English, despite a title
+          claiming better performance. Readers rated the task a little easier on green in Chinese only, among many
+          measures with no correction, and pupils were larger on green. The green was dimmer than white by its RGB values,
+          and brightness wasn't matched</td><td>With limits: 40 students, one short session</td></tr>
       <tr id="row-arutis2025"><th scope="row">Ramsahye et al. 2025 <a class="ref" href="#arutis2025">[46]</a></th><td>trial protocol: 120 young
         people aged 9 to 18 with visual stress</td><td>a precisely chosen tint against a similar near-miss tint, both
-          masked</td><td>No results yet; the question the two reviews disagree on is still open</td>
+          masked</td><td>No results yet; the question the two reviews disagree on is still open. Symptoms are the main
+          measure, and reading speed comes third. The authors include the system's designer, and the maker supplies the
+          lenses</td>
         <td>Open: a protocol, no results yet</td></tr>
       <tr id="row-bda2023"><th scope="row">British Dyslexia Association 2023 <a class="ref" href="#bda2023">[47]</a></th><td>style guide</td>
         <td>not applicable: a style guide</td>
@@ -429,13 +457,10 @@
   </figure>
   <p class="note">The tints are offered for comfort and choice, and nobody with dyslexia, visual stress or low vision has
     tried them yet. Colour doesn't treat dyslexia. Visual stress is discomfort when reading, such as eye strain or
-    headaches, and one review puts it at about one in five people with dyslexia
-    <a class="ref" href="#evans2016">[9]</a>. I found no standard colours for the tints, and the ones used here were
+    headaches, and one review, by researchers who prescribe these filters, puts it at about one in five children with dyslexia <a class="ref" href="#evans2016">[10]</a>; how to diagnose it is disputed. No study here found a tint that helps people read faster than a nearby colour. I found no standard colours for the tints, and the ones used here were
     chosen for the project, in two sets that don't yet agree. They are paler than the tested colours, and this site's
-    "turquoise" (#E3EEFA) has an OKLCH hue of 250, which is a pale blue, near the cool colours that read slowest in 2017;
-    the tool's own turquoise (#D1F8F4) is a true pale turquoise. Black text reaches well over 7:1 on each tested colour
-    shown. In one small study some readers with dyslexia chose low contrast as more restful
-    <a class="ref" href="#gregor2000">[37]</a>; the tints here keep text at 4.5:1 or more. Which tints to offer is one
+    "turquoise" (#E3EEFA) has an OKLCH hue of 250, which is a pale blue, close to the blue grey (#DBE1F1) that read slowest of all in the 2017 study, though that result comes from one online study with uncontrolled screens;
+    the tool's own turquoise (#D1F8F4) is a true pale turquoise. Black text reaches over 7:1 on each tested colour shown. In one small study, which I could only check at second hand, some readers with dyslexia chose low contrast as more restful <a class="ref" href="#gregor2000">[37]</a>; the tints here keep text at 4.5:1 or more. Which tints to offer is one
     of the <a href="#open">open questions</a>.</p>
 </div></section>
 
@@ -449,23 +474,29 @@
         <td>Rainbow and red-green colour scales distort data or are unreadable to people with colour vision deficiency,
           which by the usual estimate affects 8% of men and 0.5% of women. By the authors' calculation from the colours,
           with no readers tested, jet's visual error can exceed 7% of the data's range. Gives a guide to colour scales
-          made for science</td><td>With limits: a perspective; no readers tested</td></tr>
-      <tr id="row-borkin2011"><th scope="row">Borkin et al. 2011 <a class="ref" href="#borkin2011">[11]</a></th><td>21 medical students</td>
-        <td>Looking for regions of low shear stress in heart arteries, they found 91% with a diverging colour scale and
-          62% with a rainbow in 2D, and 71% against 39% in 3D</td><td>With limits: 21 people</td></tr>
-      <tr id="row-liuheer2018"><th scope="row">Liu and Heer 2018 <a class="ref" href="#liuheer2018">[49]</a></th><td>three online experiments of about 55
-        people each, with typical colour vision</td><td>Viridis gave consistently low error. The one rainbow scale
-          tested, jet, was slower than viridis and a single-hue blue</td><td>With limits: online, typical colour vision</td></tr>
+          made for science, including the first author's own, though no competing interests are declared</td><td>With limits: a perspective; no readers tested</td></tr>
+      <tr id="row-borkin2011"><th scope="row">Borkin et al. 2011 <a class="ref" href="#borkin2011">[12]</a></th><td>21 medical students, split between
+        the two colour scales</td>
+        <td>Looking for regions of low shear stress in heart arteries, those given a red-to-black diverging scale found
+          91% of them in 2D, against 62% for those given a rainbow, and 71% against 39% in 3D. The rainbow group felt
+          just as confident. Each student saw only one of the two scales</td><td>With limits: about 10 people per colour scale</td></tr>
+      <tr id="row-liuheer2018"><th scope="row">Liu and Heer 2018 <a class="ref" href="#liuheer2018">[49]</a></th><td>three online experiments of 56, 56
+        and 54 people, screened for typical colour vision with four Ishihara plates</td><td>Judging which of two colour
+          patches was closer in value to a third, viridis gave consistently low error. The one rainbow scale tested, jet,
+          was slower than viridis and a single-hue blue, and the most error-prone. Dark colours were hard to tell apart.
+          Every patch was shown on white; no dark background was tested</td><td>With limits: online, typical colour vision, white background only</td></tr>
       <tr id="row-nunez2018"><th scope="row">Nuñez, Anderton and Renslow 2018 <a class="ref" href="#nunez2018">[50]</a></th><td>no participants</td>
         <td>Cividis was made from viridis with a simulation of red-green colour vision deficiency, so by the authors'
           modelling it should read nearly the same to people with and without it. No one with it was tested</td>
         <td>With limits: no readers tested</td></tr>
-      <tr id="row-angerbauer2022"><th scope="row">Angerbauer et al. 2022 <a class="ref" href="#angerbauer2022">[51]</a></th><td>200 online raters, about
-        30,000 ratings</td><td>1,500 figures from visualisation papers, each shown through four simulations of colour
-          vision deficiency: about 60% of the 6,000 simulated images were rated accessible by most of their raters, 33%
-          were borderline or undecided, and 7% not. The simulations were made with Coblis. A 2014 test, known from its abstract, found Coblis inaccurate for
+      <tr id="row-angerbauer2022"><th scope="row">Angerbauer et al. 2022 <a class="ref" href="#angerbauer2022">[51]</a></th><td>200 online raters, mostly with
+        typical colour vision, about 30,000 ratings</td><td>1,500 figures from visualisation papers, each shown through four
+          simulations: milder red-green and blue-yellow deficiencies, and no colour at all. About 60% of the 6,000
+          simulated images were rated accessible by most of their raters, usually about five, 33% were borderline or
+          undecided, and 7% not. The ratings were opinions, not tests of reading. Labels were the most common help.
+          The simulations were made with Coblis. A 2014 test, known from its abstract, found Coblis inaccurate for
           full red-green colour blindness, a form not simulated here, and the tool may have changed since
-          <a class="ref" href="#lillo2014">[52]</a></td><td>With limits: crowd-sourced ratings of simulated images</td></tr>
+          <a class="ref" href="#lillo2014">[52]</a></td><td>With limits: crowd-sourced ratings of simulated images, mostly by people without the deficiency</td></tr>
       <tr id="row-olson1997"><th scope="row">Olson and Brewer 1997 <a class="ref" href="#olson1997">[53]</a></th><td>map readers with red-green colour
         vision deficiency, and readers without</td><td>With colours potentially confusing to them, they were less
           accurate and slower than the others. With colours chosen for them, they were as accurate, though still
@@ -480,15 +511,18 @@
           made no significant difference. Two of the seven made 13 of the 23 errors. Only colour was tested, with no labels
           or other cues</td><td>With limits: 7 with the deficiency; trials counted as independent</td></tr>
       <tr id="row-sajadi2013"><th scope="row">Sajadi et al. 2013 <a class="ref" href="#sajadi2013">[55]</a></th><td>11 men with red-green deficiency,
-        19 without</td><td>Adding patterns that encode colour raised correct answers by 18% (protan) and 35% (deutan)
-          relative to the original images. No statistical tests</td>
-        <td>With limits: 11 men with the deficiency; no statistical tests</td></tr>
+        5 protan and 6 deutan, tested with Ishihara plates; 19 without</td><td>On images chosen to be hard for them,
+          the authors' line patterns that encode hue raised correct answers by 18% (protan) and 35% (deutan) over the
+          original images. An existing recolouring method did about as well, 10% and 36%, though with less confidence.
+          The patterns had to be learned. No statistical tests</td>
+        <td>With limits: 5 and 6 men per group; the authors' own method; no statistical tests</td></tr>
       <tr id="row-jiang2026"><th scope="row">Jiang, Arunkumar and Bryan 2026 <a class="ref" href="#jiang2026">[56]</a></th><td>64 people with colour
-        vision deficiency (self-reported) and 67 without; 97 students in a simulation study</td>
-        <td>People with the deficiency rated colour as less helpful on real charts picked for red-green problems.
-          Students shown a simulation didn't rate it significantly lower; the authors suggest simulation may understate
-          the problem, but the two groups were different people and weren't compared directly. Nine of the 12
-          interviewed with the deficiency disputed the simulations. Ratings only, no accuracy measured</td>
+        vision deficiency (self-reported) and 67 without; 97 students in a simulation study; 18 men interviewed</td>
+        <td>On 46 real charts, chosen with red-green simulations to range from low to high colour interference, people
+          with the deficiency rated colour as less helpful, 3.90 against 4.44 out of 7. Students shown a simulation
+          didn't rate it significantly lower; the authors suggest simulation may understate the problem, but the two
+          groups were different people and weren't compared directly. Nine of the 12 interviewed with the deficiency,
+          some of them blue-yellow, disputed the red-green simulations. Ratings only, no accuracy measured</td>
         <td>With limits: online ratings; self-reported deficiency</td></tr>
       <tr id="row-hathibelagal2023"><th scope="row">Hathibelagal 2023 <a class="ref" href="#hathibelagal2023">[57]</a></th><td>15 with
         red-green colour vision deficiency (8 deutan, 7 protan, by plates and the CAD test) and 10 without, in a clinic</td>
@@ -527,31 +561,38 @@
           1990</td>
         <td>With limits: read in the 1992 FAA report of the same study</td></tr>
       <tr id="row-schloss2019"><th scope="row">Schloss et al. 2019 <a class="ref" href="#schloss2019">[62]</a></th><td>30 people, then 30 of 36 students,
-        all with typical colour vision</td><td>People read colour scales faster when darker meant more, and faster on
-          white than on black. On a dark background, scales that looked like one colour fading into the background were
-          read faster with lighter as more; the authors advise scales that don't look like that on any background, with
-          darker as more</td><td>Established</td></tr>
-      <tr id="row-schiewe2024"><th scope="row">Schiewe 2024 <a class="ref" href="#schiewe2024">[12]</a></th><td>214 people online, two answers each; two
-        thirds rated themselves map experts; no key on the maps</td><td>Taking darker as more: 95 to 97% with the usual
-          colours in light mode, and 87 to 94% with the same colours on a dark page. A tool's dark-mode conversion that
-          kept the order but left its darkest classes at 1.2 to 1.8:1 against the page, in brownish colours, fell to
-          about 52%, with a third unsure</td><td>With limits: one online study</td></tr>
-      <tr id="row-nothelfer2017"><th scope="row">Nothelfer, Gleicher and Franconeri 2017 <a class="ref" href="#nothelfer2017">[10]</a></th><td>students and
-        community members, 11 to 16 per experiment, in a lab</td><td>Telling groups apart by colour and shape together
-          gave "a large benefit for rapidly segmenting objects within a dense display": with displays shown for about a
-          tenth of a second, people were right 13 to 21 percentage points more often than with the better single cue.
-          With shape paired with a lightness difference, the grouping effect was larger too, though the authors say this
-          was mostly more interference across groups and "only marginal strengthening of grouping". They expect no gain
-          when colour alone is already easy to tell apart</td><td>With limits: 11 to 16 people per experiment</td></tr>
-      <tr id="row-smartszafir2019"><th scope="row">Smart and Szafir 2019 <a class="ref" href="#smartszafir2019">[63]</a></th><td>1,930 online participants,
-        four experiments</td><td>Mark shape changed how people judged size and colour more than size and colour changed
-          how they judged shape; colours were easier to tell apart on filled marks</td>
+        all tested for typical colour vision, in a lab</td><td>With a key on screen, people read colour scales faster when
+          darker meant more, and faster on white than on black. On black, darker as more was still faster for three of
+          the four common scales. Scales that looked like one colour fading into a dark background were read faster with
+          lighter as more; the authors advise scales that don't look like that on any background, with darker as more.
+          Nearly all answers were right, so the differences are in speed</td><td>With limits: two lab studies of 30 people</td></tr>
+      <tr id="row-schiewe2024"><th scope="row">Schiewe 2024 <a class="ref" href="#schiewe2024">[13]</a></th><td>214 people online, two answers each; two
+        thirds rated themselves map experts; 3 reported a colour vision deficiency, too few to analyse; no key on the
+        maps</td><td>Taking darker as more: 95 to 97% with the usual colours in light mode, and 87 to 94% with the same
+          colours on a dark page, a drop the author found not significant. A tool's dark-mode conversion that kept the
+          order but left its darkest classes at 1.2 to 1.8:1 against the page, in brownish or greyish colours, fell to
+          about 52%, with a third unsure. Contrast and hue changed together, so the study can't say which caused the
+          fall</td><td>With limits: one online study, mostly self-rated experts</td></tr>
+      <tr id="row-nothelfer2017"><th scope="row">Nothelfer, Gleicher and Franconeri 2017 <a class="ref" href="#nothelfer2017">[11]</a></th><td>students and
+        community members, 11 to 16 per experiment, in a lab; colour vision not reported</td><td>Telling groups apart by
+          colour and shape together made it much easier to pick out a group in a dense display: with displays shown for
+          about a tenth of a second, people were right 13 to 21 percentage points more often than with the better single
+          cue, after colour and shape had each been tuned to be about as hard. With shape paired with a lightness
+          difference, the grouping effect was larger too, though the authors say this was mostly more interference across
+          groups and "only marginal strengthening of grouping". They expect no gain when colour alone is already easy to
+          tell apart</td><td>With limits: 11 to 16 people per experiment; colour vision not reported</td></tr>
+      <tr id="row-smartszafir2019"><th scope="row">Smart and Szafir 2019 <a class="ref" href="#smartszafir2019">[63]</a></th><td>1,930 recruited online,
+        1,749 analysed, four experiments; anyone reporting a colour vision deficiency was left out</td><td>On a white
+          background, mark shape changed how people judged size and colour more than size and colour changed how they
+          judged shape; colours were easier to tell apart on filled marks than on outlines</td>
         <td>With limits: crowd-sourced; the comparison spans different tasks</td></tr>
-      <tr id="row-he2024"><th scope="row">He et al. 2024 <a class="ref" href="#he2024">[64]</a></th><td>150 online participants</td>
-        <td>Bar and pie charts filled with well-rated black and white textures performed about as well as plain ones,
-          with some differences by chart type. Colour vision and low vision weren't asked about or recruited for, so the
-          study can't say whether anyone with either took part</td>
-        <td>With limits: online; some analyses changed after preregistration</td></tr>
+      <tr id="row-he2024"><th scope="row">He et al. 2024 <a class="ref" href="#he2024">[64]</a></th><td>150 online participants; speed
+        analysed for the 86 who got at least 90% right</td>
+        <td>Bar and pie charts filled with well-rated black and white textures performed nearly as well as plain grey
+          ones, which were slightly ahead: under 3.6 points more often right, and on bar charts under 255 ms faster. Every
+          chart was labelled, and textures weren't compared with colour. Colour vision and low vision weren't asked about
+          or recruited for, so the study can't say whether anyone with either took part</td>
+        <td>With limits: online; 64 of 150 left out after preregistration</td></tr>
       <tr id="row-quadri2024"><th scope="row">Quadri et al. 2024 <a class="ref" href="#quadri2024">[65]</a></th><td>24 people, qualitative study</td>
         <td>The paper says all participants raised concerns about a chart of five same-coloured lines told apart only by
           dash pattern, but its own table shows only 5 of the 24 saw that chart, and records one critique of it. A side
@@ -560,21 +601,16 @@
   </table></div>
   <p class="note">The tests I found with readers who have colour vision deficiency are of maps, coded displays,
     photographs and ratings; I found none of today's chart palettes, such as viridis or Okabe and Ito's, with such
-    readers, and none in light against dark. What the evidence supports best is a second cue: patterns
-    <a class="ref" href="#sajadi2013">[55]</a> and colour with shape <a class="ref" href="#nothelfer2017">[10]</a>
-    helped, and works for everyone in every theme. Simulations are what most checks rely on, but only Brettel,
+    readers, and none in light against dark. What the evidence supports best is a second cue: the authors' own patterns helped men with red-green deficiency, though an existing recolouring did about as well <a class="ref" href="#sajadi2013">[55]</a>, colour with shape helped people pick out groups <a class="ref" href="#nothelfer2017">[11]</a>, and labels were the help raters named most <a class="ref" href="#angerbauer2022">[51]</a>. Because a second cue doesn't depend on colour, I infer it holds in every theme, but none of these tested a dark page. Simulations are what most checks rely on, but only Brettel,
     Viénot and Mollon's model has been checked against people with the deficiency, in small studies, and even it
-    understates how much slower they are <a class="ref" href="#sunaga2013">[59]</a>; Coblis, the tool behind the
-    largest rating study here, is inaccurate <a class="ref" href="#lillo2016">[58]</a>, and in one study 9 of 12
-    interviewees with the deficiency disputed the simulations they were shown <a class="ref" href="#jiang2026">[56]</a>.
+    understates how much slower they are <a class="ref" href="#sunaga2013">[59]</a>; Coblis, the tool behind the largest rating study here, was found inaccurate for full red-green colour blindness <a class="ref" href="#lillo2016">[58]</a>, and in one small interview study 9 of 12 people with the deficiency disputed the simulations they were shown <a class="ref" href="#jiang2026">[56]</a>.
     So a simulated check is a list for the author, not a pass. Washed-out colours may cost these readers
     <a class="ref" href="#hathibelagal2023">[57]</a>, which argues for higher contrast themes that change lightness
     and keep saturation, though that study's fixed order weakens it. Most readers still take darker as more on a dark page, so a colour scale
     should keep its lightness order in every theme, with its darkest colours still visible against the page: a dark
-    version whose darkest classes nearly vanished left about half reading it that way and a third unsure
-    <a class="ref" href="#schiewe2024">[12]</a>. Keeping darker as more in every theme is my inference from this. On a
+    version whose darkest classes nearly vanished left about half reading it that way and a third unsure <a class="ref" href="#schiewe2024">[13]</a>, though its colours also turned brownish or greyish, so low contrast may not be the only cause. Liu and Heer tested colour scales on white only <a class="ref" href="#liuheer2018">[49]</a>. Keeping darker as more in every theme is my inference from this. On a
     dark background, scales that look like one colour fading into the background were read faster with lighter as more,
-    and the authors advise scales that don't look like that on any background <a class="ref" href="#schloss2019">[62]</a>.
+    and the authors advise scales that don't look like that on any background; on black, darker as more was still faster for three of the four common scales <a class="ref" href="#schloss2019">[62]</a>.
     WCAG 1.4.1 asks that colour is not the only way information is given <a class="ref" href="#wcag22">[66]</a>.</p>
 
   <h3 id="lines">Lines, dashes and grids</h3>
@@ -582,17 +618,18 @@
     <thead><tr><th scope="col">Study</th><th scope="col">Who</th><th scope="col">Found</th><th scope="col">Strength</th></tr></thead>
     <tbody>
       <tr id="row-sterzik2024"><th scope="row">Sterzik et al. 2024 <a class="ref" href="#sterzik2024">[67]</a></th><td>three studies, the main one in a lab
-        with 20 people</td><td>About 23 line widths could be told apart up to about 28 px, 13 dash patterns for each of
-          two dashing styles, 14 wave amplitudes and 11 greys on white. The authors advise dashes only on long lines,
-          from their reasoning rather than a measurement</td><td>With limits: 20 people in the main study</td></tr>
+        with 20 people (19 analysed), aged 21 to 31</td><td>About 23 line widths could be told apart up to about 28 px, 13 dash patterns for each of
+          two dashing styles, 14 wave amplitudes and 11 greys on white. These are upper limits: two lines side by side,
+          shown for 0.2 s, on white. The authors advise dashes only on long lines,
+          from their reasoning rather than a measurement</td><td>With limits: 20 people in the main study; ideal conditions</td></tr>
       <tr id="row-szafir2018"><th scope="row">Szafir 2018 <a class="ref" href="#szafir2018">[68]</a></th><td>461 online participants in three studies, 72
-        analysed in the one on lines, all screened for typical colour vision</td><td>Colour differences were easier to see on thicker
-          lines. People judged whether two marks were the same colour, on their own screens; chart reading wasn't
-          measured</td><td>With limits: online, typical colour vision</td></tr>
-      <tr id="row-kobayashi2000"><th scope="row">Kobayashi 2000 <a class="ref" href="#kobayashi2000">[69]</a></th><td>5 sighted people under simulated low
-        vision, and 4 people with low vision</td><td>Of 30 dash and gap patterns, lines with 0.5 and 1 mm gaps were
-          recognised least often. For the four with low vision, gaps about the size of the gap they could resolve close
-          up (0.45 to 2.25 mm) were enough. The paper is in Japanese</td><td>With limits: 9 people; a university bulletin</td></tr>
+        analysed in the one on lines; colour vision checked with four Ishihara plates on their own screens and by self-report</td><td>Colour differences were easier to see on thicker
+          lines, and on lines than on dots of the same thickness. People judged whether two marks were the same colour, on their own
+          uncalibrated screens, on a white background; chart reading wasn't measured</td><td>With limits: online, typical colour vision, white background only</td></tr>
+      <tr id="row-kobayashi2000"><th scope="row">Kobayashi 2000 <a class="ref" href="#kobayashi2000">[69]</a></th><td>10 sighted people under simulated low
+        vision, and 4 people with low vision</td><td>Of 30 dash and gap patterns, on lines 0.1 to 0.7 mm thick, gaps of 0.5 and 1 mm
+          suited no one, and very wide gaps didn't suit people with low vision either. For the four with low vision, gaps at least
+          the size of the gap they could resolve close up were enough. The paper is in Japanese</td><td>With limits: 14 people; a university bulletin</td></tr>
       <tr id="row-ledermann2022"><th scope="row">Ledermann 2023 <a class="ref" href="#ledermann2022">[70]</a></th><td>25 students with good eyesight, on four
         phones</td><td>Dashed lines got harder to tell from dotted or solid ones as they got thinner: at 0.05 to 0.10 mm
           wide, dashed lines were named correctly about a quarter of the time (provisional figures, pooled across the
@@ -618,38 +655,39 @@
       <tr id="row-heer2010"><th scope="row">Heer and Bostock 2010 <a class="ref" href="#heer2010">[73]</a></th><td>Amazon Mechanical Turk
         workers, 186 across the paper's experiments; how many did the gridline task isn't stated. Vision not checked,
         screens unknown</td><td>When people estimated the difference between two values on a bar or line chart scaled
-          0 to 100, gridline spacing made a significant difference, and the authors report that adding gridlines improved
-          accuracy. Charts 40 px tall gave more error than taller ones. The authors
+          0 to 100, gridline spacing made a significant difference: gridlines every 10 or 20 units gave less error than every
+          50 or 100. Every chart had some gridlines, so "with" and "without" weren't compared. Charts 40 px tall gave more error than taller ones. The authors
           note that error rose steeply when such short charts had gridlines every 10 units, and suggest gridlines at
-          least 8 px apart. In a task where people set a grid's opacity themselves, the
+          least 8 px apart. In a task where people set a grid's opacity themselves, on light to mid-grey backgrounds, the
           authors say the results back 0.2 as a safe default. Gridline width and colour weren't varied</td><td>With
           limits: crowd-sourced; trials counted as independent</td></tr>
       <tr id="row-knittel2024"><th scope="row">Knittel et al. 2024 <a class="ref" href="#knittel2024">[74]</a></th><td>31 online participants (of 62
-        recruited)</td><td>Comparing gaps between two curves, people were right 72.1% of the time with grid lines and
-          66.5% without, overall; when the first gap was the larger one, grid lines did worst</td>
+        recruited)</td><td>Comparing gaps between two rising curves at two points, people were right 72.1% of the time with vertical
+          grid lines, 66.5% with plain lines and 61.2% with dotted lines, overall. Grid lines through the two points helped more than
+          offset ones. When the first gap was the larger one, grid lines did worst</td>
         <td>With limits: preprint read; trials counted as independent</td></tr>
       <tr id="row-owsley1983"><th scope="row">Owsley, Sekuler and Siemsen 1983 <a class="ref" href="#owsley1983">[75]</a></th><td>91 adults aged 19
-        to 87, healthy eyes</td><td>Sensitivity to middle and fine detail (2 cycles per degree and above) fell with age;
-          to coarse detail (0.5 and 1) it didn't. The authors put much of the loss down to less light reaching the
-          retina</td><td>Established</td></tr>
+        to 87, healthy eyes</td><td>Sensitivity to middle and fine detail (2 cycles per degree and above) fell with age,
+          from about 40 to 50; to coarse detail (0.5 and 1) it didn't. The authors put much of the loss down to less light reaching the
+          retina. Gratings, not text or lines</td><td>Established</td></tr>
       <tr id="row-alcaraz2025"><th scope="row">Alcaraz-Martínez et al. 2025 <a class="ref" href="#alcaraz2025">[76]</a></th><td>12 adults with low
         vision, aged 18 to 79</td><td>Charts built for accessibility (black, white and grey with patterns, value labels,
           sharp vector drawing, keyboard access and tooltips) against default spreadsheet exports saved as low-quality
           pictures (both had a data table): 86% of choices favoured the accessible charts, which were rated less
           complicated. Some preferred colour to patterns; one with achromatopsia found the patterns very useful; one found
-          the lines and dots too thin. Many changes at once, so no single one is tested</td>
+          the lines and dots of the default charts too thin. Many changes at once, so no single one is tested</td>
         <td>With limits: 12 people</td></tr>
       <tr id="row-kremkow2014"><th scope="row">Kremkow et al. 2014 <a class="ref" href="#kremkow2014">[77]</a></th><td>neuroscience</td>
         <td>Offers a neural explanation, from recordings in animals and human brain responses, for why light shapes on
           dark look larger than the same shapes dark on light (the irradiation illusion); it didn't measure how large they looked.
           I found no study of the effect on chart lines or in dark mode</td>
         <td>With limits: no perceived size measured</td></tr>
-      <tr id="row-pons2017"><th scope="row">Pons et al. 2017 <a class="ref" href="#pons2017">[28]</a></th><td>4 to 11 people with normal or
+      <tr id="row-pons2017"><th scope="row">Pons et al. 2017 <a class="ref" href="#pons2017">[29]</a></th><td>4 to 11 people with normal or
         corrected sight in each experiment, some of them the authors</td><td>Judging the direction of very fine stripes
-          seen for a fifth of a second or less, the four people each did 10.5% to 24.1% better (14.3% on average) with
-          dark stripes on a light screen than with light stripes on a dark one. On mid-grey the gap fell to 6.1%, and
+          seen for a fifth of a second or less, the four people each did 10.5 to 24.1 percentage points better (14.3 on average) with
+          dark stripes on a light screen than with light stripes on a dark one. On mid-grey the gap fell to 6.1, and
           with coarser stripes none was shown. Light squares among black and white noise were harder to count than dark
-          ones, more so with strong blur from lenses (not astigmatism). The tiniest single dots were the exception: light
+          ones, more so when contact lenses put the eye out of focus. The tiniest single dots were the exception: light
           ones were easier to see, but only on a small dark patch. Stripes, squares and dots, not charts or text</td>
         <td>With limits: 4 to 11 people, some of them the authors</td></tr>
     </tbody>
@@ -657,9 +695,8 @@
   <p class="note">Fine detail is what a dark page costs most, at least for text <a class="ref" href="#piepenbrock2014">[3]</a>,
     and older eyes lose fine detail first <a class="ref" href="#owsley1983">[75]</a>, though one clinical study, known
     only from its abstract, found letter acuity slightly better with white on black, more so with age
-    <a class="ref" href="#westheimer2003">[78]</a>. In a small lab study, fine stripes were harder to make out light on dark, but the tiniest single dots were easier <a class="ref" href="#pons2017">[28]</a>. Thin lines are fine detail, and thicker lines make colour differences
-    easier to see, for typical vision <a class="ref" href="#szafir2018">[68]</a>. That is a reason for the more contrast
-    themes, and possibly the dark ones, to draw lines and grids heavier. It is my inference from studies of text, letters
+    <a class="ref" href="#westheimer2003">[78]</a>. In a small lab study, fine stripes were harder to make out light on dark, but the tiniest single dots were easier <a class="ref" href="#pons2017">[29]</a>. Thin lines are fine detail, and thicker lines make colour differences
+    easier to see, for typical vision <a class="ref" href="#szafir2018">[68]</a>. That is a reason for the more contrast themes, and possibly the dark ones, to draw lines and grids heavier, and in dark themes to keep dash gaps and the space between grid lines generous, since light marks on dark tend to spread into the gaps between them. It is my inference from studies of text, letters
     and gratings, and I found no measurement of the gain for chart lines.</p>
 
   <h3 id="text">Text, labels, age and ability</h3>
@@ -676,10 +713,10 @@
           with the two largest colour differences than with the smallest (medians 3.5 and 3.6 s against 4.5 s). Eye
           movements suggested the middle size, 11 pt, gave the most efficient search; no statistics for size were
           available. Map labels, not chart labels</td><td>Open: abstract and the authors' web page</td></tr>
-      <tr id="row-kim2017"><th scope="row">Kim and Wiseheart 2017 <a class="ref" href="#kim2017">[81]</a></th><td>77 students: 29 with dyslexia, 48
-        without</td><td>Students with dyslexia took longer to answer questions about simple bar graphs, mostly because
-          they spent longer on the written question. With word labels they also looked longer at the x-axis, which they
-          didn't with icon labels</td><td>Established</td></tr>
+      <tr id="row-kim2017"><th scope="row">Kim and Wiseheart 2017 <a class="ref" href="#kim2017">[81]</a></th><td>80 college students
+        with and without dyslexia</td><td>Questions about simple bar graphs, with axes and legends labelled in words or
+          in icons, and the same questions as plain sentences. Students with dyslexia were slower only with the
+          sentences. Their eye movements differed from the others' only on graphs labelled in words, not in icons</td><td>Open: abstract only</td></tr>
       <tr id="row-milroy1978"><th scope="row">Milroy and Poulton 1978 <a class="ref" href="#milroy1978">[82]</a></th><td>not given in the abstract</td>
         <td>Labels placed directly on the lines gave "reliably the quickest readings" without loss of accuracy,
           against a key in two positions</td><td>Open: abstract only</td></tr>
@@ -691,19 +728,21 @@
         students in all</td><td>Legend entries in the same order as the bars or lines cut the time to understand
           graphs, mostly when reading interactions</td><td>With limits: 12 to 18 people per experiment</td></tr>
       <tr id="row-tran2024"><th scope="row">Tran, Lee and Park 2024 <a class="ref" href="#tran2024">[85]</a></th><td>70 adults with ADHD
-        (self-reported) and 77 without, online</td><td>Chart colour, amount of text and embellishments were varied.
-          Participants with ADHD were faster in all three tasks, and no difference in accuracy is reported. Green charts
-          were answered fastest and blue slowest</td><td>With limits: online; ADHD self-reported</td></tr>
+        (self-reported) and 77 without, online, on any device</td><td>Chart colour, amount of text and embellishments were varied, in three tasks always given in the same order.
+          Participants with ADHD were faster in all three, by 0.5 to 3.5 s on average (p from 0.03 to 0.05), and no difference in
+          accuracy is reported. In the colour task, a one-colour heat map in which people found the darkest square, green was
+          answered fastest and blue slowest</td><td>With limits: online; ADHD self-reported; read in the first author's thesis</td></tr>
       <tr id="row-wu2021"><th scope="row">Wu et al. 2021 <a class="ref" href="#wu2021">[86]</a></th><td>34 people in the US, 12 of them
         with a diagnosed intellectual disability or autism (6 of each), over video calls</td><td>Asked which of three
           ranges a part's share of the whole fell in, those with either disability were right 54% of the time with
-          stacked bars and 25% with pies, and countable marks (small dots or icons in place of solid bars and lines)
+          stacked bars and 25% with pies, below the 33% expected by guessing. Countable marks (small dots or icons in place of solid bars and lines)
           raised their accuracy at finding the highest value from 79% to 92%; neither made a clear difference for the
-          others. Both groups said they preferred pies. Made-up data, and the authors call the findings
+          others. Both groups said they preferred pies. Made-up data, many tests, and the authors call the findings
           preliminary</td><td>With limits: 12 with either disability</td></tr>
       <tr id="row-while2025"><th scope="row">While and Sarvghad 2025 <a class="ref" href="#while2025">[87]</a></th><td>148 adults aged 60 or over,
-        against younger adults</td><td>Across ten chart tasks the older group took longer but was nearly as accurate
-          (6% apart on average)</td><td>With limits: online; the younger group came from an earlier study</td></tr>
+        online (52 of 200 dropped for failing attention checks), against 180 aged 25 to 40 from an earlier study</td><td>Each person did one of ten simple
+          chart tasks. In a statistical model of the results the older group took about half as long again but was nearly as accurate
+          (6% apart on average)</td><td>With limits: online; about 15 older people per task; the younger group came from an earlier study</td></tr>
       <tr id="row-le2014"><th scope="row">Le et al. 2014 <a class="ref" href="#le2014">[88]</a></th><td>202 online volunteers in two
         experiments, many with a graduate degree: 102 aged 60 or over, 100 under 60</td><td>Judging marked parts of bar,
           stacked bar and pie charts, the older group took about 4 s longer per judgement, with accuracy as good or
@@ -711,24 +750,24 @@
           slightly more accurate but slower. The accuracy differences were about a percentage point or less</td>
         <td>With limits: online; read in the first author's thesis</td></tr>
       <tr id="row-vanweert2021"><th scope="row">van Weert et al. 2021 <a class="ref" href="#vanweert2021">[89]</a></th><td>446 adults on a
-        Dutch online panel: 227 aged 65 or over, 219 younger</td><td>Each person imagined choosing between two
+        Dutch online panel: 227 aged 65 or over, 219 younger; about 37 per format and age group</td><td>Each person imagined choosing between two
           treatments for a hernia and saw their risks in one of six formats, which stayed on screen while they answered.
           Asked how many people in 100 would be affected, they scored highest with a table and lowest with a pie, the
           only format with no numbers on it, which the authors think explains it. Asked at first sight which format
           appealed most, 73% picked a clock, bar or pie chart. Those aged 65 or over scored lower (3.09 against 3.42 out
-          of 4), and the authors conclude that tables are the format older adults understand best, though only 13.5% of
-          all 446 had picked a table</td><td>Established</td></tr>
+          of 4), even with a table (3.59 against 3.92). The authors conclude that tables are the format older adults understand best, though only 13.5% of
+          all 446 had picked a table</td><td>With limits: one made-up scenario; about 37 per group</td></tr>
       <tr id="row-tao2018"><th scope="row">Tao, Yuan and Qu 2018 <a class="ref" href="#tao2018">[90]</a></th><td>72 adults with self-reported typical colour
         vision: 36 aged 60 or over and 36 aged 18 to 40</td>
         <td>Made-up blood pressure and blood sugar readings on a number line, in four formats: plain; green for normal
           and red for abnormal; the same with text saying whether each was normal; and that with an average for people
-          of the reader's age and sex. Format made no significant difference to accuracy or time, though the two formats
+          of the reader's age and sex. Format made no significant difference to accuracy or time, though with 36 per group a small effect could be missed. The two formats
           with text were rated easier to understand and more useful. The older group was slower and less accurate
           overall (66.5% against 90.1% correct when reading exact values), and format didn't change the gap
           significantly. A number line, not a chart with axes, and all the younger group had been to university,
-          against 11 of the 36 older</td><td>Established</td></tr>
+          against 11 of the 36 older</td><td>With limits: 36 per age group</td></tr>
       <tr id="row-fan2023"><th scope="row">Fan et al. 2023 <a class="ref" href="#fan2023">[91]</a></th><td>18 adults aged 60 to 78 (the preprint's
-        introduction says 14), at home on their own computers; none reported an impairment</td>
+        introduction says 14), at home on their own computers; none colour-blind, by how it isn't said</td>
         <td>They thought aloud while using five real interactive COVID-19 charts and maps. The main problem with legends
           and axis labels was their absence: without a legend some were unsure what circle size meant, and one took the
           numbers on an unlabelled axis of deaths for days. Some text was found too small or too faint, and one person
@@ -737,8 +776,8 @@
           or counted</td>
         <td>With limits: 18 people, think-aloud; preprint read</td></tr>
       <tr id="row-chartability2022"><th scope="row">Elavsky, Bennett and Moritz 2022 <a class="ref" href="#chartability2022">[92]</a></th><td>auditing method</td>
-        <td>Chartability: 45 heuristics for auditing a chart's accessibility, under seven principles, 10 of them marked
-          critical</td><td>With limits: an auditing method, not a study of readers</td></tr>
+        <td>Chartability: heuristics for auditing a chart's accessibility, under seven principles. The paper's version had 45, 10 of them marked
+          critical; the current online version has 50, 14 of them critical</td><td>With limits: an auditing method, not a study of readers</td></tr>
     </tbody>
   </table></div>
   <p class="note">I found no study of label or tick size in charts. Besides print guidance, I found a study of map labels at three sizes with young students, known only from its abstract and the authors' summary <a class="ref" href="#brychtova2016">[80]</a>, and a think-aloud study in which some older adults found some chart text too small <a class="ref" href="#fan2023">[91]</a>. A figure's text is set
@@ -751,18 +790,20 @@
     <thead><tr><th scope="col">Study</th><th scope="col">What was examined</th><th scope="col">Found</th><th scope="col">Strength</th></tr></thead>
     <tbody>
       <tr id="row-jambor2021"><th scope="row">Jambor et al. 2021 <a class="ref" href="#jambor2021">[93]</a></th><td>580 papers with images, published in
-        April 2018 in the top 15 journals of each of plant sciences, cell biology and physiology</td><td>Papers that
+        April 2018 in the top 15 journals of each of plant sciences, cell biology and physiology. Photographs and
+        microscope images only; graphs and data figures were left out</td><td>Papers that
           met every good-practice criterion for all their image figures were uncommon: 16% in physiology, 12% in cell
           biology and 2% in plant sciences. Checked with a simulation of deuteranopia (Color Oracle), 45% of cell
           biology papers and 21% to 24% of the others had some images inaccessible to readers with it, and 17% to 34%
           had colour annotations they couldn't see. 10% to 29% of papers gave no scale on any image</td>
-        <td>With limits: colour judged with a simulation of one deficiency</td></tr>
+        <td>With limits: colour judged with a simulation of one deficiency; no charts</td></tr>
       <tr id="row-stevens2024"><th scope="row">Stevens et al. 2024 <a class="ref" href="#stevens2024">[94]</a></th><td>66,253 images from eLife
         articles, 2012 to 2022; 4,964 of them checked by hand</td><td>By a contrast measure, 85.6% had at least one
           pair of colours that could be hard to tell apart with deuteranopia, though labels and spacing often made up
           for it. Checked by hand against a simulation, 636 of the 4,964 (12.8%) would be hard for such readers to
-          interpret. The share of problem articles fell from 2012 to 2021</td>
-        <td>With limits: judged with a simulation of one deficiency</td></tr>
+          interpret. The share of problem articles fell from 2012 to 2021. In a sample from PubMed Central the rate was
+          about 5%</td>
+        <td>With limits: a simulation of one deficiency, judged by two reviewers without it</td></tr>
       <tr id="row-pollet2021"><th scope="row">Pollet and Bond 2021 <a class="ref" href="#pollet2021">[95]</a></th><td>2,873 figures in 1,031 papers
         from 27 ornithology journals, 2019</td><td>About 26% of the figures were in colour. Most of those were
           colour-blind compatible, but only about 60% would still work printed in black and white</td>
@@ -777,18 +818,20 @@
         parts) from the three latest research articles in each of nine leading medical journals, July 2024</td>
         <td>107 of the 138 panels fell partly or wholly short of WCAG 2.1 AA for colour contrast and labelling (the
           preprint gives 80%; the counts give 78%), and 215 of the 395 parts were judged completely inaccessible to
-          people with red-green deficiency, using a contrast checker's simulator</td>
-        <td>With limits: a preprint, not peer reviewed; 27 articles</td></tr>
+          people with red-green deficiency, using a contrast checker's simulator. The number of raters isn't given</td>
+        <td>With limits: a preprint, not peer reviewed; 27 articles; first author from a colour-blindness charity</td></tr>
       <tr id="row-wang2021"><th scope="row">Wang et al. 2021 <a class="ref" href="#wang2021">[98]</a></th><td>11,397 paper PDFs from 2010 to 2019,
         many fields, with Acrobat's accessibility checker</td><td>About 2.4% met all five criteria (alt text, table
-          headers, tags for reading order, language and tab order), and 854 (7.5%) had alt text for figures. The
-          authors say these features "must be painstakingly added by authors using proprietary software tools"</td>
-        <td>With limits: preprint</td></tr>
+          headers, tags for reading order, language and tab order), and 854 (7.5%) passed the check for figure alt text.
+          The check finds alt text, not whether it describes anything. The authors say these features "must be
+          painstakingly added by authors using proprietary software tools"</td>
+        <td>With limits: preprint; an automatic check of presence, not quality</td></tr>
       <tr id="row-kumar2024"><th scope="row">Kumar and Wang 2024 <a class="ref" href="#kumar2024">[99]</a></th><td>20,000 paper PDFs from 2014 to
         2023, open and closed access</td><td>3.2% met all six criteria and 74.9% met none. 8.5% passed the check for
-          figure alt text, but on review only 5 PDFs had meaningful descriptions. PDFs made with Word complied most,
-          and those made with LaTeX or the typesetting systems XPP and Arbortext APP least. Compliance fell after
-          2019, most among open-access papers</td><td>Established</td></tr>
+          figure alt text, but of 1,536 of these reviewed by hand, only 5 had meaningful descriptions. PDFs made with
+          Word complied most, and those made with LaTeX or the typesetting systems XPP and Arbortext APP least.
+          Compliance fell after 2019, mostly among open-access papers, though these still scored higher overall. About
+          14% of PDFs couldn't be checked and were left out</td><td>Established</td></tr>
     </tbody>
   </table></div>
   <p class="note" id="journals-ask">What journals ask of authors varies. PLOS's figure guidelines say "Preparation
@@ -810,9 +853,10 @@
     <thead><tr><th scope="col">Source</th><th scope="col">What it says</th><th scope="col">Bearing on themes</th></tr></thead>
     <tbody>
       <tr id="row-frankston2024"><th scope="row">Frankston et al. 2024 <a class="ref" href="#frankston2024">[102]</a></th><td>arXiv has offered HTML versions
-        of papers since October 2023, converted from the authors' LaTeX source, because PDFs are hard to use with
-        assistive technology. arXiv's own account, as a preprint</td><td>The web version is built from the source,
-          so a figure reaches it as the file the author included, converted for the web</td></tr>
+        of papers since 1 December 2023, converted from the authors' LaTeX source, because PDFs are hard to use with
+        assistive technology. arXiv's own account, as a preprint</td><td>The web version is built from the source.
+          The paper doesn't say how figure files are converted; it says TikZ diagrams weren't yet supported. Its web pages
+          already switch to dark mode when the browser is set to it</td></tr>
       <tr id="row-jats13"><th scope="row">JATS 1.3, the graphic element <a class="ref" href="#jats13">[103]</a></th><td>In the XML that journals and
         PubMed Central use for articles, a figure's graphic is a "pointer to an external file containing a still
         image", "usually some form of binary object"</td><td>Whether a figure can be themed on a journal's web page
@@ -825,8 +869,7 @@
   <p class="note">PLOS takes figures as TIFF or EPS only <a class="ref" href="#plosfigures">[100]</a>, and tools that
     turn PDFs into web pages, such as SciA11y, work from the PDF instead <a class="ref" href="#wang2021">[98]</a>.
     A figure made with colours for each theme could go into a themed PDF and onto a web page as SVG, where a browser
-    shows the version that matches the reader's light, dark or more contrast setting, as my thesis figures do. That
-    needs the routes above to keep SVG figures; none does today. It is my inference that this would help readers, and
+    shows the version that matches the reader's light, dark or more contrast setting, as my thesis figures do. That needs the routes above to keep SVG figures. PubMed Central and PLOS don't accept them today; JATS allows other formats but expects a binary image, and arXiv's account doesn't say how figures are converted, though its pages already follow the browser's dark mode. It is my inference that this would help readers, and
     nobody has tested it.</p>
 </div></section>
 
@@ -850,7 +893,8 @@
         <td class="part">the minimum the demo's chart lines meet; the tool lists shapes below it</td></tr>
       <tr id="row-mq5"><th scope="row">CSS Media Queries Level 5, a W3C working draft <a class="ref" href="#mq5">[106]</a></th><td>A page can
         follow the reader's light or dark setting (<code>prefers-color-scheme</code>), more contrast
-        (<code>prefers-contrast</code>) and forced colours</td><td class="no">no setting for a tint</td></tr>
+        (<code>prefers-contrast</code>) and forced colours</td><td class="no">no setting for a tint, though a note
+        says light and dark may later be joined by others "like sepia"</td></tr>
       <tr id="row-iso32000"><th scope="row">PDF (ISO 32000-2) <a class="ref" href="#iso32000">[107]</a></th><td>A page's colours are written once in its
         content; optional content can show or hide alternative layers</td>
         <td class="no">no themes; what this project proposes</td></tr>
@@ -861,8 +905,9 @@
       <tr id="row-henry2012"><th scope="row">Henry 2012 <a class="ref" href="#henry2012">[109]</a></th><td>Text customisation in PDF readers, from a
         literature review and an exploratory study with people who have low vision or dyslexia (numbers not
         given)</td>
-        <td class="no">Adobe Reader then let people change text and background colours, but not font, size or
-          spacing, and the study found PDF not accessible enough for many of them</td></tr>
+        <td class="no">Adobe Reader then let people change text and background colours and zoom, but not font, line
+          spacing or the size of particular elements, and the study found PDF not accessible enough for many of them.
+          Participants' colours ranged from black on brown to white on black</td></tr>
     </tbody>
   </table></div>
   <p class="note" id="dark-mode-request">No PDF standard has themes yet, and the gap is known. On the PDF Association's
@@ -902,8 +947,7 @@
   </table></div>
   <p class="note">So a figure pipeline could do three things. This is a plan, made on 24 October, and none of it is built
     yet: production rules (colours that survive colour vision deficiency, a second cue for every series, dashes only on
-    long lines, text checked at print size, vector output), rules per theme (colours; and, only if the specification
-    allows it and a study shows it helps, heavier lines and longer dash gaps in the more contrast themes), and checks per
+    long lines, text checked at print size, vector output), rules per theme (colours; and heavier lines and longer dash gaps in the more contrast themes, which draft 0.4 of the specification now allows, though no study has yet shown they help), and checks per
     theme (contrast, and a colour vision deficiency simulation of each theme's colours, since moving colours for
     contrast can bring two series closer).</p>
 </div></section>
@@ -1077,6 +1121,13 @@
   <p class="eyebrow">How this was gathered</p>
   <h2>Searches, checks and what was left out</h2>
   <ul>
+    <li>On 10 November 2026 every study in the tables was read again and appraised: its numbers checked against the
+      paper, and its design looked at for small or unmatched groups, untested diagnoses, fixed order, trials counted as
+      independent, claims beyond the data, and authors testing their own method. About two thirds of the rows were
+      corrected, mostly to add a limit; twelve studies first marked Established are now marked With limits. Where a paper
+      couldn't be opened, its row says what was read. Four claims still rest on sources that couldn't be opened: the
+      speeds in Wilkins et al. 2001, the quotes from the British Dyslexia Association's guide, Gregor and Newell 2000,
+      and the details of Buchner et al. 2009 beyond its abstract.</li>
     <li>The searches were made on 9 and 24 October 2026 in PubMed, Crossref, OpenAlex, Semantic Scholar, arXiv and the
       web, for the best direct evidence on each point. A second search on 24 October looked for studies missing from the
       first, in six areas: colour vision deficiency, marks and lines, text and labels, tints, polarity, and readers with
@@ -1102,21 +1153,24 @@
   <p>The second search also found these. They bear on the claims above but aren't in the tables.</p>
   <ul>
     <li>Eperjesi, Fowler and Evans 2004 <a class="ref" href="#eperjesi2004">[111]</a> (Open: abstract only). In 12 people
-      with macular degeneration, ten coloured overlays made no significant difference to reading speed against a clear
-      one.</li>
+      with macular degeneration, reading printed text, ten coloured overlays made no significant difference to reading speed
+      against a clear one, and rose, purple and blue ranked worse than the rest. With 12 people, a small effect can't be ruled out.</li>
     <li>D'Ath 2008 <a class="ref" href="#dath2008">[112]</a> (With limits: a doctoral thesis). Of 40 office workers, 39
-      preferred a tinted screen to white, but their reading and task scores didn't change significantly, and in a pilot
+      preferred a tinted screen to white, but their reading and task scores didn't change significantly. Eye-strain
+      symptoms fell after a week or two, significant by one test but not another, with no masking. In a pilot
       with three groups of 10 people with low vision, the colour each chose didn't speed their reading significantly. The tints were
-      also dimmer than white.</li>
-    <li>Jiménez et al. 2020 <a class="ref" href="#jimenez2020">[113]</a> (With limits: 20 people). In young adults with
-      typical sight, the colours of text and background made no significant difference to reading speed, though dark on
-      light was faster overall; white text on yellow, with almost no contrast, was rated least legible.</li>
+      also dimmer than white, and the author notes a grey of equal brightness was needed as a control.</li>
+    <li>Jiménez et al. 2020 <a class="ref" href="#jimenez2020">[113]</a> (Open: abstract only). In 20 young adults with
+      typical sight, reading 2-minute passages in 14 colour pairs, the colours made no significant difference to reading
+      speed, though with 20 people a small effect can't be ruled out. White with yellow, with little contrast, was rated least legible. The study's main
+      measure was the eye's focusing, which dark text on light made more variable.</li>
     <li>Westheimer et al. 2003 <a class="ref" href="#westheimer2003">[78]</a> (Open: abstract only). In 106 patients aged
-      20 to 88, letter acuity was on average about 4% better with white letters on black, and more so the older the
-      patient. Single letters, not reading.</li>
+      20 to 88, letter acuity was on average about 4% better with white letters on black, roughly one letter on the chart,
+      and more so the older the patient. Single letters, not reading.</li>
     <li>Lillo, Álvaro and Moreira 2014 <a class="ref" href="#lillo2014">[52]</a> (Open: abstract only). Of three tools
-      that simulate colour vision deficiency, checked against 10 people with full red-green colour blindness, only Vischeck appeared accurate;
-      Coblis didn't. Angerbauer and others used Coblis for other forms of the deficiency. The tools may have changed since.</li>
+      that simulate colour vision deficiency, checked on two colour-matching tasks against 10 people with full red-green
+      colour blindness, only Vischeck appeared accurate; Coblis and Variantor didn't. Angerbauer and others used Coblis for
+      other forms of the deficiency. The tools may have changed since.</li>
     <li>Mason et al. 2026 <a class="ref" href="#mason2026">[114]</a> (Not about colour vision deficiency). An online study of
       maps that show uncertainty, read as Ishihara-style plates by 137 people. About 7 said they were colour blind or
       unsure, and their answers weren't analysed apart, so it says nothing about which colours suit them.</li>
@@ -1127,19 +1181,19 @@
       colours.</li>
     <li>Wei et al. 2020 <a class="ref" href="#wei2020">[116]</a> (With limits: 20 people; the authors' version). When 20
       students judged scatterplots seen for a quarter of a second, enlarging a plot with its points made it look less
-      numerous and more correlated, and shrinking it did the reverse. Changing the size of the points only partly
-      corrected this, and differently for each judgement; value reading wasn't tested.</li>
+      numerous and more correlated, and shrinking it did the reverse. The bias was large for the number of points and
+      small for correlation. Changing the size of the points only partly corrected this, and differently for each
+      judgement; value reading wasn't tested.</li>
     <li>Okan, Galesic and Garcia-Retamero 2016 <a class="ref" href="#okan2016">[117]</a> (With limits: read in the authors'
       manuscript). In two eye-tracking experiments, with 48 and then 51 adults aged 18 to 38, some health graphs were
       made so that the title, an axis label or the scale went against what the graph's shape suggested, such as an
       upside-down scale. People who scored lower on a test of graph reading more often went by the shape and answered
       wrongly, and in the second experiment most graphs with an unusual scale were answered correctly less than half the
-      time, even by those who scored higher.</li>
-    <li>Galesic, Garcia-Retamero and Gigerenzer 2009 <a class="ref" href="#galesic2009">[118]</a> (Established). In 59 adults
-      aged 62 to 77 and 112 students in Berlin, adding an icon array (1,000 circles, those affected in black) to the
-      numbers raised the share who got the size of a risk reduction right, most for those whose numeracy was low for their
-      group, with no significant difference between the age groups. Low numeracy meant the lower half of each group, not
-      a disability.</li>
+      time, even by those who scored higher. Lower meant lower within a young sample in Berlin, not a disability.</li>
+    <li>Galesic, Garcia-Retamero and Gigerenzer 2009 <a class="ref" href="#galesic2009">[118]</a> (With limits: one study,
+      read in the abstract). In 59 adults aged 62 to 77 and 112 students, adding an icon array to the numbers raised the share
+      who got the size of a risk reduction right, for people with both low and high numeracy. Arrays of 1,000 icons made
+      risks look more serious than arrays of 100. Low numeracy meant low within each group, not a disability.</li>
     <li>Tao, Yuan and Qu 2019 <a class="ref" href="#tao2019">[119]</a> (Open: abstract only). In 36 older and 36 young adults
       reading made-up personal health records, tables and line graphs with added visual cues took less time and gave
       fewer errors than plain versions, and a line graph with a coloured background was the format both groups preferred.
@@ -1162,6 +1216,7 @@
     <li id="wang2024">Wang, Y., Zhao, Y. and Kim, Y.-S. (2024). How do low-vision individuals experience information visualization? <i>Proceedings of the CHI Conference on Human Factors in Computing Systems (CHI '24)</i>, 1–15. <a href="https://doi.org/10.1145/3613904.3642188">doi:10.1145/3613904.3642188</a></li>
     <li id="karunathilaka2025">Karunathilaka, M., Zhang, S., Tang, A., Hara, K., Li, J. and Wang, Y. (2025). Chameleon: automated color palette adaptation for dark mode data visualizations. <i>Proceedings of the International Conference on Human-Engaged Computing (ICHEC '25)</i>, 1–12. <a href="https://doi.org/10.1145/3786995.3787017">doi:10.1145/3786995.3787017</a>; preprint <a href="https://arxiv.org/abs/2512.00516">arXiv:2512.00516</a></li>
     <li id="rello2017">Rello, L. and Bigham, J. P. (2017). Good background colors for readers: a study of people with and without dyslexia. <i>Proceedings of ASSETS '17</i>, 72–80. <a href="https://doi.org/10.1145/3132525.3132546">doi:10.1145/3132525.3132546</a></li>
+    <li id="rello2017uais">Rello, L. and Baeza-Yates, R. (2017). How to present more readable text for people with dyslexia. <i>Universal Access in the Information Society</i> 16(1), 29–49. <a href="https://doi.org/10.1007/s10209-015-0438-8">doi:10.1007/s10209-015-0438-8</a></li>
     <li id="griffiths2016">Griffiths, P. G., Taylor, R. H., Henderson, L. M. and Barrett, B. T. (2016). The effect of coloured overlays and lenses on reading: a systematic review of the literature. <i>Ophthalmic and Physiological Optics</i> 36(5), 519–544. <a href="https://doi.org/10.1111/opo.12316">doi:10.1111/opo.12316</a></li>
     <li id="evans2016">Evans, B. J. W. and Allen, P. M. (2016). A systematic review of controlled trials on visual stress using Intuitive Overlays or the Intuitive Colorimeter. <i>Journal of Optometry</i> 9(4), 205–218. <a href="https://doi.org/10.1016/j.optom.2016.04.002">doi:10.1016/j.optom.2016.04.002</a></li>
     <li id="nothelfer2017">Nothelfer, C., Gleicher, M. and Franconeri, S. (2017). Redundant encoding strengthens segmentation and grouping in visual displays of data. <i>Journal of Experimental Psychology: Human Perception and Performance</i> 43(9), 1667–1676. <a href="https://doi.org/10.1037/xhp0000314">doi:10.1037/xhp0000314</a></li>
@@ -1187,7 +1242,6 @@
     <li id="andrew2025">Andrew, S. and Tigwell, G. W. (2025). Understanding the experiences of people with and without vision impairments when using mobile user interface alternative color modes. <i>Proceedings of the ACM on Human-Computer Interaction</i> 9(5), article MHCI034. <a href="https://doi.org/10.1145/3743704">doi:10.1145/3743704</a></li>
     <li id="prakash2024">Prakash, Y., Kolgar Nayak, A., Jayarathna, S., Lee, H.-N. and Ashok, V. (2024). Understanding low vision graphical perception of bar charts. <i>Proceedings of ASSETS '24</i>, 1–10. <a href="https://doi.org/10.1145/3663548.3675616">doi:10.1145/3663548.3675616</a></li>
     <li id="rello2012">Rello, L. and Baeza-Yates, R. (2012). Optimal colors to improve readability for people with dyslexia. <i>Text Customization for Readability Online Symposium</i>, W3C Web Accessibility Initiative. <a href="https://www.w3.org/WAI/RD/2012/text-customization/r11">w3.org/WAI/RD/2012/text-customization/r11</a></li>
-    <li id="rello2017uais">Rello, L. and Baeza-Yates, R. (2017). How to present more readable text for people with dyslexia. <i>Universal Access in the Information Society</i> 16(1), 29–49. <a href="https://doi.org/10.1007/s10209-015-0438-8">doi:10.1007/s10209-015-0438-8</a></li>
     <li id="vajs2022">Vajs, I., Ković, V., Papić, T., Savić, A. M. and Janković, M. M. (2022). Spatiotemporal eye-tracking feature set for improved recognition of dyslexic reading patterns in children. <i>Sensors</i> 22(13), 4900. <a href="https://doi.org/10.3390/s22134900">doi:10.3390/s22134900</a></li>
     <li id="vajs2023">Vajs, I., Papić, T., Ković, V., Savić, A. M. and Janković, M. M. (2023). Accessible dyslexia detection with real-time reading feedback through robust interpretable eye-tracking features. <i>Brain Sciences</i> 13(3), 405. <a href="https://doi.org/10.3390/brainsci13030405">doi:10.3390/brainsci13030405</a></li>
     <li id="otermans2026">Otermans, P. C. J., Seon, J., Cooper, E. E., Roomi, A., Baines, S. and Aditya, D. (2026). How do adults with neurodevelopmental disorders prefer information being presented? <i>Educational Media International</i> 63(1), 6–27. <a href="https://doi.org/10.1080/09523987.2025.2544118">doi:10.1080/09523987.2025.2544118</a></li>
