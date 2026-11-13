@@ -11,7 +11,7 @@
 // This copy is the one the tests merge, so every build draws the same text and
 // shapes: it prints nothing about the theme it was built in. out/ holds the
 // eight builds, made with
-//   typst compile --input mode=<mode> --pdf-standard 2.0 --font-path ../../examples/fonts theme-lab.typ out/<mode>.pdf
+//   typst compile --input mode=<mode> --pdf-standard a-2a,ua-1 --font-path ../../examples/fonts theme-lab.typ out/<mode>.pdf
 
 #import "@preview/lilaq:0.6.0" as lq
 
@@ -58,8 +58,12 @@
 #let t = themes.at(mode)
 #let series = lq.color.map.petroff10.map(c => fit(c, t.paper, t.ink, t.line-min))
 
+#set document(title: "Theme lab", author: "Mathew Newman")
 #set page(width: 210mm, height: auto, margin: 12mm, fill: t.paper)
-#set text(font: ("Inter", "DejaVu Sans"), size: 9pt, fill: t.ink)
+#set text(font: ("Inter", "DejaVu Sans"), size: 9pt, fill: t.ink, lang: "en", region: "gb")
+// Each plot is a figure with alt text, and the alt text is the same in every
+// theme, so it names no colour that a theme changes.
+#show figure: set align(start)
 
 #show: lq.set-diagram(cycle: series)
 #show: lq.set-spine(stroke: 0.6pt + t.ink)
@@ -74,25 +78,42 @@ colours are fitted to the paper so lines and marks keep their contrast.
 #let xs = lq.linspace(0, 10, num: 120)
 
 #grid(columns: 2, gutter: 8mm,
-  lq.diagram(
-    width: 80mm, height: 50mm, title: [Six series], xlabel: [time (ms)], ylabel: [signal (V)],
-    legend: (position: bottom + right),
-    ..range(6).map(k => lq.plot(xs, xs.map(x => calc.sin(x + k) * calc.exp(-x / 8)), mark: none,
-      label: [run #(k + 1)])),
+  figure(alt: "Line plot titled Six series: six damped waves, runs 1 to 6, each starting at a different "
+      + "phase, signal in volts against time from 0 to 10 ms. Each swings between about plus and minus "
+      + "1 V at the start and dies away towards 0 V. A legend at the bottom right names the runs.",
+    lq.diagram(
+      width: 80mm, height: 50mm, title: [Six series], xlabel: [time (ms)], ylabel: [signal (V)],
+      legend: (position: bottom + right),
+      ..range(6).map(k => lq.plot(xs, xs.map(x => calc.sin(x + k) * calc.exp(-x / 8)), mark: none,
+        label: [run #(k + 1)])),
+    ),
   ),
-  lq.diagram(
-    width: 80mm, height: 50mm, title: [Bars and marks], xlabel: [sample],
-    lq.bar(range(1, 9), (3, 5, 2, 6, 4, 7, 5, 3)),
-    lq.plot(range(1, 9), (2.5, 4, 2.5, 5, 4.5, 6, 4, 3.5), mark: "o", stroke: none),
+  figure(alt: "Bar chart titled Bars and marks: eight samples with bars of height 3, 5, 2, 6, 4, 7, 5 "
+      + "and 3, and a round mark on each at 2.5, 4, 2.5, 5, 4.5, 6, 4 and 3.5.",
+    lq.diagram(
+      width: 80mm, height: 50mm, title: [Bars and marks], xlabel: [sample],
+      lq.bar(range(1, 9), (3, 5, 2, 6, 4, 7, 5, 3)),
+      lq.plot(range(1, 9), (2.5, 4, 2.5, 5, 4.5, 6, 4, 3.5), mark: "o", stroke: none),
+    ),
   ),
-  lq.diagram(
-    width: 80mm, height: 50mm, title: [Error bars], xlabel: [dose],
-    lq.plot(range(0, 10), range(0, 10).map(x => 1 / (1 + calc.exp(-(x - 5)))), yerr: 0.08, mark: "s"),
+  figure(alt: "Plot titled Error bars: an S-shaped curve against dose from 0 to 9, rising from near 0 "
+      + "to near 1 and passing 0.5 at a dose of 5, with a square mark and an error bar of 0.08 on each "
+      + "point.",
+    lq.diagram(
+      width: 80mm, height: 50mm, title: [Error bars], xlabel: [dose],
+      lq.plot(range(0, 10), range(0, 10).map(x => 1 / (1 + calc.exp(-(x - 5)))), yerr: 0.08, mark: "s"),
+    ),
   ),
   {
     let mesh = lq.colormesh(lq.linspace(-2, 2, num: 40), lq.linspace(-2, 2, num: 30),
       (x, y) => calc.exp(-(x * x + y * y)) * calc.cos(2 * x), map: color.map.viridis)
-    lq.diagram(width: 64mm, height: 50mm, title: [Heatmap (an image: viridis in every theme)], mesh)
+    // The heatmap is an image and keeps its colours in every theme, so its
+    // alt text can name them.
+    figure(alt: "Heatmap titled Heatmap, an image in the viridis colour map in every theme: x from "
+        + "-2 to 2 and y from -2 to 2. A bright yellow peak at the centre fades through green and blue "
+        + "to dark purple, with the darkest purple in two shallow troughs to its left and right.",
+      lq.diagram(width: 64mm, height: 50mm, title: [Heatmap (an image: viridis in every theme)], mesh),
+    )
   },
 )
 
@@ -100,7 +121,7 @@ colours are fitted to the paper so lines and marks keep their contrast.
 
 #table(
   columns: 3, stroke: 0.4pt + t.rule, inset: 4pt,
-  [*Series*], [*Petroff 10*], [*In this theme*],
+  table.header([*Series*], [*Petroff 10*], [*In this theme*]),
   ..range(10).map(i => (
     [#(i + 1)],
     box(width: 22mm, height: 3mm, fill: lq.color.map.petroff10.at(i)),
