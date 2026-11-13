@@ -35,10 +35,10 @@ Themes built from source, one build per theme:
 | | Theme lab, 1 page of plots | Objects test, 31 pages |
 | --- | --- | --- |
 | Builds | 8, one per standard theme | 2, light and dark |
-| Light build | 38,318 bytes | 1,900,431 bytes |
-| Themed file, Light and Dark | 39,034 (+1.9%) | 1,943,737 (+2.3%) |
-| Themed file, all 8 themes | 39,966 (+4.3%) | |
-| The builds as separate files | 304,725 | 3,800,176 |
+| Light build | 34,839 bytes | 1,900,431 bytes |
+| Themed file, Light and Dark | 35,483 (+1.8%) | 1,943,737 (+2.3%) |
+| Themed file, all 8 themes | 36,576 (+5.0%) | |
+| The builds as separate files | 276,935 | 3,800,176 |
 | Each theme against its own build | identical in Poppler, MuPDF and PDFium | identical in PDFium but for page 2 |
 | Themes that passed their contrast check | 8 of 8 | see below |
 
@@ -327,19 +327,52 @@ veraPDF 1.28.2 is the full validation, and themed files pass it:
 | File | Standard | Light build | Themed file | Each theme as a reader shows it |
 | --- | --- | --- | --- | --- |
 | Theme lab, 8 themes | PDF/A-2b | passes | passes | 7 of 7 pass |
-| Theme lab, 8 themes | PDF/A-2u | passes | passes | 7 of 7 pass |
+| Theme lab, 8 themes | PDF/A-2a | passes | passes | 7 of 7 pass |
 | Theme lab, 8 themes | PDF/A-4 | passes | passes | 7 of 7 pass |
+| Theme lab, 8 themes | PDF/UA-1 | passes | passes | 7 of 7 pass |
+| Theme lab, 8 themes | PDF/UA-2 | passes | passes | 7 of 7 pass |
+| Test page, 8 themes | PDF/A-2a | passes | passes | 7 of 7 pass |
+| Test page, 8 themes | PDF/UA-1 | passes | passes | 7 of 7 pass |
+| Test page, 8 themes | PDF/UA-2 | passes | passes | 7 of 7 pass |
 | The proposal, 8 themes | PDF/A-2a | passes | passes | 7 of 7 pass |
 | The proposal, 8 themes | PDF/UA-1 | passes | passes | 7 of 7 pass |
+| The proposal, 8 themes | PDF/UA-2 | passes | passes | 7 of 7 pass |
+
+These were checked on 13 November 2026. The PDF/UA-2 builds come from a
+prototype of Typst that adds `--pdf-standard ua-2`
+([typst-pdf-ua2](https://thenewmanator15.github.io/typst-pdf-ua2/)), since
+Typst 0.15 writes PDF/UA-1 only. Before the prototype tagged each line of a
+code block as `Sub`, the proposal failed one PDF/UA-2 rule, in the file as
+stored and so in every theme: its code block was a `Code` holding a `P` per
+line (ISO 32005, Code-P-1). That was the tagging, not the themes. The test
+page and the theme lab in the demo are the PDF/A-2a and PDF/UA-1 builds,
+made with Typst 0.15.1:
+
+```
+pdf-themes typst examples/sample/sample.typ -o demo/sample-themed.pdf --font-path examples/fonts --ignore-system-fonts --pdf-standard a-2a,ua-1 --dark-paper 1C1C1E --derive
+```
+
+and for the theme lab, `pdf-themes merge` over the eight builds in
+`tests/theme-lab/out`. The test page's figures in the tables above come from
+`tools/run.py`, which builds it as PDF 2.0 without tags.
+
+The other files in the demo aren't PDF/UA, and aren't meant to be. The
+objects test holds every kind of object a PDF 2.0 file can contain, some of
+them broken on purpose. The matplotlib figure and the scan are untagged
+inputs, as most PDFs are, and show what the tool does with a file it gets as
+it is.
 
 A validator only checks what the pages reach, and nothing reaches an alternate
 theme's objects until that theme is shown. So `tools/verapdf.py themed.pdf`
 validates the file as stored and then each theme as a file of its own, with
 its objects swapped in. The theme lab can't be built as PDF/A-1b, because its
-heatmap has transparency, or as a tagged standard, because its plots have no
-alt text, which is why the tagged standards were tested on the proposal.
-`tests/test_conformance.py` runs the proposal through veraPDF when it's
-installed.
+heatmap has transparency. `tests/test_conformance.py` runs the proposal
+through veraPDF when it's installed.
+
+The tags, alt text included, are shared by every theme. So alt text that
+names a colour has to be true in all of them: the theme lab's plots are
+described by their labels and shapes, and only the heatmap, an image every
+theme keeps, is described by its colours (R6-13 in [SPEC.md](SPEC.md)).
 
 PDF/UA covers structure and tagging. Its tests for PDF/UA-1, the Matterhorn
 Protocol 1.1, have one check on colour (04-001: meaning shown by colour or
