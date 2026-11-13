@@ -58,6 +58,12 @@ def image_family(path):
         return str(space[0]) if isinstance(space, pikepdf.Array) else str(space)
 
 
+def image_bits(path):
+    with pikepdf.open(path) as pdf:
+        (x,) = [o for o in pdf.pages[0].Resources.XObject.values() if o.get("/Subtype") == "/Image"]
+        return int(x.BitsPerComponent)
+
+
 def render(path, scale):
     doc = pdfium.PdfDocument(str(path))
     try:
@@ -78,13 +84,13 @@ def test_a_matted_image_keeps_its_colour_space_and_its_look(tmp_path):
 def test_the_same_image_without_a_matte_still_gets_a_palette(tmp_path):
     """The control: without Matte this is a drawing on white and is given a palette.
 
-    Its two colours are packed one bit to an index, and PDFium draws a 1-bit image
-    one level off where it resamples it (MuPDF and Poppler don't), so the look is
-    held to one level here and not to the pixel."""
+    Its two colours are packed two bits to an index, not one: PDFium draws a 1-bit
+    image a level off where it resamples it (MuPDF and Poppler don't), and the
+    same image at 2 bits exactly as it draws the RGB one."""
     src, out = tmp_path / "plain.pdf", tmp_path / "themed.pdf"
     build(src, matte=False)
     add(src, out)
     assert image_family(out) == "/Indexed"
+    assert image_bits(out) == 2
     for scale in (1, 2):
-        diff = np.abs(render(src, scale).astype(int) - render(out, scale).astype(int))
-        assert diff.max() <= 1
+        assert np.array_equal(render(src, scale), render(out, scale))

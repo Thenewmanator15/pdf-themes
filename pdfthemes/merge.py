@@ -1262,7 +1262,9 @@ class Merger:
             pal.area.append(0.0)
         self.palette_list.append(pal)
         n = len(pairs)
-        bpc = 8 if n > 16 else 4 if n > 4 else 2 if n > 2 else 1
+        # Never 1 bit: PDFium resamples a 1-bit palette image a level away from the
+        # same image in RGB, and draws it the same at 2 bits (corpus, 13 November).
+        bpc = 8 if n > 16 else 4 if n > 4 else 2
         idx = inverse.reshape(h, w).astype(np.uint8)
         if bpc < 8:
             bits = np.unpackbits(idx[:, :, None], axis=2)[:, :, 8 - bpc:].reshape(h, w * bpc)
