@@ -323,6 +323,12 @@ writer.
   and shall write `Checked` only for a theme that passed (9.4).
 - **R6-12** A writer should give every annotation and form field an
   appearance stream. Readers draw ones without differently (7.5).
+- **R6-13** The structure tree is shared by every theme (R7.6-4), so alt
+  text, actual text, expansions and captions are read out the same whichever
+  theme is shown. Words in them about colour shall be true in every theme. "The
+  red line" fails if Dark draws that series orange; name the series by its
+  label, marker or position instead. A colour that every theme keeps, such as
+  a photo's or a heatmap image's, can be named.
 
 ### 6.4 Graphs, charts, tables and figures
 
@@ -628,6 +634,9 @@ fixing a colour should aim a little above the minimum.
 - **R9.3-2** A checker shall report a replacement graphics state that breaks
   R5.3-11, and a changed line width or dash pattern that a `w` or `d`
   operator overrides before the line is drawn (R6.4-10).
+- **R9.3-3** A checker should list alt text, actual text and expansions that
+  name a colour, with the colours drawn under that structure element in each
+  theme, so the author can check the words hold in all of them (R6-13).
 
 ### 9.4 `Checked`
 
@@ -706,6 +715,7 @@ means it is planned. Files to make go in `tests/conformance/`, named by rule.
 | R6-1 to R6-7 | Writer | Build `tests/objects` and merge it | `pair_check.py` passes, and the file meets section 5 | have |
 | R6-4 | Writer | `demo/objects-themed.pdf` | Draws as the light build in a reader without themes | have |
 | R6-9 | Writer | `demo/scan-themed.pdf` | Every derived theme passes 9.2 | have |
+| R6-13, R9.3-3 | Writer, checker | `demo/theme-lab-themed.pdf`: four plots with alt text, one of them a heatmap image | No alt text names a colour a theme changes; the heatmap's names its colour map, which every theme keeps | have |
 | R7.1-2 | Reader | `R7.1-2-appearance.pdf`: a field with `NeedAppearances` whose `DA` is swapped | The made appearance is in the theme's colours | to make |
 | R7.1-4 | Reader | `R7.1-4-broken.pdf`: `Themes` of the wrong type | Default theme shown, file opens | to make |
 | R7.2-1 to R7.2-6 | Reader | `R7.2-labels.pdf`: Light, Dark, Cream, Dark cream, Dark more contrast | The theme chosen for each setting in its table | to make |
@@ -888,6 +898,8 @@ other palettes and its other six themes are left out. Prototypes write
   bolder, up to twice the width, through a graphics state (R5.3-11, closing
   open question 2).
 - Privacy (10.2).
+- Alt text and the rest of the structure tree are shared by every theme, so
+  words about colour in them hold in all of them (R6-13, R9.3-3).
 - Open questions 20 and 21, from the roadmap.
 - *Editor's call, for discussion:* when reader colours are on and the file
   has no theme with a matching scheme, the reader keeps its own colours
