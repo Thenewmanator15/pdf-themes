@@ -244,15 +244,17 @@
 <section id="q-lines"><div class="wrap qa">
   <p class="eyebrow">08</p>
   <h2>Can a theme make thin lines thicker for people with low vision?</h2>
-  <p class="short">Not yet. In a file set up for it, three PDF engines would already draw it, but the proposal keeps
-    themes to colour for now.</p>
+  <p class="short">Yes, in draft 0.4 of the specification: a theme may draw lines up to twice as heavy. Three PDF
+    engines already draw it, but the tool can't make such files yet, and nobody has measured how much it helps.</p>
   <p>Thicker lines make colour differences easier to see, at least for people with typical vision. In one study, all
     11 people with low vision commented on chart grid lines and tick marks, mainly on how thin, pale and sparse they
     were; two asked for bolder lines and one for larger tick marks. In a test file whose line width came from a setting
     a theme can swap, PDFium, MuPDF and Poppler drew the line at 3 pt instead of 0.5 pt when the theme was shown, and
     did the same for a dash pattern. But most tools set line widths directly in the page content, where a theme can't
-    reach them, and I found no study that measures whether heavier lines help people with low vision read charts. So
-    the proposal keeps themes to colour and lists line width as an open question. On a web page it is easy: the demo
+    reach them, and I found no study that measures whether heavier lines help people with low vision read charts. Draft 0.4 of the
+    specification now allows a theme to make a line up to twice as heavy, never thinner, so a line can't cover what is
+    beside it, and asks writers to set such widths where a theme can reach them. Whether it helps is still to be
+    measured. On a web page it is easy: the demo
     draws heavier lines and grid in the more contrast themes.</p>
   <p class="more">More: <a href="../evidence/index.html#lines">lines, dashes and grids</a>, and
     <a href="../evidence/index.html#measured">the test in three PDF engines</a>.</p>

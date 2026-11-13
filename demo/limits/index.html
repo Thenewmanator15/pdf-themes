@@ -81,7 +81,7 @@
     font, a script or what's inside a 3D model, so colours held there stay as they are.</p>
   <ul>
     <li><strong>Colour fonts.</strong> A font can carry its own colours, as colour emoji do. A theme can't replace a
-      font (section 5 of the <a href="https://github.com/Thenewmanator15/pdf-themes/blob/main/SPEC.md">specification</a>),
+      font (rule R5.3-3 of the <a href="https://github.com/Thenewmanator15/pdf-themes/blob/main/SPEC.md">specification</a>),
       so these keep their light-page colours. Work: decide whether a theme may swap a font's colour palette, or
       whether writers should draw such glyphs another way (open question 15).</li>
     <li><strong>Colours set by scripts.</strong> A form can run JavaScript that colours a field when it changes, for
@@ -91,8 +91,11 @@
       background, render mode and cross-sections) but not the model's materials and lighting, and not video or sound.
       A white part stays bright white on a dark page. Work: say whether a 3D view per theme is wanted, or whether these
       stay as photos do (open question 17).</li>
-    <li><strong>Line widths and dashes.</strong> A more contrast theme can't yet make thin grid lines thicker. Work:
-      open question 2, and the evidence page on <a href="../evidence/index.html#lines">lines, dashes and grids</a>.</li>
+    <li><strong>Line widths and dashes.</strong> Draft 0.4 of the specification lets a theme draw thin grid lines and
+      chart lines bolder, up to twice the width (rules R5.3-11 and section 6.4). The tool can't make such files yet, and
+      nobody has measured how much bolder helps: see the evidence page on
+      <a href="../evidence/index.html#lines">lines, dashes and grids</a>. Marker size, font weight and layout stay the
+      same in every theme.</li>
     <li><strong>Attached files.</strong> A PDF attached to a themed PDF, or held in a portfolio, needs themes of its
       own. The portfolio's own colours are themed. Work: say whether a reader should match an attached file's theme to
       the one shown (open question 18).</li>
@@ -116,7 +119,7 @@
       on a scanned page becomes a negative.</li>
     <li><strong>Images whose soft mask has a Matte.</strong> The tool leaves these alone, because palette indices can't
       carry the arithmetic a reader uses to undo the matte. Work: swap in a whole image per theme, blended with the same
-      matte, and add the rule to section 5 of the specification.</li>
+      matte, and add the rule to section 5.3 of the specification (open question 20).</li>
     <li><strong>Colour scales that change.</strong> A heatmap whose scale changes between themes needs a copy of the
       image per theme, because its palette and its values both change.</li>
     <li><strong>Wide-gamut colours in worked-out themes.</strong> Themes the tool works out read every three-channel
@@ -145,8 +148,8 @@
     in each theme's colours.</p>
   <ul>
     <li><strong>No stored appearance.</strong> Some comments and fields leave the PDF app to draw the mark too. The app
-      is drawing it anyway, so it can draw it in the theme shown, using the theme's colours or its own. Work: say so in
-      section 9 of the specification (open question 6).</li>
+      is drawing it anyway, so it can draw it in the theme shown. Draft 0.4 of the specification says so (rules R7.5-2
+      to R7.5-4). Work: readers that do it.</li>
     <li><strong>Added later.</strong> A comment added afterwards by an app that doesn't know about themes gets no
       colours for the other themes, and black text vanishes on dark paper (open questions 11 and 12). Work: a way for a
       reader to tell that the themes no longer match the page.</li>
@@ -207,9 +210,9 @@
   <h2>The name in the file</h2>
   <p class="short">The themes sit under the private key <code>/XXThemes</code>, which is meant for testing, not for
     files shared between apps.</p>
-  <p>Work: register a developer prefix with Adobe's PDF name registry, so files use a registered name until the PDF
-    Association agrees a standard one. Apps will keep reading <code>/XXThemes</code> as well, because files with it are
-    already on this site.</p>
+  <p>Work: agree the name with the PDF Association's working group, so files shared beyond testing carry the name that
+    will stay, and as few names as possible. Until then the prototypes keep <code>/XXThemes</code>, and apps read the
+    key from a list, so the agreed name is a one-line addition and files that already exist keep working.</p>
 </div></section>
 
 <section id="ask"><div class="wrap qa">

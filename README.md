@@ -310,8 +310,9 @@ development work still to do. The tool's own limits:
   text filled with a gradient, is counted in the report but doesn't stop the
   mark. And a run of text is held to the contrast that 90% of the pixels
   behind it reach, so a few darker pixels don't fail it.
-- Uses the private key `/XXThemes`. Files shared beyond testing should use a
-  registered developer prefix until a standard key exists.
+- Uses the private key `/XXThemes`, which is for testing. The name for files
+  shared beyond testing is left to the PDF Association's working group, so
+  files carry as few names as possible.
 
 ## PDF/A and PDF/UA
 
