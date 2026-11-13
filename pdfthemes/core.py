@@ -34,18 +34,33 @@ SAVE = dict(compress_streams=True, object_stream_mode=pikepdf.ObjectStreamMode.g
             fix_metadata_version=False)
 
 
+def _keeps_old_form(pdf: pikepdf.Pdf) -> bool:
+    """Whether a file has to stay without object streams: one that declares PDF/A-1, or
+    PDF/X older than PDF 1.5. Both forbid cross-reference streams (ISO 19005-1, 6.1.4,
+    and PDF/X-1a and X-3 are built on PDF 1.3 and 1.4)."""
+    try:
+        meta = pdf.open_metadata(set_pikepdf_as_editor=False, update_docinfo=False)
+        if (meta.pdfa_status or "").startswith("1"):
+            return True
+        pdfx = meta.get("pdfxid:GTS_PDFXVersion") or meta.get("pdfx:GTS_PDFXVersion")
+    except Exception:  # unreadable XMP: go by the Info dictionary
+        pdfx = None
+    pdfx = pdfx or pdf.docinfo.get("/GTS_PDFXVersion")
+    return bool(pdfx) and pdf.pdf_version < "1.5"
+
+
 def save(pdf: pikepdf.Pdf, target):
-    """Save with SAVE, except that a file older than PDF 1.5 is saved without object
-    streams. A stream with no data is first written as a whole, empty Flate stream:
-    compressing on save, qpdf writes it as /FlateDecode with no bytes at all, which has
-    no header and isn't a Flate stream, and MuPDF says so."""
+    """Save with SAVE, except that a PDF/A-1 file, or a PDF/X file older than PDF 1.5,
+    is saved without object streams and keeps its version. Any other file older than 1.5
+    moves to 1.5: without object streams a browser's print grows by half again. A stream
+    with no data is first written as a whole, empty Flate stream: compressing on save,
+    qpdf writes it as /FlateDecode with no bytes at all, which has no header and isn't a
+    Flate stream, and MuPDF says so."""
     for obj in pdf.objects:
         if isinstance(obj, pikepdf.Stream) and "/Filter" not in obj and not obj.read_raw_bytes():
             obj.write(zlib.compress(b""), filter=Name.FlateDecode)
     options = dict(SAVE)
-    if pdf.pdf_version < "1.5":
-        # Object streams need a cross-reference stream, which needs PDF 1.5, and PDF/A-1,
-        # built on PDF 1.4, forbids them: a file older than 1.5 keeps its version.
+    if _keeps_old_form(pdf):
         options["object_stream_mode"] = pikepdf.ObjectStreamMode.disable
     pdf.save(target, **options)
 
