@@ -2,7 +2,7 @@
 
 | | |
 | --- | --- |
-| **Version** | Draft 0.4, November 2026 |
+| **Version** | Draft 0.5, November 2026 |
 | **Editor** | Mathew Newman |
 | **Status** | Working draft for discussion with the PDF Association's PDF Technical Working Group |
 | **Discussion** | [pdf-association/pdf-issues#369](https://github.com/pdf-association/pdf-issues/issues/369) |
@@ -35,6 +35,7 @@
 - [Annex C (informative): Example](#annex-c-informative-example)
 - [Annex D (informative): Open questions](#annex-d-informative-open-questions)
 - [Annex E (informative): Changes since draft 0.3](#annex-e-informative-changes-since-draft-03)
+- [Annex F (informative): Figures with a value per theme](#annex-f-informative-figures-with-a-value-per-theme)
 
 ## Introduction
 
@@ -111,6 +112,7 @@ from carrying themes, and the test suite includes PDF 1.7 files.
 | **Labels** | A theme's `ColorScheme`, `Contrast` and `Tint`: what a reader matches from one document to the next. |
 | **Authored theme** | A theme the author built, with its own colours for text, charts and pictures. |
 | **Derived theme** | An alternate theme the writer worked out from the default theme rather than one the author built. A fallback for a file with no source to build from. |
+| **Draws the same** | Shows the same shapes, text and image samples in the same colours, where a colour put into a palette may have moved to the nearest value the palette can hold (R6-14). |
 | **Contrast ratio** | As WCAG 2.2 defines it, from the relative luminance of two colours. Success criteria are cited by number and name, for example 1.4.3 Contrast (Minimum). |
 | **Enhanced contrast** | WCAG's term for the 7:1 level of success criterion 1.4.6. A theme with `Contrast` `More` is an enhanced contrast theme. |
 | **Forced colours** | A system mode in which the person's own colours replace every document's, such as a Windows contrast theme (CSS `forced-colors: active`). |
@@ -144,7 +146,7 @@ reader but shows a themed file correctly in its default theme (R6-4).
 
 A product claims a class by passing every test in Annex A for that class.
 A claim names this document, its version and the class, for example
-"Colour themes in PDF, draft 0.4: reader".
+"Colour themes in PDF, draft 0.5: reader".
 
 ### 4.4 The catalog key
 
@@ -292,6 +294,11 @@ writer.
   place that uses it shall refer to it, not hold a copy (R5.3-9).
 - **R6-4** The default theme shall be a complete document on its own: a
   reader that ignores the themes dictionary shows it correctly.
+- **R6-14** An `Indexed` lookup table holds whole bytes, so a colour put
+  into a palette may move to the nearest value one can hold: by at most half
+  of 1/255 of its range in each component. A fill of `0.7 g` becomes byte 178
+  or 179, not 178.5. That is the only change the default theme may have.
+  Shapes, text, images and their samples stay as they were.
 - **R6-5** A palette's base colour space should be the space the colour was
   written in. Colours a writer works out itself should be in an ICC-based sRGB
   space; a file that already has an sRGB profile should use it, which keeps
@@ -317,7 +324,8 @@ writer.
   author look at each theme before the file goes out.
 - **R6-9** A writer may derive a theme only where the author asks for it or
   there is no source to build from, and should leave out a derived theme that
-  fails its check or that draws every page exactly as the default theme does.
+  fails its check (but see R6-15) or that draws every page the same as the
+  default theme does.
 - **R6-10** A writer shall not change a colour in an authored theme.
 - **R6-11** A writer should check each theme (section 9) before writing it,
   and shall write `Checked` only for a theme that passed (9.4).
@@ -329,6 +337,13 @@ writer.
   red line" fails if Dark draws that series orange; name the series by its
   label, marker or position instead. A colour that every theme keeps, such as
   a photo's or a heatmap image's, can be named.
+- **R6-15** A derived theme without `Contrast` `More` may be kept although
+  it fails its check, where every run of text that fails in it fails in the
+  default theme too and is no lower in contrast than there. It is then no
+  worse than the file the author made, and a person who asked for dark paper
+  gets dark paper. It shall not have `Checked` (R9.4-1). A derived theme with
+  `Contrast` `More` shall pass its check, because its label promises more
+  contrast than the default.
 
 ### 6.4 Graphs, charts, tables and figures
 
@@ -596,6 +611,11 @@ is why stale themes (open question 12) need a way for a reader to notice.
 
 - **R9.1-1** A checker shall report every rule in section 5 a file breaks,
   with the theme and the objects.
+- **R9.1-2** A checker that tests whether a default theme draws the same
+  as the file it came from (R6-4, R6-14) should compare the colours in the
+  file, not the pixels a reader draws. Readers convert and resample
+  differently, so a comparison of drawn pages should allow one level in each
+  8-bit component, and should name the reader where it finds more.
 
 ### 9.2 Checking contrast
 
@@ -715,6 +735,8 @@ means it is planned. Files to make go in `tests/conformance/`, named by rule.
 | R6-1 to R6-7 | Writer | Build `tests/objects` and merge it | `pair_check.py` passes, and the file meets section 5 | have |
 | R6-4 | Writer | `demo/objects-themed.pdf` | Draws as the light build in a reader without themes | have |
 | R6-9 | Writer | `demo/scan-themed.pdf` | Every derived theme passes 9.2 | have |
+| R6-14, R9.1-2 | Writer, checker | `R6-14-between-bytes.pdf`: fills of `0.7 g` and `0.3 0.5 0.7 rg`, themed | Each palette entry is within half of 1/255 of the colour it replaced; the checker passes the file and allows one level on the drawn pages | to make |
+| R6-15 | Writer | `R6-15-weak-default.pdf`: body text at 3:1 in the default theme, themes derived | Dark is kept without `Checked`; Dark more contrast is left out | to make |
 | R6-13, R9.3-3 | Writer, checker | `demo/theme-lab-themed.pdf`: four plots with alt text, one of them a heatmap image | No alt text names a colour a theme changes; the heatmap's names its colour map, which every theme keeps | have |
 | R7.1-2 | Reader | `R7.1-2-appearance.pdf`: a field with `NeedAppearances` whose `DA` is swapped | The made appearance is in the theme's colours | to make |
 | R7.1-4 | Reader | `R7.1-4-broken.pdf`: `Themes` of the wrong type | Default theme shown, file opens | to make |
@@ -782,7 +804,7 @@ other palettes and its other six themes are left out. Prototypes write
 
 ## Annex D (informative): Open questions
 
-| # | About | Status in 0.4 |
+| # | About | Status in 0.5 |
 | --- | --- | --- |
 | 1 | Where the themes live: a catalog key or optional content | Open |
 | 2 | Thicker lines in a higher contrast theme | **Closed:** R5.3-11, 6.4. How much bolder helps is still to measure. |
@@ -804,7 +826,9 @@ other palettes and its other six themes are left out. Prototypes write
 | 18 | Attached files | Open |
 | 19 | Signed files | Partly: R8.4-5 |
 | 20 | Matte | Open |
-| 21 | What "draws the same" means | Open |
+| 21 | What "draws the same" means | **Closed:** R6-14, R9.1-2 |
+| 22 | Derived themes when the default theme fails its check | **Closed:** R6-15 |
+| 23 | Figures with a value per theme | Partly: Annex F. Nothing in SVG or CSS for tints yet. |
 
 1. A catalog key, or an extension of optional content configurations?
 2. *Closed in 0.4: a theme may, up to twice the width (R5.3-11, 6.4).* The
@@ -867,10 +891,39 @@ other palettes and its other six themes are left out. Prototypes write
 20. Matte: an image whose soft mask has a `Matte` was premultiplied with that
     colour. Should such an image keep its values in every theme, with a theme
     only able to swap in a whole image blended with the same matte?
-21. What does "draws the same" mean for R6-4 and R6-9: within one level of each
-    colour component? PDFium is four levels out on one Display P3 file.
+21. *Closed in 0.5: R6-14 and R9.1-2.* The question was: what does "draws
+    the same" mean for R6-4 and R6-9? In a run over 298 public PDFs, 267
+    themed files drew pixel for pixel like the original in PDFium, and 30
+    within one level. In every one of the 30 the cause was a colour between
+    two bytes: rounding each colour in the original to a byte made it draw
+    exactly like the themed file. The one file further out had Display P3
+    fills that PDFium converts differently through a palette, which is the
+    reader, and Poppler draws the two the same.
+22. *Closed in 0.5: R6-15.* The question was: should a derived theme pass
+    outright, or be held to the default theme's own level? In the same run,
+    114 of the 299 files failed the text check in their own default theme,
+    and 267 of the 295 derived themes left out for contrast were in those
+    files. Leaving them out took dark paper away from people who asked for it
+    without making any text easier to read.
+23. Figures: a figure drawn by a plotting tool comes into a document as SVG
+    with one set of colours. Annex F suggests how an SVG can carry a value
+    per theme. CSS has media features for a dark scheme and more contrast,
+    but none for a tint. Should the tints get one?
 
 ## Annex E (informative): Changes since draft 0.3
+
+### In draft 0.5
+
+- What "draws the same" means: a colour put into a palette may move by up
+  to half a step, and nothing else may change (R6-14). A checker compares
+  colours, and allows one level on drawn pages (R9.1-2). Closes open
+  question 21.
+- A derived theme may be kept where it is no worse than the default theme,
+  without `Checked`, except a `Contrast` `More` theme (R6-15). Open question
+  22, closed.
+- Annex F, on figures that carry a value per theme, and open question 23.
+
+### In draft 0.4
 
 - Laid out as an ISO document, with every rule given an identifier and a
   test (Annex A). Section numbers have changed: 0.3's sections 1 to 13 are now
@@ -904,3 +957,39 @@ other palettes and its other six themes are left out. Prototypes write
 - *Editor's call, for discussion:* when reader colours are on and the file
   has no theme with a matching scheme, the reader keeps its own colours
   (R7.2-3), rather than showing a light theme to someone who asked for dark.
+
+## Annex F (informative): Figures with a value per theme
+
+Most figures in a paper are drawn by a plotting tool and come into the
+document as SVG, with one set of colours. Drawing a figure once per theme
+works (R6-8) but costs a copy each. A figure that says what each colour is in
+each theme can be drawn once, and the document's writer puts those colours in
+its palettes. Nothing in this annex is required.
+
+The labels are the ones a theme has (5.2). An SVG gives its colours in a
+`style` element, with each theme's under attribute selectors on the root
+element, named after the labels:
+
+```css
+.series-1 { stroke: #0072B2 }
+svg[data-color-scheme="dark"] .series-1 { stroke: #56B4E9 }
+svg[data-tint="cream"] .series-1 { stroke: #00609A }
+svg[data-color-scheme="dark"][data-tint="cream"] .series-1 { stroke: #5BB0E0 }
+svg[data-contrast="more"] .series-1 { stroke: #005A8C }
+```
+
+A program that draws the figure for a theme sets `data-color-scheme`,
+`data-contrast` and `data-tint` on the root element first, with the label's
+value in lower case, and leaves out a label the theme doesn't have. Without
+them the figure draws in its own colours, which are the default theme's.
+
+The same rules for the scheme and contrast can also be written as
+`@media (prefers-color-scheme: dark)` and `@media (prefers-contrast: more)`,
+so a web browser shows the figure to match the person's setting. There is no
+media feature for a tint, so a browser shows a tinted reader the untinted
+figure, which is what it shows today.
+
+Attribute selectors are plain CSS, which SVG readers already parse. Typst
+reads SVG through usvg, whose CSS parser skips every `@media` rule but reads
+attribute selectors. Whether to propose a `prefers-tint` media feature to the
+CSS working group is open question 23.
